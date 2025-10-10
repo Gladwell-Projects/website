@@ -1,0 +1,628 @@
+@import "tailwindcss";
+
+@theme {
+  --color-*: initial;
+  --color-black: #000;
+  --color-white: #fff;
+
+  --color-blue: hsla(241, 84%, 41%, 1);
+  --color-blue-900: hsla(241, 83%, 18%, 1);
+  --color-blue-800: hsla(242, 84%, 24%, 1);
+  --color-blue-700: hsla(241, 83%, 31%, 1);
+  --color-blue-600: hsla(242, 84%, 36%, 1);
+  --color-blue-500: hsla(241, 84%, 41%, 1);
+  --color-blue-400: hsla(241, 58%, 58%, 1);
+  --color-blue-300: hsla(241, 57%, 67%, 1);
+  --color-blue-200: hsla(241, 57%, 76%, 1);
+  --color-blue-100: hsla(241, 57%, 85%, 1);
+
+  --color-midnight: hsla(133, 39%, 7%, 1);
+  --color-midnight-900: hsla(133, 39%, 7%, 1);
+  --color-midnight-800: hsla(134, 16%, 16%, 1);
+  --color-midnight-700: hsla(131, 7%, 30%, 1);
+  --color-midnight-600: hsla(132, 5%, 40%, 1);
+  --color-midnight-500: hsla(127, 3%, 49%, 1);
+  --color-midnight-400: hsla(137, 3%, 54%, 1);
+  --color-midnight-300: hsla(140, 3%, 63%, 1);
+  --color-midnight-200: hsla(140, 3%, 81%, 1);
+  --color-midnight-100: hsla(120, 2%, 91%, 1);
+
+  --color-bone: hsla(27, 28%, 87%, 1);
+  --color-bone-900: hsla(40, 40%, 20%, 1);
+  --color-bone-800: hsla(38, 38%, 30%, 1);
+  --color-bone-700: hsla(36, 36%, 40%, 1);
+  --color-bone-600: hsla(34, 34%, 60%, 1);
+  --color-bone-500: hsla(32, 32%, 70%, 1);
+  --color-bone-400: hsla(30, 30%, 80%, 1);
+  --color-bone-300: hsla(27, 28%, 87%, 1);
+  --color-bone-200: hsla(28, 29%, 91%, 1);
+  --color-bone-100: hsla(23, 29%, 95%, 1);
+
+  --color-glow: hsla(234, 100%, 98%, 1);
+  --color-glow-900: hsla(234, 35%, 33%, 1);
+  --color-glow-800: hsla(234, 38%, 52%, 1);
+  --color-glow-700: hsla(234, 71%, 67%, 1);
+  --color-glow-600: hsla(234, 100%, 78%, 1);
+  --color-glow-500: hsla(234, 100%, 83%, 1);
+  --color-glow-400: hsla(234, 100%, 88%, 1);
+  --color-glow-300: hsla(234, 100%, 92%, 1);
+  --color-glow-200: hsla(234, 100%, 96%, 1);
+  --color-glow-100: hsla(234, 100%, 98%, 1);
+
+  --color-hi-vis: hsla(23, 100%, 50%, 1);
+  --color-hi-vis-900: hsla(23, 100%, 25%, 1);
+  --color-hi-vis-800: hsla(23, 100%, 33%, 1);
+  --color-hi-vis-700: hsla(23, 100%, 37%, 1);
+  --color-hi-vis-600: hsla(23, 100%, 45%, 1);
+  --color-hi-vis-500: hsla(23, 100%, 50%, 1);
+  --color-hi-vis-400: hsla(23, 100%, 63%, 1);
+  --color-hi-vis-300: hsla(23, 100%, 77%, 1);
+  --color-hi-vis-200: hsla(23, 100%, 85%, 1);
+  --color-hi-vis-100: hsla(22, 100%, 93%, 1);
+
+  --color-taxi: hsla(47, 100%, 50%, 1);
+  --color-taxi-900: hsla(39, 100%, 24%, 1);
+  --color-taxi-800: hsla(41, 100%, 33%, 1);
+  --color-taxi-700: hsla(42, 100%, 37%, 1);
+  --color-taxi-600: hsla(43, 100%, 43%, 1);
+  --color-taxi-500: hsla(47, 100%, 50%, 1);
+  --color-taxi-400: hsla(47, 100%, 65%, 1);
+  --color-taxi-300: hsla(47, 100%, 73%, 1);
+  --color-taxi-200: hsla(46, 100%, 80%, 1);
+  --color-taxi-100: hsla(47, 100%, 90%, 1);
+
+  --color-brick: hsla(6, 79%, 33%, 1);
+  --color-brick-900: hsla(5, 76%, 7%, 1);
+  --color-brick-800: hsla(6, 80%, 12%, 1);
+  --color-brick-700: hsla(6, 78%, 18%, 1);
+  --color-brick-600: hsla(5, 78%, 25%, 1);
+  --color-brick-500: hsla(6, 79%, 33%, 1);
+  --color-brick-400: hsla(6, 45%, 46%, 1);
+  --color-brick-300: hsla(6, 39%, 56%, 1);
+  --color-brick-200: hsla(5, 39%, 67%, 1);
+  --color-brick-100: hsla(6, 39%, 80%, 1);
+
+  --color-timber: hsla(36, 100%, 44%, 1);
+  --color-timber-900: hsla(36, 100%, 13%, 1);
+  --color-timber-800: hsla(36, 100%, 18%, 1);
+  --color-timber-700: hsla(36, 100%, 26%, 1);
+  --color-timber-600: hsla(36, 100%, 35%, 1);
+  --color-timber-500: hsla(36, 100%, 44%, 1);
+  --color-timber-400: hsla(36, 78%, 55%, 1);
+  --color-timber-300: hsla(36, 78%, 66%, 1);
+  --color-timber-200: hsla(36, 79%, 83%, 1);
+  --color-timber-100: hsla(35, 79%, 95%, 1);
+
+  --color-cli: hsla(135, 100%, 50%, 1);
+  --color-cli-900: hsla(135, 100%, 23%, 1);
+  --color-cli-800: hsla(134, 100%, 33%, 1);
+  --color-cli-700: hsla(135, 100%, 37%, 1);
+  --color-cli-600: hsla(135, 100%, 45%, 1);
+  --color-cli-500: hsla(135, 100%, 50%, 1);
+  --color-cli-400: hsla(134, 100%, 63%, 1);
+  --color-cli-300: hsla(135, 100%, 77%, 1);
+  --color-cli-200: hsla(134, 100%, 85%, 1);
+  --color-cli-100: hsla(134, 100%, 93%, 1);
+
+  --color-web3: hsla(257, 100%, 64%, 1);
+  --color-web3-900: hsla(256, 56%, 22%, 1);
+  --color-web3-800: hsla(257, 57%, 32%, 1);
+  --color-web3-700: hsla(257, 57%, 38%, 1);
+  --color-web3-600: hsla(257, 59%, 51%, 1);
+  --color-web3-500: hsla(257, 100%, 64%, 1);
+  --color-web3-400: hsla(256, 100%, 69%, 1);
+  --color-web3-300: hsla(256, 100%, 75%, 1);
+  --color-web3-200: hsla(256, 100%, 80%, 1);
+  --color-web3-100: hsla(257, 100%, 87%, 1);
+
+  /* FONTS */
+  --font-sans: "ABC Oracle Edu", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", courier, monospace;
+
+  --text-base: 1rem;
+  --text-xs: 0.56rem;
+  --text-sm: 0.75rem;
+  --text-md: 1rem;
+  --text-lg: 1.33rem;
+  --text-xl: 1.78rem;
+  --text-2xl: 2.37rem;
+  --text-3xl: 3.16rem;
+  --text-4xl: 4.21rem;
+  --text-5xl: 5.61rem;
+  --text-6xl: 1;
+  --text-7xl: 1;
+  --text-8xl: 1;
+  --text-9xl: 1;
+
+  /*
+  0.5 - 0.775
+  1.0 - 1.55
+  1.5 - 2.325
+  2.0 - 3.1
+  2.5 - 3.875
+  3.0 - 4.65
+  3.5 - 5.425
+  4.0 - 6.2
+  4.5 - 6.975
+  5.0 - 7.75
+  5.5 - 8.525
+   */
+
+  --text-base--line-height: 1.55rem;
+  --text-xs--line-height: 0.775rem;
+  --text-sm--line-height: 1.55rem;
+  --text-lg--line-height: 1.55rem;
+  --text-xl--line-height: 2.325rem;
+  --text-2xl--line-height: 2.325rem;
+  --text-3xl--line-height: 3.1rem;
+  --text-4xl--line-height: 3.875rem;
+  --text-5xl--line-height: 5.425rem;
+  --text-6xl--line-height: 1;
+  --text-7xl--line-height: 1;
+  --text-8xl--line-height: 1;
+  --text-9xl--line-height: 1;
+
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.01em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  --font-size-base-px: 21px;
+
+  --spacing: 0.3875rem;
+
+  --theme-transition: color 300ms ease, background 300ms ease, fill 300ms ease;
+}
+
+:root {
+  --nav-height: calc(3 * var(--text-base--line-height) + --spacing(8));
+}
+
+html.baseline {
+  background-image: linear-gradient(to top, red, red 1px, white 1px, white);
+  background-position: 0 0;
+  background-size: 100vw var(--text-base--line-height);
+  background-repeat: repeat;
+
+  background-attachment: local;
+}
+
+@layer base {
+  html {
+    --theme-text: var(--color-midnight);
+    --theme-bg: var(--color-white);
+    --theme-accent: var(--color-glow);
+    --theme-link: var(--color-blue);
+    --theme-link-visited: var(--color-web3);
+
+    transition: var(--theme-transition);
+    background: var(--theme-bg);
+    color: var(--theme-text);
+    font-size: var(--font-size-base-px);
+    line-height: var(--text-base--line-height);
+    font-feature-settings:
+      "ss02" 1,
+      "ss15" 1;
+  }
+
+  /* theme settings */
+  .theme-default {
+    --theme-text: var(--color-midnight);
+    --theme-bg: var(--color-white);
+    --theme-highlight: var(--color-glow-300);
+    --theme-shadow: var(--color-midnight-400);
+  }
+  .theme-blue {
+    --theme-text: var(--color-white);
+    --theme-bg: var(--color-blue);
+    --theme-link: var(--color-blue-100);
+    --theme-link-visited: var(--color-blue-100);
+    --theme-highlight: var(--color-blue-400);
+    --theme-shadow: var(--color-blue-800);
+  }
+  .theme-cli {
+    --theme-text: var(--color-cli);
+    --theme-bg: var(--color-black);
+    --theme-link: var(--color-cli-200);
+    --theme-link-visited: var(--color-cli-200);
+    --theme-highlight: var(--color-cli-900);
+    --theme-shadow: var(--color-cli-900);
+  }
+  .theme-web3 {
+    --theme-text: var(--color-white);
+    --theme-bg: var(--color-web3);
+    --theme-link: var(--color-white);
+    --theme-link-visited: var(--color-white);
+    --theme-highlight: var(--color-web3-400);
+    --theme-shadow: var(--color-web3-700);
+  }
+  .theme-glow {
+    --theme-text: var(--color-blue);
+    --theme-bg: var(--color-glow);
+    --theme-link: var(--color-blue-400);
+    --theme-link-visited: var(--color-web3);
+    --theme-highlight: var(--color-glow-400);
+    --theme-shadow: var(--color-glow-400);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  h1 {
+    margin-bottom: var(--text-xs--line-height);
+    font-size: var(--text-4xl);
+    line-height: var(--text-4xl--line-height);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h2 {
+    margin-bottom: var(--text-xs--line-height);
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  h4 {
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+  }
+
+  h5 {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+  }
+  h6 {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+  p {
+    margin-bottom: var(--text-base--line-height);
+  }
+
+  a {
+    color: var(--theme-link);
+    text-decoration: underline;
+
+    &:visited {
+      color: var(--theme-link-visited);
+    }
+  }
+}
+
+@layer components {
+  .modal-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: start;
+    z-index: 999;
+    backdrop-filter: blur(1px);
+    box-sizing: border-box;
+    padding-top: --spacing(8);
+    padding-bottom: --spacing(8);
+    width: 100dvw;
+    height: 100dvh;
+    overflow: scroll;
+  }
+  .modal--item {
+    box-shadow: 6px -6px 0 --alpha(var(--theme-shadow) / 50%);
+    border: 2px solid;
+    background: var(--theme-bg);
+    padding: --spacing(4);
+    height: auto;
+    color: var(--theme-text);
+  }
+  .no-link-underline {
+    a {
+      text-decoration: none;
+    }
+  }
+  .main-nav {
+    display: grid;
+    grid-template-rows: var(--text-base--line-height);
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    padding: 0;
+    text-align: center;
+
+    a {
+      color: var(--theme-text);
+      text-decoration: none;
+    }
+
+    a:first-child {
+      text-align: left;
+    }
+    a:last-child {
+      text-align: right;
+    }
+  }
+  .page-nav {
+    display: grid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    grid-template-rows: var(--text-base--line-height) 1fr var(
+        --text-base--line-height
+      );
+    transition: top 300ms ease-in;
+    padding: --spacing(2);
+    padding-bottom: --spacing(6);
+    width: 100%;
+    height: 100%;
+
+    &.spread {
+      padding-bottom: --spacing(2);
+    }
+
+    .logo-nav {
+      grid-row-start: 2;
+    }
+  }
+  .page-nav.condensed {
+    grid-template-rows: repeat(3, var(--text-base--line-height));
+    gap: --spacing(0.5);
+
+    background-image: linear-gradient(
+      to bottom,
+      var(--theme-bg) 75%,
+      transparent
+    );
+    height: auto;
+
+    .logo-nav {
+      grid-row-start: 1;
+      place-self: start;
+    }
+  }
+  .react-calendar {
+    font-size: var(--text-md);
+
+    .hasEvent {
+      border-radius: 10px;
+      background: var(--theme-highlight);
+      font-weight: bold;
+    }
+  }
+  .react-calendar--doubleView {
+  }
+
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: calc(-1 * var(--spacing));
+  }
+
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    margin: var(--spacing);
+    width: 50%;
+  }
+
+  .react-calendar,
+  .react-calendar *,
+  .react-calendar *:before,
+  .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .react-calendar button {
+    margin: 0;
+    border: 2px solid transparent;
+  }
+
+  .react-calendar button:enabled:hover {
+    cursor: pointer;
+  }
+
+  .react-calendar__navigation {
+    display: flex;
+    margin-bottom: var(--text-base--line-height);
+  }
+
+  .react-calendar__navigation button {
+    background: none;
+    min-width: 44px;
+  }
+
+  .react-calendar__navigation button:disabled {
+  }
+
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-weight: bold;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    text-align: center;
+  }
+
+  .react-calendar__month-view__weekdays__weekday {
+    abbr:where([title]) {
+      display: block;
+      margin: auto;
+      margin-bottom: 2px;
+      border-bottom: 2px solid;
+      padding: 0;
+      width: calc(100% - var(--spacing));
+      font-weight: bold;
+      font-size: var(--text-sm);
+      letter-spacing: var(--tracking-wider);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+  }
+
+  .react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: inherit;
+    font-weight: bold;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth,
+  .react-calendar__decade-view__years__year--neighboringDecade,
+  .react-calendar__century-view__decades__decade--neighboringCentury {
+    color: var(--color-midnight-600);
+  }
+
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: var(--text-xs--line-height) var(--spacing);
+    font-size: var(--text-sm);
+  }
+
+  .react-calendar__tile {
+    --indicator-border: transparent;
+    --indicator-bg: transparent;
+    --indicator-outline: transparent;
+    border-radius: 8px;
+    background: none;
+    padding: --spacing(1) 0;
+    max-width: 100%;
+    font: inherit;
+    font-size: var(--text-md);
+    text-align: center;
+
+    abbr {
+      position: relative;
+      z-index: 1;
+      &::before {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        outline: 2px solid var(--indicator-outline);
+        border: 2px solid var(--indicator-border);
+        border-radius: 4em;
+        background-color: var(--indicator-bg);
+        width: 1.5em;
+        height: 1.5em;
+        content: "";
+      }
+    }
+  }
+
+  .react-calendar__tile:disabled {
+    border: 2px solid transparent;
+    background-color: #fff;
+    color: var(--color-midnight-600);
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth:disabled,
+  .react-calendar__decade-view__years__year--neighboringDecade:disabled,
+  .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
+    color: var(--color-midnight-100);
+  }
+
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    --indicator-outline: var(--theme-text);
+    color: var(--color-text);
+  }
+
+  .react-calendar__tile--now,
+  .react-calendar__tile--now.react-calendar__tile--active {
+    font-weight: bold;
+    --indicator-outline: var(--theme-text);
+  }
+
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    --indicator-border: transparent;
+    --indicator-bg: transparent;
+    --indicator-outline: transparent;
+  }
+
+  .react-calendar__year-view .react-calendar__tile--now:hover,
+  .react-calendar__decade-view .react-calendar__tile--now:hover,
+  .react-calendar__century-view .react-calendar__tile--now:hover,
+  .react-calendar__year-view .react-calendar__tile:hover,
+  .react-calendar__decade-view .react-calendar__tile:hover,
+  .react-calendar__century-view .react-calendar__tile:hover,
+  .react-calendar__year-view .react-calendar__tile--active,
+  .react-calendar__decade-view .react-calendar__tile--active,
+  .react-calendar__century-view .react-calendar__tile--active,
+  .react-calendar__year-view .react-calendar__tile--hasActive,
+  .react-calendar__decade-view .react-calendar__tile--hasActive,
+  .react-calendar__century-view .react-calendar__tile--hasActive {
+    background: var(--theme-text);
+    color: var(--theme-bg);
+  }
+  .react-calendar__year-view .react-calendar__tile--now,
+  .react-calendar__decade-view .react-calendar__tile--now,
+  .react-calendar__century-view .react-calendar__tile--now {
+    border: 2px solid var(--theme-text);
+  }
+
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+    --indicator-outline: var(--theme-text);
+  }
+
+  .react-calendar__tile--hasActive {
+    --indicator-outline: var(--theme-text);
+  }
+
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+    --indicator-outline: var(--theme-text);
+  }
+  .react-calendar__tile--active {
+    --indicator-border: var(--theme-text);
+    --indicator-bg: var(--theme-text);
+    --indicator-outline: var(--theme-text);
+    color: var(--theme-bg);
+  }
+
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    --indicator-border: var(--theme-text);
+    --indicator-bg: var(--theme-text);
+    --indicator-outline: var(--theme-text);
+    color: var(--theme-bg);
+  }
+
+  .react-calendar--selectRange .react-calendar__tile--hover {
+  }
+
+  .event-list {
+  }
+}
