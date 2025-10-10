@@ -1,19 +1,17 @@
 import React from 'react'
-import './styles.css'
+import { ThemeProvider } from './_contexts/ThemeContext'
+import { CalendarProvider } from './_contexts/CalendarOpen'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
-}
+import './main.css'
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en">
-      <body>
-        <main>{children}</main>
+    <ThemeProvider>
+      <body className="min-h-dvh">
+        <CalendarProvider>{children}</CalendarProvider>
       </body>
-    </html>
+    </ThemeProvider>
   )
 }

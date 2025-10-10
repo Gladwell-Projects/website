@@ -64,32 +64,59 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    clients: ClientAuthOperations;
   };
   blocks: {};
   collections: {
-    users: User;
     media: Media;
+    artists: Artist;
+    exhibitions: Exhibition;
+    viewingRooms: ViewingRoom;
+    press: Press;
+    events: Event;
+    pages: Page;
+    users: User;
+    clients: Client;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
+    'payload-query-presets': PayloadQueryPreset;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    artists: ArtistsSelect<false> | ArtistsSelect<true>;
+    exhibitions: ExhibitionsSelect<false> | ExhibitionsSelect<true>;
+    viewingRooms: ViewingRoomsSelect<false> | ViewingRoomsSelect<true>;
+    press: PressSelect<false> | PressSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    clients: ClientsSelect<false> | ClientsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    'payload-query-presets': PayloadQueryPresetsSelect<false> | PayloadQueryPresetsSelect<true>;
   };
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
-  locale: null;
-  user: User & {
-    collection: 'users';
+  globals: {
+    'main-menu': MainMenu;
+    branding: Branding;
   };
+  globalsSelect: {
+    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
+    branding: BrandingSelect<false> | BrandingSelect<true>;
+  };
+  locale: null;
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Client & {
+        collection: 'clients';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -113,12 +140,395 @@ export interface UserAuthOperations {
     password: string;
   };
 }
+export interface ClientAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  isArt?: boolean | null;
+  preview?: string | null;
+  alt: string;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  artworkId?: string | null;
+  artist?: (number | null) | Artist;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artists".
+ */
+export interface Artist {
+  id: number;
+  title?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  profileImage?: (number | null) | Media;
+  firstName: string;
+  middleName?: string | null;
+  lastName: string;
+  suffix?: string | null;
+  nationality?: string | null;
+  birthYear?: number | null;
+  deathYear?: number | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  socialLinks?: {
+    website?: string | null;
+    instagram?: string | null;
+    twitter?: string | null;
+  };
+  cvUpload?: (number | null) | Media;
+  surveyArtworks?: (number | Media)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exhibitions".
+ */
+export interface Exhibition {
+  id: number;
+  startDate: string;
+  endDate: string;
+  location?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  title: string;
+  featuredArtists?: (number | Artist)[] | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  coverImage?: (number | null) | Media;
+  featuredArtworks?: (number | Media)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "viewingRooms".
+ */
+export interface ViewingRoom {
+  id: number;
+  title?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "press".
+ */
+export interface Press {
+  id: number;
+  /**
+   * This is the smaller text before the Headline that usually says something like "From So-and-so Newspaper".
+   */
+  strapline?: string | null;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  date: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  featuredImage?: (number | null) | Media;
+  relatedArtworks?: (number | Media)[] | null;
+  relatedExhibitions?: (number | Exhibition)[] | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom' | 'upload') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'artists';
+                value: number | Artist;
+              } | null)
+            | ({
+                relationTo: 'exhibitions';
+                value: number | Exhibition;
+              } | null)
+            | ({
+                relationTo: 'press';
+                value: number | Press;
+              } | null)
+            | ({
+                relationTo: 'events';
+                value: number | Event;
+              } | null)
+            | ({
+                relationTo: 'viewingRooms';
+                value: number | ViewingRoom;
+              } | null);
+          url?: string | null;
+          upload?: (number | null) | Media;
+          label: string;
+          customId?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  theme?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  parent?: (number | null) | Page;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Page;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  startDate: string;
+  startDate_tz: SupportedTimezones;
+  endDate: string;
+  endDate_tz: SupportedTimezones;
+  hasTime?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  featuredImage?: (number | null) | Media;
+  location?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  relatedExhibitions?: (number | Exhibition)[] | null;
+  isLinked?: boolean | null;
+  link: {
+    type?: ('reference' | 'custom' | 'upload') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'artists';
+          value: number | Artist;
+        } | null)
+      | ({
+          relationTo: 'exhibitions';
+          value: number | Exhibition;
+        } | null)
+      | ({
+          relationTo: 'press';
+          value: number | Press;
+        } | null)
+      | ({
+          relationTo: 'events';
+          value: number | Event;
+        } | null)
+      | ({
+          relationTo: 'viewingRooms';
+          value: number | ViewingRoom;
+        } | null);
+    url?: string | null;
+    upload?: (number | null) | Media;
+    label: string;
+    customId?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  role: 'admin' | 'editor' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -139,22 +549,29 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "clients".
  */
-export interface Media {
+export interface Client {
   id: number;
-  alt: string;
+  name: string;
+  role: 'user';
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -164,18 +581,51 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'artists';
+        value: number | Artist;
+      } | null)
+    | ({
+        relationTo: 'exhibitions';
+        value: number | Exhibition;
+      } | null)
+    | ({
+        relationTo: 'viewingRooms';
+        value: number | ViewingRoom;
+      } | null)
+    | ({
+        relationTo: 'press';
+        value: number | Press;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
     | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'clients';
+        value: number | Client;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'clients';
+        value: number | Client;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -185,10 +635,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: number;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'clients';
+        value: number | Client;
+      };
   key?: string | null;
   value?:
     | {
@@ -215,9 +670,267 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-query-presets".
+ */
+export interface PayloadQueryPreset {
+  id: number;
+  title: string;
+  isShared?: boolean | null;
+  access?: {
+    read?: {
+      constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
+      users?: (number | User)[] | null;
+    };
+    update?: {
+      constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
+      users?: (number | User)[] | null;
+    };
+    delete?: {
+      constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
+      users?: (number | User)[] | null;
+    };
+  };
+  where?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  columns?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  relatedCollection: 'media';
+  /**
+   * This is a temporary field used to determine if updating the preset would remove the user's access to it. When `true`, this record will be deleted after running the preset's `validate` function.
+   */
+  isTemp?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  isArt?: T;
+  preview?: T;
+  alt?: T;
+  caption?: T;
+  artworkId?: T;
+  artist?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artists_select".
+ */
+export interface ArtistsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  profileImage?: T;
+  firstName?: T;
+  middleName?: T;
+  lastName?: T;
+  suffix?: T;
+  nationality?: T;
+  birthYear?: T;
+  deathYear?: T;
+  content?: T;
+  socialLinks?:
+    | T
+    | {
+        website?: T;
+        instagram?: T;
+        twitter?: T;
+      };
+  cvUpload?: T;
+  surveyArtworks?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exhibitions_select".
+ */
+export interface ExhibitionsSelect<T extends boolean = true> {
+  startDate?: T;
+  endDate?: T;
+  location?: T;
+  slug?: T;
+  slugLock?: T;
+  title?: T;
+  featuredArtists?: T;
+  content?: T;
+  coverImage?: T;
+  featuredArtworks?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "viewingRooms_select".
+ */
+export interface ViewingRoomsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "press_select".
+ */
+export interface PressSelect<T extends boolean = true> {
+  strapline?: T;
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  date?: T;
+  content?: T;
+  featuredImage?: T;
+  relatedArtworks?: T;
+  relatedExhibitions?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              upload?: T;
+              label?: T;
+              customId?: T;
+            };
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  startDate?: T;
+  startDate_tz?: T;
+  endDate?: T;
+  endDate_tz?: T;
+  hasTime?: T;
+  slug?: T;
+  slugLock?: T;
+  featuredImage?: T;
+  location?: T;
+  content?: T;
+  relatedExhibitions?: T;
+  isLinked?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        upload?: T;
+        label?: T;
+        customId?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  theme?: T;
+  content?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -237,21 +950,27 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
+ * via the `definition` "clients_select".
  */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
+export interface ClientsSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -284,6 +1003,224 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-query-presets_select".
+ */
+export interface PayloadQueryPresetsSelect<T extends boolean = true> {
+  title?: T;
+  isShared?: T;
+  access?:
+    | T
+    | {
+        read?:
+          | T
+          | {
+              constraint?: T;
+              users?: T;
+            };
+        update?:
+          | T
+          | {
+              constraint?: T;
+              users?: T;
+            };
+        delete?:
+          | T
+          | {
+              constraint?: T;
+              users?: T;
+            };
+      };
+  where?: T;
+  columns?: T;
+  relatedCollection?: T;
+  isTemp?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu".
+ */
+export interface MainMenu {
+  id: number;
+  'menu-items-top'?:
+    | {
+        label: string;
+        theme?: string | null;
+        link?: {
+          type?: ('reference' | 'custom' | 'upload') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'artists';
+                value: number | Artist;
+              } | null)
+            | ({
+                relationTo: 'exhibitions';
+                value: number | Exhibition;
+              } | null)
+            | ({
+                relationTo: 'press';
+                value: number | Press;
+              } | null)
+            | ({
+                relationTo: 'events';
+                value: number | Event;
+              } | null)
+            | ({
+                relationTo: 'viewingRooms';
+                value: number | ViewingRoom;
+              } | null);
+          url?: string | null;
+          upload?: (number | null) | Media;
+          customId?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  'menu-items-bot'?:
+    | {
+        label: string;
+        theme?: string | null;
+        link?: {
+          type?: ('reference' | 'custom' | 'upload') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'artists';
+                value: number | Artist;
+              } | null)
+            | ({
+                relationTo: 'exhibitions';
+                value: number | Exhibition;
+              } | null)
+            | ({
+                relationTo: 'press';
+                value: number | Press;
+              } | null)
+            | ({
+                relationTo: 'events';
+                value: number | Event;
+              } | null)
+            | ({
+                relationTo: 'viewingRooms';
+                value: number | ViewingRoom;
+              } | null);
+          url?: string | null;
+          upload?: (number | null) | Media;
+          customId?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "branding".
+ */
+export interface Branding {
+  id: number;
+  logo?: (number | null) | Media;
+  title?: string | null;
+  description?: string | null;
+  author?: string | null;
+  /**
+   * A list of keywords separated by commas.
+   */
+  keywords?: string | null;
+  socialLinks?:
+    | {
+        type?: ('Instagram' | 'Facebook' | 'X / Twitter' | 'Threads' | 'Other') | null;
+        url?: string | null;
+        /**
+         * upload a black icon in PNG or SVG format with transparent background up to 64 x 64 pixels
+         */
+        icon?: (number | null) | Media;
+        at?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu_select".
+ */
+export interface MainMenuSelect<T extends boolean = true> {
+  'menu-items-top'?:
+    | T
+    | {
+        label?: T;
+        theme?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              upload?: T;
+              customId?: T;
+            };
+        id?: T;
+      };
+  'menu-items-bot'?:
+    | T
+    | {
+        label?: T;
+        theme?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              upload?: T;
+              customId?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "branding_select".
+ */
+export interface BrandingSelect<T extends boolean = true> {
+  logo?: T;
+  title?: T;
+  description?: T;
+  author?: T;
+  keywords?: T;
+  socialLinks?:
+    | T
+    | {
+        type?: T;
+        url?: T;
+        icon?: T;
+        at?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
