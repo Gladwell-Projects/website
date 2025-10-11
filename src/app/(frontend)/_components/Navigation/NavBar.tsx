@@ -52,7 +52,7 @@ const NavBar: React.FC<{ data: MenuType | null }> = ({ data }) => {
   }
 
   return (
-    <div className="main-nav">
+    <div className="grid h-auto grid-flow-row auto-rows-auto md:auto-cols-fr md:grid-flow-col md:grid-rows-[var(--text-base--line-height)] md:p-0 md:text-center">
       {data.map(({ link, label, theme }, i) => {
         const { reference } = link
 
@@ -63,6 +63,7 @@ const NavBar: React.FC<{ data: MenuType | null }> = ({ data }) => {
 
         return (
           <CMSLink
+            className="text-[var(--theme-text)] no-underline md:first:text-left md:last:text-right"
             key={i}
             {...link}
             onMouseEnter={() => {

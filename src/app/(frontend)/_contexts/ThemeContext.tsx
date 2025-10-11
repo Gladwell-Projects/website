@@ -4,12 +4,18 @@ import { useState } from 'react'
 
 export const ThemeContext = createContext(undefined)
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeProvider = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className: string
+}) => {
   const [theme, setTheme] = useState('default')
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
-      <html lang="en" className={`theme-${theme}`}>
+      <html lang="en" className={`theme-${theme} ${className}`}>
         {children}
       </html>
     </ThemeContext.Provider>

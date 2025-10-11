@@ -33,8 +33,10 @@ const Navigation = (props: {
   })
 
   return (
-    <nav className={`${navTemplate} ${!isVisible && '-top-full'} page-nav`}>
-      <Logo />
+    <nav
+      className={`page-nav ${!isVisible && 'nav-not-visible'} ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(4)] relative col-span-full w-full grid-rows-3 p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && 'grid-rows-[repeat(3, var(--text-base--line-height)] gap-0.5 bg-gradient-to-b from-(--theme-bg) from-70% to-transparent pb-6'} fixed top-0 left-0 m-0 grid w-dvw p-2 text-center transition-transform`}
+    >
+      <Logo className={`${navTemplate === 'spread' && 'row-start-2'}`} />
       {/* @ts-expect-error type number problem with database schema  */}
       <NavBar data={nav['menu-items-top']} />
       {/* @ts-expect-error type number problem with database schema  */}

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
+import { resendAdapter } from '@payloadcms/email-resend'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -63,6 +64,11 @@ export default buildConfig({
       },
     },
   },
+  email: resendAdapter({
+    defaultFromAddress: 'webmaster@gladwellprojects.com',
+    defaultFromName: 'Gladwell Projects',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
   globals: [MainMenu, BrandSettings],
   collections: [
     Media,
@@ -92,12 +98,11 @@ export default buildConfig({
 
 // Adapted from https://github.com/opennextjs/opennextjs-cloudflare/blob/d00b3a13e42e65aad76fba41774815726422cc39/packages/cloudflare/src/api/cloudflare-context.ts#L328C36-L328C46
 function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
-  return import(
-    /* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`
-  ).then(({ getPlatformProxy }) =>
-    getPlatformProxy({
-      environment: process.env.CLOUDFLARE_ENV,
-      experimental: { remoteBindings: cloudflareRemoteBindings },
-    } satisfies GetPlatformProxyOptions)
+  return import(/* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`).then(
+    ({ getPlatformProxy }) =>
+      getPlatformProxy({
+        environment: process.env.CLOUDFLARE_ENV,
+        experimental: { remoteBindings: cloudflareRemoteBindings },
+      } satisfies GetPlatformProxyOptions)
   )
 }

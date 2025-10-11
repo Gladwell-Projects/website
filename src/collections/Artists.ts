@@ -4,6 +4,7 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
+import { anyone } from './access/anyone'
 
 export const Artists: CollectionConfig = {
   slug: 'artists',
@@ -11,6 +12,7 @@ export const Artists: CollectionConfig = {
     group: 'Website',
     useAsTitle: 'title',
     defaultColumns: [
+      'id',
       'title',
       'profileImage',
       'nationality',
@@ -33,8 +35,8 @@ export const Artists: CollectionConfig = {
       }),
   },
   access: {
-    read: published,
-    readVersions: published,
+    read: anyone,
+    readVersions: adminsAndEditors,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: adminsAndEditors,
@@ -42,7 +44,7 @@ export const Artists: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 200, // We set this interval for optimal live preview
       },
     },
   },
@@ -197,7 +199,6 @@ export const Artists: CollectionConfig = {
                 return {
                   inSurvey: { equals: true },
                   isArt: { equals: true },
-                  // artist: { contains: siblingData.id.toString() },
                 }
               },
             },

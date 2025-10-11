@@ -73,7 +73,7 @@ const CalendarEventList = (props: {
     <ul>
       {error && !isLoading && 'there was an error loading the calendar...'}
 
-      <li className="events-headline sticky p-4">
+      <li className="events-headline sticky p-3">
         <h6>{activeMonthString}</h6>
       </li>
       <Suspense
@@ -91,7 +91,7 @@ const CalendarEventList = (props: {
             return (
               <li
                 key={e.id}
-                className={`w-full list-none p-4 hover:bg-[var(--theme-highlight)] ${dateMatches ? 'bg-[var(--theme-highlight)]' : ''}`}
+                className={`w-full list-none p-3 hover:bg-[var(--theme-highlight)] ${dateMatches ? 'bg-[var(--theme-highlight)]' : ''}`}
                 onClick={() => {
                   if (openEvent === e.id) {
                     setOpenEvent(null)

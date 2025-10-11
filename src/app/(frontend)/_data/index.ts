@@ -46,9 +46,7 @@ export const fetchGlobals = async (): Promise<{
   }
 }
 
-export const fetchPage = async (
-  incomingSlugSegments: string[]
-): Promise<null | Page> => {
+export const fetchPage = async (incomingSlugSegments: string[]): Promise<null | Page> => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config })
@@ -132,7 +130,7 @@ export const fetchCollection = async (
   const payload = await getPayload({ config })
   const data = await payload.find({
     collection,
-    depth: 1,
+    depth: 2,
     limit: 300,
     sort,
   })
