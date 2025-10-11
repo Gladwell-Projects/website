@@ -65,7 +65,7 @@ export default buildConfig({
     },
   },
   email: resendAdapter({
-    defaultFromAddress: 'webmaster@gladwellprojects.com',
+    defaultFromAddress: 'noreply@notifs.gladwellprojects.com',
     defaultFromName: 'Gladwell Projects',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
