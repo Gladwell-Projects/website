@@ -154,11 +154,11 @@
   --text-sm--line-height: --spacing(4);
   --text-base--line-height: 1.6rem;
   --text-lg--line-height: --spacing(4);
-  --text-xl--line-height: --spacing(4);
+  --text-xl--line-height: --spacing(6);
   --text-2xl--line-height: --spacing(6);
-  --text-3xl--line-height: --spacing(6);
-  --text-4xl--line-height: --spacing(8);
-  --text-5xl--line-height: --spacing(8);
+  --text-3xl--line-height: --spacing(8);
+  --text-4xl--line-height: --spacing(10);
+  --text-5xl--line-height: --spacing(10);
   --text-6xl--line-height: 1;
   --text-7xl--line-height: 1;
   --text-8xl--line-height: 1;
@@ -181,20 +181,37 @@
 
   --spacing: calc(var(--text-base--line-height) / 4);
 
-  --theme-transition: color 300ms ease, background 300ms ease, fill 300ms ease;
+  --theme-transition:
+    color var(--default-transition-duration)
+      var(--default-transition-timing-function),
+    background var(--default-transition-duration)
+      var(--default-transition-timing-function),
+    fill var(--default-transition-duration)
+      var(--default-transition-timing-function);
+  --default-transition-timing-function: ease-out;
+  --default-transition-duration: 300ms;
 }
 
 :root {
   --nav-height: calc(3 * var(--text-base--line-height) + --spacing(8));
 }
 
-html.baseline {
-  background-image: linear-gradient(to top, red, red 1px, white 1px, white);
+.baseline {
+  background-image: linear-gradient(
+    to top,
+    red,
+    red 1px,
+    transparent 1px,
+    transparent
+  );
   background-position: 0 0;
   background-size: 100vw var(--text-base--line-height);
   background-repeat: repeat;
 
   background-attachment: local;
+  width: 100vw;
+  height: 100%;
+  content: "";
 }
 
 @layer base {
@@ -227,6 +244,7 @@ html.baseline {
     --theme-bg: var(--color-white);
     --theme-highlight: var(--color-glow-300);
     --theme-shadow: var(--color-midnight-400);
+    --theme-accent: var(--color-glow);
   }
   .theme-blue {
     --theme-text: var(--color-white);
@@ -235,6 +253,7 @@ html.baseline {
     --theme-link-visited: var(--color-blue-100);
     --theme-highlight: var(--color-blue-400);
     --theme-shadow: var(--color-blue-800);
+    --theme-accent: var(--color-blue-300);
   }
   .theme-cli {
     --theme-text: var(--color-cli);
@@ -243,6 +262,7 @@ html.baseline {
     --theme-link-visited: var(--color-cli-200);
     --theme-highlight: --alpha(var(--color-cli-900) / 50%);
     --theme-shadow: var(--color-cli-900);
+    --theme-accent: var(--color-cli-900);
   }
   .theme-web3 {
     --theme-text: var(--color-white);
@@ -251,6 +271,7 @@ html.baseline {
     --theme-link-visited: var(--color-white);
     --theme-highlight: var(--color-web3-300);
     --theme-shadow: var(--color-web3-700);
+    --theme-accent: var(--color-web3-200);
   }
   .theme-glow {
     --theme-text: var(--color-blue);
@@ -259,6 +280,7 @@ html.baseline {
     --theme-link-visited: var(--color-web3);
     --theme-highlight: var(--color-glow-400);
     --theme-shadow: var(--color-glow-400);
+    --theme-accent: var(--color-glow-300);
   }
 
   h1,
@@ -328,7 +350,7 @@ html.baseline {
     bottom: 0;
     left: 0;
     align-items: start;
-    z-index: 999;
+    z-index: 9999;
     backdrop-filter: blur(1px);
     box-sizing: border-box;
     padding-top: --spacing(8);
@@ -349,6 +371,17 @@ html.baseline {
   .no-link-underline {
     a {
       text-decoration: none;
+    }
+  }
+
+  .footer {
+    a {
+      color: var(--theme-text);
+      text-decoration: none;
+
+      &:visited {
+        color: var(--theme-text);
+      }
     }
   }
 
