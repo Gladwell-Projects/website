@@ -128,6 +128,7 @@ export const fetchCollection = async (
   sort?: Sort
 ): Promise<Partial<Artist | Exhibition | Event | Press | null>[]> => {
   const payload = await getPayload({ config })
+
   const data = await payload.find({
     collection,
     depth: 2,

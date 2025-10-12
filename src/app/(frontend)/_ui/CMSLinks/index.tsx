@@ -11,13 +11,7 @@ import Link from 'next/link'
 
 export type LinkType = 'custom' | 'reference' | 'upload' | null
 export type Reference = {
-  relationTo:
-    | 'pages'
-    | 'artists'
-    | 'exhibitions'
-    | 'press'
-    | 'viewingRooms'
-    | 'events'
+  relationTo: 'pages' | 'artists' | 'exhibitions' | 'press' | 'viewingRooms' | 'events'
   value: Page | Artist | Exhibition | Press | ViewingRoom | Event
 }
 
@@ -31,9 +25,7 @@ export type CMSLinkType = {
   label?: null | string
   mobileFullWidth?: boolean
   newTab?: boolean | null
-  onClick?: (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
-  ) => void
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void
   onMouseEnter?: () => void
   onMouseLeave?: () => void
   reference?: Reference | null
@@ -59,11 +51,7 @@ const generateHref = (args: GenerateSlugType): string => {
     return upload.url
   }
 
-  if (
-    type === 'reference' &&
-    reference?.value &&
-    typeof reference.value !== 'string'
-  ) {
+  if (type === 'reference' && reference?.value && typeof reference.value !== 'string') {
     if (reference.relationTo === 'pages') {
       const value = reference.value as Page
       const breadcrumbs = value?.breadcrumbs
@@ -136,9 +124,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   }
 
   if (!appearance) {
-    const hrefIsLocal = ['tel:', 'mailto:', '/'].some((prefix) =>
-      href.startsWith(prefix)
-    )
+    const hrefIsLocal = ['tel:', 'mailto:', '/'].some((prefix) => href.startsWith(prefix))
 
     if (!hrefIsLocal && href !== '#') {
       try {
@@ -153,9 +139,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
       }
     }
 
-    const newTabProps = newTab
-      ? { rel: 'noopener noreferrer', target: '_blank' }
-      : {}
+    const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
     if (href.indexOf('/') === 0) {
       return (

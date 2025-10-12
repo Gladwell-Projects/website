@@ -1,9 +1,9 @@
 import React from 'react'
 import { currentThemeFromNav, fetchCollection } from '../../_data'
 import Link from 'next/link'
-import ThemeSwitch from '../../_components/ThemeSwitch'
-import Headline from '../../_components/Headline'
-import SubGrid from '../../_components/pageGrid'
+import ThemeSwitch from '../../_ui/ThemeSwitch'
+import Headline from '../../_ui/Headline'
+import SubGrid from '../../_ui/pageGrid'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 
@@ -25,9 +25,7 @@ const ArtistsPage: React.FC = async () => {
         {artistList.map((artist) => {
           return (
             <li key={artist.id} className="col-span-4 py-1.5 text-xl">
-              <Link href={{ pathname: `/artists/${artist.slug}` }}>
-                {artist.title}
-              </Link>
+              <Link href={{ pathname: `/artists/${artist.slug}` }}>{artist.title}</Link>
             </li>
           )
         })}

@@ -3,7 +3,7 @@
 import { useContext, useEffect } from 'react'
 import ThemeContext from '../../_contexts/ThemeContext'
 
-const ThemeSwitch = (props: { templateTheme?: string }) => {
+const ThemeSwitch: React.FC = (props: { templateTheme?: string }) => {
   const [theme, setTheme] = useContext(ThemeContext)
 
   const { templateTheme } = props
@@ -16,7 +16,7 @@ const ThemeSwitch = (props: { templateTheme?: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <></>
+  return null
 }
 
 export default ThemeSwitch

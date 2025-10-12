@@ -12,7 +12,6 @@ import {
   Event,
 } from '@/payload-types'
 import { usePathname } from 'next/navigation'
-import { CalendarContext } from '../../_contexts/CalendarOpen'
 
 type MenuType = {
   label: string
@@ -38,16 +37,10 @@ type MenuType = {
 
 const NavBar: React.FC<{ data: MenuType | null }> = ({ data }) => {
   const [theme, setTheme] = useContext(ThemeContext)
-  const [calOpen, setCalOpen] = useContext(CalendarContext)
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  // @ts-expect-error event
-  const handleClick = (event) => {
-    if (event.target.innerText === 'Events') {
-      event.preventDefault()
-      setCalOpen(!calOpen)
-    }
+  const handleClick = () => {
     setTheme(theme)
   }
 
