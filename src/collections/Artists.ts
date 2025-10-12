@@ -11,14 +11,7 @@ export const Artists: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
-    defaultColumns: [
-      'id',
-      'title',
-      'profileImage',
-      'nationality',
-      'birthYear',
-      'deathYear',
-    ],
+    defaultColumns: ['title', 'profileImage', 'nationality', 'birthYear', 'deathYear'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -59,7 +52,7 @@ export const Artists: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeValidate: [
+        beforeChange: [
           ({ data }) => {
             if (data) {
               return `${data.firstName}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName}${data.suffix ? `, ${data.suffix}` : ''}`

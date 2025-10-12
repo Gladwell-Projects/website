@@ -39,6 +39,7 @@ export const Exhibitions: CollectionConfig = {
       name: 'startDate',
       type: 'date',
       required: true,
+      timezone: true,
       admin: {
         position: 'sidebar',
       },
@@ -46,6 +47,7 @@ export const Exhibitions: CollectionConfig = {
     {
       name: 'endDate',
       type: 'date',
+      timezone: true,
       required: true,
       admin: {
         position: 'sidebar',
