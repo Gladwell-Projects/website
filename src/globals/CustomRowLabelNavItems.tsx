@@ -3,9 +3,7 @@ import type { PayloadClientReactComponent, RowLabelComponent } from 'payload'
 
 import { useRowLabel } from '@payloadcms/ui'
 
-const CustomRowLabelNavItems: PayloadClientReactComponent<
-  RowLabelComponent
-> = () => {
+const CustomRowLabelNavItems: PayloadClientReactComponent<RowLabelComponent> = () => {
   const { data } = useRowLabel<any>()
 
   if (data.style === 'default') {

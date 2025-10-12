@@ -28,7 +28,7 @@ export const Artists: CollectionConfig = {
       }),
   },
   access: {
-    read: anyone,
+    read: published,
     readVersions: adminsAndEditors,
     create: adminsAndEditors,
     update: adminsAndEditors,

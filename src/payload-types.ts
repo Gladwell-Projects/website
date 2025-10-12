@@ -1168,6 +1168,91 @@ export interface Branding {
  */
 export interface Footer {
   id: number;
+  tagline?: string | null;
+  siteDescription?: string | null;
+  showCopyright?: boolean | null;
+  /**
+   * Add links for navigating your website from the footer here.
+   */
+  linksPrimary?:
+    | {
+        label: string;
+        link?: {
+          type?: ('reference' | 'custom' | 'upload') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'artists';
+                value: number | Artist;
+              } | null)
+            | ({
+                relationTo: 'exhibitions';
+                value: number | Exhibition;
+              } | null)
+            | ({
+                relationTo: 'press';
+                value: number | Press;
+              } | null)
+            | ({
+                relationTo: 'events';
+                value: number | Event;
+              } | null)
+            | ({
+                relationTo: 'viewingRooms';
+                value: number | ViewingRoom;
+              } | null);
+          url?: string | null;
+          upload?: (number | null) | Media;
+          customId?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add secondary links here, e.g. Privacy Policy, Terms of Service, Sales Agreements, etc.
+   */
+  linksSecondary?:
+    | {
+        label: string;
+        link?: {
+          type?: ('reference' | 'custom' | 'upload') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'artists';
+                value: number | Artist;
+              } | null)
+            | ({
+                relationTo: 'exhibitions';
+                value: number | Exhibition;
+              } | null)
+            | ({
+                relationTo: 'press';
+                value: number | Press;
+              } | null)
+            | ({
+                relationTo: 'events';
+                value: number | Event;
+              } | null)
+            | ({
+                relationTo: 'viewingRooms';
+                value: number | ViewingRoom;
+              } | null);
+          url?: string | null;
+          upload?: (number | null) | Media;
+          customId?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1242,6 +1327,41 @@ export interface BrandingSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  tagline?: T;
+  siteDescription?: T;
+  showCopyright?: T;
+  linksPrimary?:
+    | T
+    | {
+        label?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              upload?: T;
+              customId?: T;
+            };
+        id?: T;
+      };
+  linksSecondary?:
+    | T
+    | {
+        label?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              upload?: T;
+              customId?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

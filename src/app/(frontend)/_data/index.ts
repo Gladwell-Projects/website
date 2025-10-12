@@ -10,12 +10,13 @@ import {
   Page,
   Press,
   Event,
+  Footer,
 } from '@/payload-types'
 
 export const payloadConfig = await config
 
 export const fetchGlobals = async (): Promise<{
-  // footer: Footer
+  footer: Footer
   mainMenu: MainMenu
   // topBar: TopBar
   branding: Branding
@@ -30,16 +31,16 @@ export const fetchGlobals = async (): Promise<{
     slug: 'branding',
     depth: 2,
   })
-  // const footer = await payload.findGlobal({
-  //   slug: 'footer',
-  //   depth: 1,
-  // })
+  const footer = await payload.findGlobal({
+    slug: 'footer',
+    depth: 1,
+  })
   // const topBar = await payload.findGlobal({
   //   slug: 'topBar',
   //   depth: 1,
   // })
   return {
-    // footer,
+    footer,
     mainMenu,
     branding,
     // topBar,
