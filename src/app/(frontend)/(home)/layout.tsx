@@ -1,6 +1,5 @@
 import React from 'react'
-import Header from '../_components/Header'
-import CalendarPopup from '../_components/CalendarPopUp'
+import Header from '../_ui/Header'
 
 const App = (props: { children: React.ReactNode }) => {
   const { children } = props
@@ -9,7 +8,6 @@ const App = (props: { children: React.ReactNode }) => {
     <main className="grid min-h-dvh grid-cols-12 gap-3 p-2">
       <Header navTemplate="spread" />
       {children}
-      <CalendarPopup />
     </main>
   )
 }

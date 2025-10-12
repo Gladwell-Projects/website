@@ -1,6 +1,5 @@
 import React from 'react'
 import { ThemeProvider } from './_contexts/ThemeContext'
-import { CalendarProvider } from './_contexts/CalendarOpen'
 import localFont from 'next/font/local'
 import { IBM_Plex_Mono } from 'next/font/google'
 
@@ -49,13 +48,17 @@ export const sans = localFont({
   variable: '--theme-sans',
 })
 
-export default function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+export default function RootLayout(props: {
+  children: React.ReactNode
+  events: React.ReactNode
+}) {
+  const { children, events } = props
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
-      <body className={`min-h-dvh`}>
-        <CalendarProvider>{children}</CalendarProvider>
+      <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+        {children}
+        {events}
       </body>
     </ThemeProvider>
   )
