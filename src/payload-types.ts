@@ -104,10 +104,12 @@ export interface Config {
   globals: {
     'main-menu': MainMenu;
     branding: Branding;
+    footer: Footer;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     branding: BrandingSelect<false> | BrandingSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user:
@@ -254,7 +256,9 @@ export interface Artist {
 export interface Exhibition {
   id: number;
   startDate: string;
+  startDate_tz: SupportedTimezones;
   endDate: string;
+  endDate_tz: SupportedTimezones;
   location?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -782,7 +786,9 @@ export interface ArtistsSelect<T extends boolean = true> {
  */
 export interface ExhibitionsSelect<T extends boolean = true> {
   startDate?: T;
+  startDate_tz?: T;
   endDate?: T;
+  endDate_tz?: T;
   location?: T;
   slug?: T;
   slugLock?: T;
@@ -1158,6 +1164,15 @@ export interface Branding {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
 export interface MainMenuSelect<T extends boolean = true> {
@@ -1218,6 +1233,15 @@ export interface BrandingSelect<T extends boolean = true> {
         at?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

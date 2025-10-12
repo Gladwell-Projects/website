@@ -20,6 +20,7 @@ import { Clients } from './collections/Clients'
 import BrandSettings from './globals/Branding'
 import { ViewingRooms } from './collections/ViewingRooms'
 import plugins from './plugins'
+import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,6 +34,9 @@ const cloudflare =
 
 export default buildConfig({
   admin: {
+    timezones: {
+      defaultTimezone: 'America/New_York',
+    },
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
@@ -69,7 +73,7 @@ export default buildConfig({
     defaultFromName: 'Gladwell Projects',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
-  globals: [MainMenu, BrandSettings],
+  globals: [MainMenu, BrandSettings, Footer],
   collections: [
     Media,
     Artists,
