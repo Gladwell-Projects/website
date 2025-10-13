@@ -70,8 +70,9 @@ export const Media: CollectionConfig = {
             },
             {
               name: 'artist',
-              type: 'relationship',
-              relationTo: 'artists',
+              type: 'join',
+              collection: 'artists',
+              on: 'surveyArtworks',
             },
           ],
         },

@@ -11,7 +11,7 @@ export const Artists: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'profileImage', 'nationality', 'birthYear', 'deathYear'],
+    defaultColumns: ['title', 'isRepresented', 'nationality', 'birthYear', 'deathYear'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -35,11 +35,7 @@ export const Artists: CollectionConfig = {
     delete: adminsAndEditors,
   },
   versions: {
-    drafts: {
-      autosave: {
-        interval: 200, // We set this interval for optimal live preview
-      },
-    },
+    drafts: false,
   },
   fields: [
     {
@@ -52,10 +48,10 @@ export const Artists: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeChange: [
+        beforeValidate: [
           ({ data }) => {
             if (data) {
-              return `${data.firstName}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName}${data.suffix ? `, ${data.suffix}` : ''}`
+              return `${data.firstName ? data.firstName : 'unknown'}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? `, ${data.suffix}` : ''}`
             }
           },
         ],
@@ -63,7 +59,17 @@ export const Artists: CollectionConfig = {
     },
     ...slugField('title'),
     {
+      name: 'isRepresented',
+      type: 'checkbox',
+      label: 'Show on Artists page',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'profileImage',
+      label: 'Featured Image',
       type: 'upload',
       relationTo: 'media',
       admin: {
@@ -85,7 +91,6 @@ export const Artists: CollectionConfig = {
                 {
                   name: 'firstName',
                   type: 'text',
-                  required: true,
                   admin: {
                     width: '30%',
                   },
@@ -100,7 +105,6 @@ export const Artists: CollectionConfig = {
                 {
                   name: 'lastName',
                   type: 'text',
-                  required: true,
                   admin: {
                     width: '30%',
                   },
@@ -187,10 +191,10 @@ export const Artists: CollectionConfig = {
               name: 'surveyArtworks',
               label: 'Artworks to include in survey',
               relationTo: 'media',
+              displayPreview: true,
               hasMany: true,
               filterOptions: () => {
                 return {
-                  inSurvey: { equals: true },
                   isArt: { equals: true },
                 }
               },

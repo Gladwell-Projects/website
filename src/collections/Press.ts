@@ -78,9 +78,9 @@ export const Press: CollectionConfig = {
       },
     },
     {
-      name: 'relatedArtworks',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'relatedArtists',
+      type: 'relationship',
+      relationTo: 'artists',
       hasMany: true,
       admin: {
         position: 'sidebar',
