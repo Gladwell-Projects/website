@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import { fetcher, query } from './getEvents'
 import { Suspense } from 'react'
 import { dateToNumeric } from '../../_helpers/convertCMSDate'
+import { fetchCollection } from '../../_data'
 
 const CalendarModal = (props: {
   date: Date
@@ -19,12 +20,29 @@ const CalendarModal = (props: {
 
   const { data, isLoading, error } = useSWR(
     () => `${getClientSideURL()}/api/events${dateQuery}`,
-    fetcher,
-    { suspense: true }
+    fetcher
   )
 
   if (error) return 'sorry there was an error finding that information'
-  if (isLoading) return 'loading...'
+  if (isLoading) {
+    return (
+      <>
+        <Calendar
+          value={null}
+          onChange={null}
+          maxDetail="month"
+          minDetail="year"
+          nextLabel="→"
+          prevLabel="←"
+          next2Label={null}
+          prev2Label={null}
+          calendarType="gregory"
+          showNeighboringMonth={false}
+          activeStartDate={activeMonth}
+        />
+      </>
+    )
+  }
 
   const handleActiveStartDateChange = ({ view, activeStartDate }: OnArgs) => {
     setActiveMonth(activeStartDate)
@@ -62,39 +80,23 @@ const CalendarModal = (props: {
   return (
     <>
       {error && !isLoading && 'there was an error loading the calendar dates...'}
-      <Suspense
-        fallback={
-          <Calendar
-            maxDetail="month"
-            minDetail="year"
-            nextLabel="→"
-            prevLabel="←"
-            next2Label={null}
-            prev2Label={null}
-            calendarType="gregory"
-            showNeighboringMonth={false}
-            activeStartDate={activeMonth}
-          />
-        }
-      >
-        {!isLoading && !error && (
-          <Calendar
-            value={date}
-            onChange={handleCalendarChange}
-            maxDetail="month"
-            minDetail="year"
-            nextLabel="→"
-            prevLabel="←"
-            next2Label={null}
-            prev2Label={null}
-            calendarType="gregory"
-            tileClassName={activeDates}
-            showNeighboringMonth={false}
-            activeStartDate={activeMonth}
-            onActiveStartDateChange={handleActiveStartDateChange}
-          />
-        )}
-      </Suspense>
+      {!isLoading && !error && (
+        <Calendar
+          value={date}
+          onChange={handleCalendarChange}
+          maxDetail="month"
+          minDetail="year"
+          nextLabel="→"
+          prevLabel="←"
+          next2Label={null}
+          prev2Label={null}
+          calendarType="gregory"
+          tileClassName={activeDates}
+          showNeighboringMonth={false}
+          activeStartDate={activeMonth}
+          onActiveStartDateChange={handleActiveStartDateChange}
+        />
+      )}
     </>
   )
 }
