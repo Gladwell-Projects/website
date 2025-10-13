@@ -19,7 +19,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
           {children}
           <br />
           {footer.showCopyright && (
-            <p>
+            <p className="m-0">
               © Copyright{' '}
               {new Date().toLocaleDateString('en-US', {
                 timeZone: 'America/New_York',
@@ -31,7 +31,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
         </div>
       </div>
       <div className="col-span-full grid grid-cols-subgrid md:col-span-6">
-        <div className="col-span-full columns-2 gap-3">
+        <div className="col-span-full md:columns-2 md:gap-3">
           {footer.linksPrimary.map((a) => {
             return (
               // @ts-expect-error number isn't expected here.
