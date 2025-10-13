@@ -35,7 +35,10 @@ type MenuType = {
   }
 }[]
 
-const NavBar: React.FC<{ data: MenuType | null }> = ({ data }) => {
+const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
+  data,
+  className,
+}) => {
   const [theme, setTheme] = useContext(ThemeContext)
   const pathname = usePathname()
   const isHome = pathname === '/'
@@ -45,7 +48,9 @@ const NavBar: React.FC<{ data: MenuType | null }> = ({ data }) => {
   }
 
   return (
-    <div className="grid h-auto grid-flow-row auto-rows-auto md:auto-cols-fr md:grid-flow-col md:grid-rows-[var(--text-base--line-height)] md:p-0 md:text-center">
+    <div
+      className={`grid h-auto grid-flow-row auto-rows-auto items-center md:auto-cols-fr md:grid-flow-col md:grid-rows-[var(--text-base--line-height)] md:p-0 md:text-center ${className}`}
+    >
       {data.map(({ link, label, theme }, i) => {
         const { reference } = link
 
