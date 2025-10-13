@@ -120,7 +120,7 @@
   --font-serif: var(--theme-serif);
   --font-mono: var(--theme-mono);
 
-  --font-scale: 1.25;
+  --font-scale: 1.2;
 
   --text-base: 1rem;
   --text-xs: calc(var(--text-sm) / var(--font-scale));
@@ -151,14 +151,14 @@
    */
 
   --text-xs--line-height: --spacing(2);
-  --text-sm--line-height: --spacing(4);
-  --text-base--line-height: 1.6rem;
+  --text-sm--line-height: 2rem;
+  --text-base--line-height: 2rem;
   --text-lg--line-height: --spacing(4);
-  --text-xl--line-height: --spacing(6);
-  --text-2xl--line-height: --spacing(6);
-  --text-3xl--line-height: --spacing(8);
-  --text-4xl--line-height: --spacing(10);
-  --text-5xl--line-height: --spacing(10);
+  --text-xl--line-height: --spacing(4);
+  --text-2xl--line-height: --spacing(4);
+  --text-3xl--line-height: --spacing(4);
+  --text-4xl--line-height: --spacing(6);
+  --text-5xl--line-height: --spacing(6);
   --text-6xl--line-height: 1;
   --text-7xl--line-height: 1;
   --text-8xl--line-height: 1;
@@ -179,6 +179,7 @@
 
   --font-size-base-px: 21px;
 
+  --default-font-family: var(--font-sans);
   --spacing: calc(var(--text-base--line-height) / 4);
 
   --theme-transition:
@@ -190,10 +191,7 @@
       var(--default-transition-timing-function);
   --default-transition-timing-function: ease-out;
   --default-transition-duration: 300ms;
-}
-
-:root {
-  --nav-height: calc(3 * var(--text-base--line-height) + --spacing(8));
+  --nav-height: --spacing(12);
 }
 
 .baseline {
@@ -232,10 +230,27 @@
       "ss15" 1;
   }
 
-  @media screen and (width >= var(--breakpoint-md)) {
-    html {
-      --font-scale: 1.2;
-    }
+  html {
+    @apply md:[--font-scale:1.33333333333];
+    @apply md:[--nav-height:--spacing(18)];
+    @apply md:[--text-xs--line-height:--spacing(3)];
+    @apply md:[--text-sm--line-height:1.5rem];
+    @apply md:[--text-base--line-height:1.5rem];
+    @apply md:[--text-lg--line-height:--spacing(6)];
+    @apply md:[--text-xl--line-height:--spacing(6)];
+    @apply md:[--text-2xl--line-height:--spacing(6)];
+    @apply md:[--text-3xl--line-height:--spacing(8)];
+    @apply md:[--text-4xl--line-height:--spacing(10)];
+    @apply md:[--text-5xl--line-height:--spacing(10)];
+    @apply md:[--text-6xl--line-height:1];
+    @apply md:[--text-7xl--line-height:1];
+    @apply md:[--text-8xl--line-height:1];
+    @apply md:[--text-9xl--line-height:1];
+  }
+
+  body > * {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
   }
 
   /* theme settings */
@@ -351,7 +366,7 @@
     left: 0;
     align-items: start;
     z-index: 9999;
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(3px);
     box-sizing: border-box;
     padding-top: --spacing(8);
     padding-bottom: --spacing(8);
