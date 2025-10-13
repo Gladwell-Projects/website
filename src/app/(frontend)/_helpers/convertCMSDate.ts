@@ -35,7 +35,7 @@ export const localeOptionsMonthYear = (
 ): Intl.DateTimeFormatOptions => {
   return {
     timeZone: timeZone || 'America/New_York',
-    month: 'numeric',
+    month: 'long',
     year: 'numeric',
   }
 }

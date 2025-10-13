@@ -12,7 +12,7 @@ const CalendarPopup = ({ hasClose }: { hasClose: boolean }) => {
   return (
     <>
       <ModalItem
-        className={`top-2 col-span-full h-auto place-self-start md:sticky md:col-span-6 md:col-start-1 lg:col-span-5 lg:row-start-1 xl:col-span-4`}
+        className={`top-2 col-span-full h-auto place-self-start p-1 md:sticky md:col-span-6 md:col-start-1 md:p-2 md:text-base lg:col-span-5 lg:row-start-1 xl:col-span-4`}
       >
         <CalendarModal
           date={date}
@@ -22,7 +22,7 @@ const CalendarPopup = ({ hasClose }: { hasClose: boolean }) => {
         />
       </ModalItem>
       <ModalItem
-        className={`event-list modal--item col-span-full w-full place-self-start p-0 ${hasClose ? 'mt-2 md:col-span-6 lg:col-span-6 xl:col-span-7' : 'md:col-span-6 lg:col-span-7 xl:col-span-8'} lg:row-start-1`}
+        className={`event-list modal--item col-span-full w-full place-self-start p-0 md:p-2 ${hasClose ? 'mt-2 md:col-span-6 lg:col-span-6 xl:col-span-7' : 'md:col-span-6 lg:col-span-7 xl:col-span-8'} lg:row-start-1`}
       >
         <CalendarEventList
           date={date}
