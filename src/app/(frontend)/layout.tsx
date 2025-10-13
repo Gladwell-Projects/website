@@ -5,14 +5,14 @@ import { IBM_Plex_Mono } from 'next/font/google'
 
 import './main.css'
 
-export const mono = IBM_Plex_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ['latin'],
   style: ['normal', 'italic'],
   weight: ['300', '400', '500', '700'],
   variable: '--theme-mono',
 })
 
-export const sans = localFont({
+const sans = localFont({
   src: [
     {
       path: '../../../public/fonts/ABCOracle-Bold.woff2',
@@ -51,14 +51,16 @@ export const sans = localFont({
 export default function RootLayout(props: {
   children: React.ReactNode
   events: React.ReactNode
+  newsletter: React.ReactNode
 }) {
-  const { children, events } = props
+  const { children, events, newsletter } = props
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
       <body className={`flex min-h-dvh flex-col flex-nowrap`}>
         {children}
         {events}
+        {newsletter}
       </body>
     </ThemeProvider>
   )
