@@ -7,7 +7,7 @@ const Modal = (props: { children: React.ReactNode }) => {
 
   return (
     <>
-      <div className="modal-wrapper grid h-dvh grid-cols-12 gap-3 p-0 lg:p-6">
+      <div className="modal-wrapper h-vh inset-0 grid grid-cols-12 grid-rows-[--spacing(6)_1fr] gap-3 p-2 pb-6 lg:grid-rows-1 lg:p-6">
         <button
           onClick={() => {
             router.back()
@@ -24,7 +24,7 @@ const Modal = (props: { children: React.ReactNode }) => {
 
 export default Modal
 
-export const ModalItem = (props: { children: React.ReactNode; className: string }) => {
+export const ModalItem = (props: { children?: React.ReactNode; className?: string }) => {
   const { children, className } = props
   return <div className={`modal--item ${className}`}>{children}</div>
 }
