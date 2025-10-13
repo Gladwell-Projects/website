@@ -82,7 +82,11 @@ export interface Config {
     'payload-migrations': PayloadMigration;
     'payload-query-presets': PayloadQueryPreset;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    media: {
+      artist: 'artists';
+    };
+  };
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
@@ -185,7 +189,11 @@ export interface Media {
     [k: string]: unknown;
   } | null;
   artworkId?: string | null;
-  artist?: (number | null) | Artist;
+  artist?: {
+    docs?: (number | Artist)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -207,10 +215,11 @@ export interface Artist {
   title?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  isRepresented?: boolean | null;
   profileImage?: (number | null) | Media;
-  firstName: string;
+  firstName?: string | null;
   middleName?: string | null;
-  lastName: string;
+  lastName?: string | null;
   suffix?: string | null;
   nationality?: string | null;
   birthYear?: number | null;
@@ -247,7 +256,6 @@ export interface Artist {
   };
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -350,7 +358,7 @@ export interface Press {
     [k: string]: unknown;
   };
   featuredImage?: (number | null) | Media;
-  relatedArtworks?: (number | Media)[] | null;
+  relatedArtists?: (number | Artist)[] | null;
   relatedExhibitions?: (number | Exhibition)[] | null;
   links?:
     | {
@@ -751,6 +759,7 @@ export interface ArtistsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
+  isRepresented?: T;
   profileImage?: T;
   firstName?: T;
   middleName?: T;
@@ -778,7 +787,6 @@ export interface ArtistsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -832,7 +840,7 @@ export interface PressSelect<T extends boolean = true> {
   date?: T;
   content?: T;
   featuredImage?: T;
-  relatedArtworks?: T;
+  relatedArtists?: T;
   relatedExhibitions?: T;
   links?:
     | T
