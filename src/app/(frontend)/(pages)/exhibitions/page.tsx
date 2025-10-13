@@ -62,14 +62,14 @@ const Exhibitions = async () => {
 
       {upcoming.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2 className="col-span-full">Upcoming</h2>
+          <h3 className="col-span-full">Upcoming</h3>
           <ExhibitionsList exhibitions={upcoming} />
         </div>
       )}
 
       {past.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2>Archive</h2>
+          <h3>Archive</h3>
           <ExhibitionsList exhibitions={past} />
         </div>
       )}

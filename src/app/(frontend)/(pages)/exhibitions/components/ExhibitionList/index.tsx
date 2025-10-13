@@ -9,7 +9,7 @@ const ExhibitionsList = (props: {
   return (
     <div className="exhibitions col-span-full grid grid-cols-subgrid">
       {children && children}
-      <ul className="col-span-full grid w-full grid-cols-subgrid py-2">
+      <ul className="col-span-full mb-6 grid w-full grid-cols-subgrid py-2">
         {exhibitions.map((e) => (
           <ExhibitionItem exhibition={e} key={e.id} />
         ))}

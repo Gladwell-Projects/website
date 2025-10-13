@@ -38,8 +38,8 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
       <ThemeSwitch templateTheme={'default'} />
       {draft && <LivePreviewListener />}
       <Headline title={page.title}>
-        <div className="col-span-7">
-          <time dateTime={`${startShort}/${endShort}`} className="text-bold text-xl">
+        <div className="col-span-full md:col-span-7">
+          <time dateTime={`${startShort}/${endShort}`} className="text-xl font-bold">
             {start} — {end}
           </time>
           <address className="text-xl not-italic">{page.location}</address>
@@ -50,7 +50,7 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
             width={cover.width}
             height={cover.height}
             alt={cover.alt}
-            className="col-span-5 -col-start-6 h-auto w-full"
+            className="col-span-full my-2 h-auto w-full md:col-span-5 md:-col-start-6"
           />
         )}
       </Headline>
