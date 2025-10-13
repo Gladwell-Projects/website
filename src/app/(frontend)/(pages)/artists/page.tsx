@@ -6,12 +6,13 @@ import Headline from '../../_ui/Headline'
 import SubGrid from '../../_ui/pageGrid'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
+import ArtistList from './components/ArtistList'
 
 const ArtistsPage: React.FC = async () => {
   const { isEnabled: draft } = await draftMode()
   const artistList = draft
-    ? await fetchCollection('artists', 'lastName')
-    : await unstable_cache(fetchCollection, ['artists'])('artists', 'lastName')
+    ? await fetchCollection('artists', 'firstName')
+    : await unstable_cache(fetchCollection, ['artists'])('artists', 'firstName')
 
   const slug = '/artists'
 
@@ -21,15 +22,7 @@ const ArtistsPage: React.FC = async () => {
     <SubGrid>
       <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Aritsts" />
-      <ul className="no-link-underline col-span-full grid grid-cols-subgrid">
-        {artistList.map((artist) => {
-          return (
-            <li key={artist.id} className="col-span-4 py-1.5 text-xl">
-              <Link href={{ pathname: `/artists/${artist.slug}` }}>{artist.title}</Link>
-            </li>
-          )
-        })}
-      </ul>
+      <ArtistList data={artistList} />
     </SubGrid>
   )
 }

@@ -234,8 +234,8 @@
     @apply md:[--font-scale:1.33333333333];
     @apply md:[--nav-height:--spacing(18)];
     @apply md:[--text-xs--line-height:--spacing(3)];
-    @apply md:[--text-sm--line-height:1.5rem];
-    @apply md:[--text-base--line-height:1.5rem];
+    @apply md:[--text-sm--line-height:1.55rem];
+    @apply md:[--text-base--line-height:1.55rem];
     @apply md:[--text-lg--line-height:--spacing(6)];
     @apply md:[--text-xl--line-height:--spacing(6)];
     @apply md:[--text-2xl--line-height:--spacing(6)];
@@ -273,8 +273,8 @@
   .theme-cli {
     --theme-text: var(--color-cli);
     --theme-bg: var(--color-black);
-    --theme-link: var(--color-cli-200);
-    --theme-link-visited: var(--color-cli-200);
+    --theme-link: var(--color-cli);
+    --theme-link-visited: var(--color-cli-700);
     --theme-highlight: --alpha(var(--color-cli-900) / 50%);
     --theme-shadow: var(--color-cli-900);
     --theme-accent: var(--color-cli-900);
