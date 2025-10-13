@@ -1,7 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import { NextConfig } from 'next'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   // Your Next.js config here
   webpack: (webpackConfig: any) => {
     webpackConfig.resolve.extensionAlias = {
@@ -15,6 +15,10 @@ const nextConfig = {
     })
 
     return webpackConfig
+  },
+  images: {
+    loader: 'custom',
+    loaderFile: './cf-images.ts',
   },
 }
 

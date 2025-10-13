@@ -3,13 +3,14 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { LivePreviewListener } from '@/components/frontend/LivePreviewListener'
 import { notFound } from 'next/navigation'
 import ThemeSwitch from '@/app/(frontend)/_ui/ThemeSwitch'
-import { Artist } from '@/payload-types'
+import { Artist, Media } from '@/payload-types'
 import { draftMode } from 'next/headers'
 import Headline from '@/app/(frontend)/_ui/Headline'
 import Content from '@/app/(frontend)/_ui/PageContent'
 import SubGrid from '@/app/(frontend)/_ui/pageGrid'
 import { fetchDocument } from '@/app/(frontend)/_data'
 import { unstable_cache } from 'next/cache'
+import Image from 'next/image'
 
 const getArtist = async (slug: string, draft?: boolean) =>
   draft
@@ -30,6 +31,8 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
     notFound()
   }
 
+  const cover = page.profileImage as Media
+
   return (
     <SubGrid>
       <ThemeSwitch templateTheme="default" />
@@ -44,6 +47,14 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {(page.birthYear || page.deathYear) && page.nationality && ','}{' '}
           {page.nationality && page.nationality}
         </h4>
+        {cover && (
+          <Image
+            src={cover.url}
+            width={cover.width}
+            height={cover.height}
+            alt={cover.alt}
+          />
+        )}
       </Headline>
       <Content>
         <RichText data={page.content} />
