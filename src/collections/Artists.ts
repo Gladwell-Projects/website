@@ -35,7 +35,7 @@ export const Artists: CollectionConfig = {
     delete: adminsAndEditors,
   },
   versions: {
-    drafts: false,
+    drafts: true,
   },
   fields: [
     {
