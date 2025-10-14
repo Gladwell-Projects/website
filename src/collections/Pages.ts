@@ -3,6 +3,7 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { themePicker } from '@/fields/theme'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -33,7 +34,7 @@ export const Pages: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 200,
       },
     },
   },
@@ -51,10 +52,7 @@ export const Pages: CollectionConfig = {
               required: true,
             },
             ...slugField('title'),
-            {
-              name: 'theme',
-              type: 'text',
-            },
+            themePicker(),
             {
               name: 'content',
               type: 'richText',

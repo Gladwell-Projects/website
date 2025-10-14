@@ -1,3 +1,42 @@
-.frontend-dummy-element {
-  outline: 1px solid red;
+.color-field {
+  ul {
+    width: 100%;
+    text-align: center;
+    li {
+      display: inline-block;
+      appearance: none;
+      opacity: 0.3;
+      margin: 0.5em;
+      outline: none;
+      box-shadow: none;
+      border: none;
+      background-color: transparent;
+      padding: 0;
+      list-style-type: none;
+      &.has-selected,
+      &:hover {
+        opacity: 1;
+      }
+      button {
+        font-weight: bold;
+        line-height: 3rem;
+        &.chip {
+          vertical-align: middle;
+          appearance: none;
+          cursor: pointer;
+          margin: 0;
+          box-shadow: 0 3px 5px color-mix(in oklab, black, transparent 75%);
+          border: 2px solid white;
+          border-radius: 99999em;
+          padding: 0;
+          width: 3rem;
+          height: 3rem;
+          text-align: center;
+          &.selected {
+            outline: 2px solid black;
+          }
+        }
+      }
+    }
+  }
 }

@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import link from '../fields/link'
 import { adminsAndEditors } from '@/collections/access/adminsAndEditors'
 import { anyone } from '@/collections/access/anyone'
+import { themePicker } from '@/fields/theme'
 
 export const MainMenu: GlobalConfig = {
   slug: 'main-menu',
@@ -32,13 +33,11 @@ export const MainMenu: GlobalConfig = {
           type: 'text',
           required: true,
         },
-        {
-          name: 'theme',
-          type: 'text',
+        themePicker({
           admin: {
             condition: (_, siblingData) => siblingData?.link.type === 'custom',
           },
-        },
+        }),
         {
           type: 'collapsible',
           fields: [
@@ -67,13 +66,11 @@ export const MainMenu: GlobalConfig = {
           type: 'text',
           required: true,
         },
-        {
-          name: 'theme',
-          type: 'text',
+        themePicker({
           admin: {
             condition: (_, siblingData) => siblingData?.link.type === 'custom',
           },
-        },
+        }),
         {
           type: 'collapsible',
           fields: [
