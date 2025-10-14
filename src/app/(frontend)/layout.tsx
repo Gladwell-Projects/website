@@ -46,6 +46,7 @@ const sans = localFont({
     },
   ],
   variable: '--theme-sans',
+  fallback: ['arial', 'helvetica', 'sans-serif'],
 })
 
 export default function RootLayout(props: {
