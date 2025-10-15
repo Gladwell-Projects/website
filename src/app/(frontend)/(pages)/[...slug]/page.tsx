@@ -10,10 +10,10 @@ import SubGrid from '../../_ui/pageGrid'
 import { LivePreviewListener } from '@/components/frontend/LivePreviewListener'
 import { unstable_cache } from 'next/cache'
 
-const getPage = async (slug: string[], draft?: boolean) =>
+const getPage = async (slug: string, draft?: boolean) =>
   draft ? fetchPage(slug) : unstable_cache(fetchPage, [`page-${slug}`])(slug)
 
-const Page = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await params
   // const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug)
