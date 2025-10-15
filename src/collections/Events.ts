@@ -2,7 +2,7 @@ import link from '@/fields/link'
 import { CollectionConfig } from 'payload'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { slugField } from '@/fields/slug'
+import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 export const Events: CollectionConfig = {
@@ -74,7 +74,7 @@ export const Events: CollectionConfig = {
       type: 'checkbox',
       admin: { position: 'sidebar' },
     },
-    ...slugField(),
+    slugField(),
     {
       name: 'featuredImage',
       type: 'upload',

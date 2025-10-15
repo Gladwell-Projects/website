@@ -11,7 +11,7 @@ import {
   dateToLong,
   dateToNumeric,
   timeOnly,
-} from '../../_helpers/convertCMSDate'
+} from '../../_utilities/convertCMSDate'
 
 const CalendarEventList = (props: {
   date: Date
@@ -32,11 +32,15 @@ const CalendarEventList = (props: {
   )
 
   if (error) return 'sorry there was an error finding that information'
+
   if (isLoading) {
     return (
       <ul>
         <li className="events-headline sticky p-1 md:p-2">
           <h6 className="text-base md:text-lg">{activeMonthString}</h6>
+        </li>
+        <li className="w-full list-none px-1 py-2 hover:bg-[var(--theme-highlight)] md:px-2">
+          Loading events...
         </li>
       </ul>
     )

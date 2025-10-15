@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 // import { CvBreak, CvHeading, CvItem } from './blocks/CVBlocks'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { slugField } from '@/fields/slug'
+import { slugField } from 'payload'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
 import { anyone } from './access/anyone'
 
@@ -57,7 +57,7 @@ export const Artists: CollectionConfig = {
         ],
       },
     },
-    ...slugField('title'),
+    slugField(),
     {
       name: 'isRepresented',
       type: 'checkbox',

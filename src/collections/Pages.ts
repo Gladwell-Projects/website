@@ -1,9 +1,12 @@
+import { slugField } from 'payload'
 import { CollectionConfig } from 'payload'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { themePicker } from '@/fields/theme'
+import { anyone } from './access/anyone'
+import { nestedDocs } from '@/fields/nested-docs'
+import { createBreadcrumbsField } from '@payloadcms/plugin-nested-docs'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -13,7 +16,7 @@ export const Pages: CollectionConfig = {
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
-          slug: data?.slug,
+          slug: data?.breadcrumbs || data?.slug,
           collection: 'pages',
           req,
         }),
@@ -32,34 +35,20 @@ export const Pages: CollectionConfig = {
     delete: adminsAndEditors,
   },
   versions: {
-    drafts: {
-      autosave: {
-        interval: 200,
-      },
-    },
+    drafts: true,
   },
   labels: { singular: 'Page', plural: 'Pages' },
   fields: [
     {
-      type: 'tabs',
-      tabs: [
-        {
-          label: 'Content',
-          fields: [
-            {
-              name: 'title',
-              type: 'text',
-              required: true,
-            },
-            ...slugField('title'),
-            themePicker(),
-            {
-              name: 'content',
-              type: 'richText',
-            },
-          ],
-        },
-      ],
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    slugField(),
+    themePicker(),
+    {
+      name: 'content',
+      type: 'richText',
     },
   ],
 }

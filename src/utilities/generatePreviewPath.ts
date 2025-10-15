@@ -20,6 +20,25 @@ export const generatePreviewPath = ({ collection, slug }: Props) => {
     return null
   }
 
+  if (Array.isArray(slug)) {
+    const segment = slug.at(-1).url
+
+    const document = segment.split('/').at(-1)
+
+    const encodedParams = new URLSearchParams({
+      slug: document,
+      collection,
+      path: `${segment}`,
+      previewSecret: process.env.PREVIEW_SECRET || '',
+    })
+
+    const url = `/next/preview?${encodedParams.toString()}`
+
+    return url
+  }
+
+  console.log(slug, collection)
+
   const encodedParams = new URLSearchParams({
     slug,
     collection,

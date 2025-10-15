@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { slugField } from '@/fields/slug'
+import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 export const Exhibitions: CollectionConfig = {
@@ -60,7 +60,7 @@ export const Exhibitions: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    ...slugField('title'),
+    slugField(),
     {
       type: 'tabs',
       tabs: [

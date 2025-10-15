@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload'
 import link from '@/fields/link'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { slugField } from '@/fields/slug'
+import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 // import { formatSlug } from '@/fields/slug/formatSlug'
 
@@ -55,7 +55,7 @@ export const Press: CollectionConfig = {
       label: 'Headline',
       required: true,
     },
-    ...slugField('title'),
+    slugField(),
     {
       name: 'date',
       type: 'date',

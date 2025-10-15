@@ -35,15 +35,10 @@ export const fetchGlobals = async (): Promise<{
     slug: 'footer',
     depth: 1,
   })
-  // const topBar = await payload.findGlobal({
-  //   slug: 'topBar',
-  //   depth: 1,
-  // })
   return {
     footer,
     mainMenu,
     branding,
-    // topBar,
   }
 }
 

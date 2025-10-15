@@ -19,7 +19,8 @@
       }
       button {
         font-weight: bold;
-        line-height: 3rem;
+        font-size: 1.5rem;
+        line-height: 1;
         &.chip {
           vertical-align: middle;
           appearance: none;
@@ -28,7 +29,6 @@
           box-shadow: 0 3px 5px color-mix(in oklab, black, transparent 75%);
           border: 2px solid white;
           border-radius: 99999em;
-          padding: 0;
           width: 3rem;
           height: 3rem;
           text-align: center;

@@ -1,4 +1,4 @@
-import { slugField } from '@/fields/slug'
+import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
 export const ViewingRooms: CollectionConfig = {
   slug: 'viewingRooms',
@@ -15,6 +15,6 @@ export const ViewingRooms: CollectionConfig = {
       type: 'richText',
       name: 'content',
     },
-    ...slugField('title'),
+    slugField(),
   ],
 }

@@ -23,7 +23,7 @@ const ThemePicker: React.FC<props> = (props) => {
               aria-label={color.theme}
               onClick={() => setValue(color.theme)}
             >
-              A
+              G
             </button>
           </li>
         ))}

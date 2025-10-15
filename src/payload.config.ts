@@ -78,11 +78,11 @@ export default buildConfig({
     Media,
     Artists,
     Exhibitions,
-    ViewingRooms,
     Press,
     Events,
     Pages,
     Users,
+    ViewingRooms,
     Clients,
   ],
   editor: lexicalEditor(),
@@ -90,7 +90,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteD1Adapter({ binding: cloudflare.env.D1 }),
+  db: sqliteD1Adapter({ binding: cloudflare.env.D1, idType: 'uuid' }),
   plugins: [
     r2Storage({
       bucket: cloudflare.env.R2,

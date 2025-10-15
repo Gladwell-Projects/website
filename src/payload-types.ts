@@ -71,11 +71,11 @@ export interface Config {
     media: Media;
     artists: Artist;
     exhibitions: Exhibition;
-    viewingRooms: ViewingRoom;
     press: Press;
     events: Event;
     pages: Page;
     users: User;
+    viewingRooms: ViewingRoom;
     clients: Client;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -91,11 +91,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
     exhibitions: ExhibitionsSelect<false> | ExhibitionsSelect<true>;
-    viewingRooms: ViewingRoomsSelect<false> | ViewingRoomsSelect<true>;
     press: PressSelect<false> | PressSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    viewingRooms: ViewingRoomsSelect<false> | ViewingRoomsSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -103,7 +103,7 @@ export interface Config {
     'payload-query-presets': PayloadQueryPresetsSelect<false> | PayloadQueryPresetsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     'main-menu': MainMenu;
@@ -169,7 +169,7 @@ export interface ClientAuthOperations {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   isArt?: boolean | null;
   preview?: string | null;
   alt: string;
@@ -190,7 +190,7 @@ export interface Media {
   } | null;
   artworkId?: string | null;
   artist?: {
-    docs?: (number | Artist)[];
+    docs?: (string | Artist)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -211,12 +211,15 @@ export interface Media {
  * via the `definition` "artists".
  */
 export interface Artist {
-  id: number;
+  id: string;
   title?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   isRepresented?: boolean | null;
-  profileImage?: (number | null) | Media;
+  profileImage?: (string | null) | Media;
   firstName?: string | null;
   middleName?: string | null;
   lastName?: string | null;
@@ -244,15 +247,15 @@ export interface Artist {
     instagram?: string | null;
     twitter?: string | null;
   };
-  cvUpload?: (number | null) | Media;
-  surveyArtworks?: (number | Media)[] | null;
+  cvUpload?: (string | null) | Media;
+  surveyArtworks?: (string | Media)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -263,16 +266,19 @@ export interface Artist {
  * via the `definition` "exhibitions".
  */
 export interface Exhibition {
-  id: number;
+  id: string;
   startDate: string;
   startDate_tz: SupportedTimezones;
   endDate: string;
   endDate_tz: SupportedTimezones;
   location?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   title: string;
-  featuredArtists?: (number | Artist)[] | null;
+  featuredArtists?: (string | Artist)[] | null;
   content?: {
     root: {
       type: string;
@@ -288,15 +294,15 @@ export interface Exhibition {
     };
     [k: string]: unknown;
   } | null;
-  coverImage?: (number | null) | Media;
-  featuredArtworks?: (number | Media)[] | null;
+  coverImage?: (string | null) | Media;
+  featuredArtworks?: (string | Media)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -304,44 +310,20 @@ export interface Exhibition {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "viewingRooms".
- */
-export interface ViewingRoom {
-  id: number;
-  title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "press".
  */
 export interface Press {
-  id: number;
+  id: string;
   /**
    * This is the smaller text before the Headline that usually says something like "From So-and-so Newspaper".
    */
   strapline?: string | null;
   title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   date: string;
   content: {
     root: {
@@ -358,9 +340,9 @@ export interface Press {
     };
     [k: string]: unknown;
   };
-  featuredImage?: (number | null) | Media;
-  relatedArtists?: (number | Artist)[] | null;
-  relatedExhibitions?: (number | Exhibition)[] | null;
+  featuredImage?: (string | null) | Media;
+  relatedArtists?: (string | Artist)[] | null;
+  relatedExhibitions?: (string | Exhibition)[] | null;
   links?:
     | {
         link: {
@@ -369,30 +351,30 @@ export interface Press {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: number | Page;
+                value: string | Page;
               } | null)
             | ({
                 relationTo: 'artists';
-                value: number | Artist;
+                value: string | Artist;
               } | null)
             | ({
                 relationTo: 'exhibitions';
-                value: number | Exhibition;
+                value: string | Exhibition;
               } | null)
             | ({
                 relationTo: 'press';
-                value: number | Press;
+                value: string | Press;
               } | null)
             | ({
                 relationTo: 'events';
-                value: number | Event;
+                value: string | Event;
               } | null)
             | ({
                 relationTo: 'viewingRooms';
-                value: number | ViewingRoom;
+                value: string | ViewingRoom;
               } | null);
           url?: string | null;
-          upload?: (number | null) | Media;
+          upload?: (string | null) | Media;
           label: string;
           customId?: string | null;
         };
@@ -405,7 +387,7 @@ export interface Press {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -416,10 +398,13 @@ export interface Press {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: number;
+  id: string;
   title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   theme?: string | null;
   content?: {
     root: {
@@ -436,22 +421,13 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
-  parent?: (number | null) | Page;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Page;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   meta?: {
     title?: string | null;
     description?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -462,16 +438,19 @@ export interface Page {
  * via the `definition` "events".
  */
 export interface Event {
-  id: number;
+  id: string;
   title: string;
   startDate: string;
   startDate_tz: SupportedTimezones;
   endDate: string;
   endDate_tz: SupportedTimezones;
   hasTime?: boolean | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  featuredImage?: (number | null) | Media;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  featuredImage?: (string | null) | Media;
   location?: string | null;
   content?: {
     root: {
@@ -488,7 +467,7 @@ export interface Event {
     };
     [k: string]: unknown;
   } | null;
-  relatedExhibitions?: (number | Exhibition)[] | null;
+  relatedExhibitions?: (string | Exhibition)[] | null;
   isLinked?: boolean | null;
   link: {
     type?: ('reference' | 'custom' | 'upload') | null;
@@ -496,30 +475,30 @@ export interface Event {
     reference?:
       | ({
           relationTo: 'pages';
-          value: number | Page;
+          value: string | Page;
         } | null)
       | ({
           relationTo: 'artists';
-          value: number | Artist;
+          value: string | Artist;
         } | null)
       | ({
           relationTo: 'exhibitions';
-          value: number | Exhibition;
+          value: string | Exhibition;
         } | null)
       | ({
           relationTo: 'press';
-          value: number | Press;
+          value: string | Press;
         } | null)
       | ({
           relationTo: 'events';
-          value: number | Event;
+          value: string | Event;
         } | null)
       | ({
           relationTo: 'viewingRooms';
-          value: number | ViewingRoom;
+          value: string | ViewingRoom;
         } | null);
     url?: string | null;
-    upload?: (number | null) | Media;
+    upload?: (string | null) | Media;
     label: string;
     customId?: string | null;
   };
@@ -529,7 +508,7 @@ export interface Event {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -537,10 +516,40 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "viewingRooms".
+ */
+export interface ViewingRoom {
+  id: string;
+  title?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   role: 'admin' | 'editor' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -565,7 +574,7 @@ export interface User {
  * via the `definition` "clients".
  */
 export interface Client {
-  id: number;
+  id: string;
   name: string;
   role: 'user';
   updatedAt: string;
@@ -591,53 +600,53 @@ export interface Client {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'artists';
-        value: number | Artist;
+        value: string | Artist;
       } | null)
     | ({
         relationTo: 'exhibitions';
-        value: number | Exhibition;
-      } | null)
-    | ({
-        relationTo: 'viewingRooms';
-        value: number | ViewingRoom;
+        value: string | Exhibition;
       } | null)
     | ({
         relationTo: 'press';
-        value: number | Press;
+        value: string | Press;
       } | null)
     | ({
         relationTo: 'events';
-        value: number | Event;
+        value: string | Event;
       } | null)
     | ({
         relationTo: 'pages';
-        value: number | Page;
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'viewingRooms';
+        value: string | ViewingRoom;
       } | null)
     | ({
         relationTo: 'clients';
-        value: number | Client;
+        value: string | Client;
       } | null);
   globalSlug?: string | null;
   user:
     | {
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       }
     | {
         relationTo: 'clients';
-        value: number | Client;
+        value: string | Client;
       };
   updatedAt: string;
   createdAt: string;
@@ -647,15 +656,15 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user:
     | {
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       }
     | {
         relationTo: 'clients';
-        value: number | Client;
+        value: string | Client;
       };
   key?: string | null;
   value?:
@@ -675,7 +684,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -686,21 +695,21 @@ export interface PayloadMigration {
  * via the `definition` "payload-query-presets".
  */
 export interface PayloadQueryPreset {
-  id: number;
+  id: string;
   title: string;
   isShared?: boolean | null;
   access?: {
     read?: {
       constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
-      users?: (number | User)[] | null;
+      users?: (string | User)[] | null;
     };
     update?: {
       constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
-      users?: (number | User)[] | null;
+      users?: (string | User)[] | null;
     };
     delete?: {
       constraint?: ('everyone' | 'onlyMe' | 'specificUsers') | null;
-      users?: (number | User)[] | null;
+      users?: (string | User)[] | null;
     };
   };
   where?:
@@ -758,8 +767,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ArtistsSelect<T extends boolean = true> {
   title?: T;
+  generateSlug?: T;
   slug?: T;
-  slugLock?: T;
   isRepresented?: T;
   profileImage?: T;
   firstName?: T;
@@ -800,8 +809,8 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   endDate?: T;
   endDate_tz?: T;
   location?: T;
+  generateSlug?: T;
   slug?: T;
-  slugLock?: T;
   title?: T;
   featuredArtists?: T;
   content?: T;
@@ -820,25 +829,13 @@ export interface ExhibitionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "viewingRooms_select".
- */
-export interface ViewingRoomsSelect<T extends boolean = true> {
-  title?: T;
-  content?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "press_select".
  */
 export interface PressSelect<T extends boolean = true> {
   strapline?: T;
   title?: T;
+  generateSlug?: T;
   slug?: T;
-  slugLock?: T;
   date?: T;
   content?: T;
   featuredImage?: T;
@@ -882,8 +879,8 @@ export interface EventsSelect<T extends boolean = true> {
   endDate?: T;
   endDate_tz?: T;
   hasTime?: T;
+  generateSlug?: T;
   slug?: T;
-  slugLock?: T;
   featuredImage?: T;
   location?: T;
   content?: T;
@@ -917,19 +914,10 @@ export interface EventsSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  generateSlug?: T;
   slug?: T;
-  slugLock?: T;
   theme?: T;
   content?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
   meta?:
     | T
     | {
@@ -963,6 +951,18 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "viewingRooms_select".
+ */
+export interface ViewingRoomsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1061,7 +1061,7 @@ export interface PayloadQueryPresetsSelect<T extends boolean = true> {
  * via the `definition` "main-menu".
  */
 export interface MainMenu {
-  id: number;
+  id: string;
   'menu-items-top'?:
     | {
         label: string;
@@ -1072,30 +1072,30 @@ export interface MainMenu {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: number | Page;
+                value: string | Page;
               } | null)
             | ({
                 relationTo: 'artists';
-                value: number | Artist;
+                value: string | Artist;
               } | null)
             | ({
                 relationTo: 'exhibitions';
-                value: number | Exhibition;
+                value: string | Exhibition;
               } | null)
             | ({
                 relationTo: 'press';
-                value: number | Press;
+                value: string | Press;
               } | null)
             | ({
                 relationTo: 'events';
-                value: number | Event;
+                value: string | Event;
               } | null)
             | ({
                 relationTo: 'viewingRooms';
-                value: number | ViewingRoom;
+                value: string | ViewingRoom;
               } | null);
           url?: string | null;
-          upload?: (number | null) | Media;
+          upload?: (string | null) | Media;
           customId?: string | null;
         };
         id?: string | null;
@@ -1111,30 +1111,30 @@ export interface MainMenu {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: number | Page;
+                value: string | Page;
               } | null)
             | ({
                 relationTo: 'artists';
-                value: number | Artist;
+                value: string | Artist;
               } | null)
             | ({
                 relationTo: 'exhibitions';
-                value: number | Exhibition;
+                value: string | Exhibition;
               } | null)
             | ({
                 relationTo: 'press';
-                value: number | Press;
+                value: string | Press;
               } | null)
             | ({
                 relationTo: 'events';
-                value: number | Event;
+                value: string | Event;
               } | null)
             | ({
                 relationTo: 'viewingRooms';
-                value: number | ViewingRoom;
+                value: string | ViewingRoom;
               } | null);
           url?: string | null;
-          upload?: (number | null) | Media;
+          upload?: (string | null) | Media;
           customId?: string | null;
         };
         id?: string | null;
@@ -1148,8 +1148,8 @@ export interface MainMenu {
  * via the `definition` "branding".
  */
 export interface Branding {
-  id: number;
-  logo?: (number | null) | Media;
+  id: string;
+  logo?: (string | null) | Media;
   title?: string | null;
   description?: string | null;
   author?: string | null;
@@ -1164,7 +1164,7 @@ export interface Branding {
         /**
          * upload a black icon in PNG or SVG format with transparent background up to 64 x 64 pixels
          */
-        icon?: (number | null) | Media;
+        icon?: (string | null) | Media;
         at?: string | null;
         id?: string | null;
       }[]
@@ -1177,7 +1177,7 @@ export interface Branding {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: number;
+  id: string;
   tagline?: string | null;
   siteDescription?: string | null;
   showCopyright?: boolean | null;
@@ -1193,30 +1193,30 @@ export interface Footer {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: number | Page;
+                value: string | Page;
               } | null)
             | ({
                 relationTo: 'artists';
-                value: number | Artist;
+                value: string | Artist;
               } | null)
             | ({
                 relationTo: 'exhibitions';
-                value: number | Exhibition;
+                value: string | Exhibition;
               } | null)
             | ({
                 relationTo: 'press';
-                value: number | Press;
+                value: string | Press;
               } | null)
             | ({
                 relationTo: 'events';
-                value: number | Event;
+                value: string | Event;
               } | null)
             | ({
                 relationTo: 'viewingRooms';
-                value: number | ViewingRoom;
+                value: string | ViewingRoom;
               } | null);
           url?: string | null;
-          upload?: (number | null) | Media;
+          upload?: (string | null) | Media;
           customId?: string | null;
         };
         id?: string | null;
@@ -1234,30 +1234,30 @@ export interface Footer {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: number | Page;
+                value: string | Page;
               } | null)
             | ({
                 relationTo: 'artists';
-                value: number | Artist;
+                value: string | Artist;
               } | null)
             | ({
                 relationTo: 'exhibitions';
-                value: number | Exhibition;
+                value: string | Exhibition;
               } | null)
             | ({
                 relationTo: 'press';
-                value: number | Press;
+                value: string | Press;
               } | null)
             | ({
                 relationTo: 'events';
-                value: number | Event;
+                value: string | Event;
               } | null)
             | ({
                 relationTo: 'viewingRooms';
-                value: number | ViewingRoom;
+                value: string | ViewingRoom;
               } | null);
           url?: string | null;
-          upload?: (number | null) | Media;
+          upload?: (string | null) | Media;
           customId?: string | null;
         };
         id?: string | null;

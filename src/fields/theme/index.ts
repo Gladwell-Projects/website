@@ -36,6 +36,7 @@ export const themePicker = (overrides = {}): Field => {
     ...(overrides || {}),
     admin: {
       ...(overrides?.admin || {}),
+      position: 'sidebar',
       components: {
         Field: '@/fields/theme/ThemeComponent',
       },

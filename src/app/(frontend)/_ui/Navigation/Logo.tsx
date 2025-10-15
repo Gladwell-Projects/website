@@ -8,7 +8,7 @@ const Logo = ({ className, variant }: { className: string; variant?: string }) =
     <div className={`${className} logo-nav w-full place-self-center`}>
       <Link href={'/'} className="flex w-full flex-row justify-between">
         {variant === 'stacked' && (
-          <GladwellProjects className="mb-1 h-[--spacing(4)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
+          <GladwellProjects className="mb-1 h-[--spacing(6)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
         )}
         {variant !== 'stacked' && (
           <>

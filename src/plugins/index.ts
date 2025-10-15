@@ -7,9 +7,9 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { Page, Exhibition, Artist, Event, Press } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
-const generateTitle: GenerateTitle<
-  Page | Exhibition | Artist | Event | Press
-> = ({ doc }) => {
+const generateTitle: GenerateTitle<Page | Exhibition | Artist | Event | Press> = ({
+  doc,
+}) => {
   return doc?.title ? `${doc.title} | Gladwell Projects` : 'Gladwell Projects'
 }
 
@@ -23,10 +23,6 @@ const generateURL: GenerateURL<Page | Exhibition | Artist | Event | Press> = ({
 
 const plugins: Plugin[] = [
   payloadCloudPlugin(),
-  nestedDocsPlugin({
-    collections: ['pages'],
-    generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
-  }),
   seoPlugin({
     generateTitle,
     generateURL,

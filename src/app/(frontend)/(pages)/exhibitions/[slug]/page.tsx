@@ -11,7 +11,7 @@ import Content from '@/app/(frontend)/_ui/PageContent'
 import { unstable_cache } from 'next/cache'
 import { Exhibition, Media } from '@/payload-types'
 import Image from 'next/image'
-import { dateISO, dateToLong } from '@/app/(frontend)/_helpers/convertCMSDate'
+import { dateISO, dateToLong } from '@/app/(frontend)/_utilities/convertCMSDate'
 
 const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()

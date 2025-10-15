@@ -3,7 +3,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
-import { fetchPage } from '../../_data'
+import { fetchPage, fetchPages } from '../../_data'
 import Headline from '../../_ui/Headline'
 import Content from '../../_ui/PageContent'
 import SubGrid from '../../_ui/pageGrid'
@@ -40,3 +40,14 @@ const Page = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
 }
 
 export default Page
+
+// // Return a list of `params` to populate the [slug] dynamic segment
+// export async function generateStaticParams() {
+//   const pages = await fetchPages()
+
+//   console.log(pages)
+
+//   return pages.map((page) => ({
+//     slug: page.slug,
+//   }))
+// }
