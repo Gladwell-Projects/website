@@ -53,13 +53,7 @@ const generateHref = (args: GenerateSlugType): string => {
 
   if (type === 'reference' && reference?.value && typeof reference.value !== 'string') {
     if (reference.relationTo === 'pages') {
-      const value = reference.value as Page
-      const breadcrumbs = value?.breadcrumbs
-      const hasBreadcrumbs =
-        breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0
-      if (hasBreadcrumbs) {
-        return breadcrumbs[breadcrumbs.length - 1]?.url as string
-      }
+      return reference.value.slug
     }
 
     if (reference.relationTo === 'exhibitions') {

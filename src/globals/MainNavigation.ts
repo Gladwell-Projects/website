@@ -34,8 +34,10 @@ export const MainMenu: GlobalConfig = {
           required: true,
         },
         themePicker({
-          admin: {
-            condition: (_, siblingData) => siblingData?.link.type === 'custom',
+          overrides: {
+            admin: {
+              condition: (_, siblingData) => siblingData?.link.type === 'custom',
+            },
           },
         }),
         {
@@ -67,8 +69,10 @@ export const MainMenu: GlobalConfig = {
           required: true,
         },
         themePicker({
-          admin: {
-            condition: (_, siblingData) => siblingData?.link.type === 'custom',
+          overrides: {
+            admin: {
+              condition: (_, siblingData) => siblingData?.link.type === 'custom',
+            },
           },
         }),
         {

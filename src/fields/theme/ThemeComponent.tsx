@@ -3,15 +3,16 @@ import { useField } from '@payloadcms/ui'
 import { colors } from '.'
 import { FieldLabel } from '@payloadcms/ui'
 import { fieldBaseClass } from '@payloadcms/ui'
+import { TextFieldClientProps } from 'payload'
 
-const ThemePicker: React.FC<props> = (props) => {
-  const { path, label, required, field } = props
+const ThemePicker = (props: TextFieldClientProps) => {
+  const { path, field } = props
 
   const { value, setValue } = useField<string>({ path: path || field.name })
 
   return (
     <div className={`${fieldBaseClass} color-field`}>
-      <FieldLabel htmlFor={path} label={label} required={required} />
+      <FieldLabel label="Theme" />
       <ul className={`${fieldBaseClass}__colors w-full text-center`}>
         {colors.map((color, i) => (
           <li key={i} className={`${color.theme === value && 'has-selected'}`}>

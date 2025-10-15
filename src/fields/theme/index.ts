@@ -1,4 +1,4 @@
-import { Field } from 'payload'
+import { Field, TextField, TextFieldSingleValidation } from 'payload'
 
 export const colors = [
   { theme: 'default', code: '#FFFFFF', text: '#000000' },
@@ -15,7 +15,10 @@ export const colors = [
 ]
 const themes = colors.map((c) => c.theme)
 
-export const validateThemePicker = (value: string, { required }): boolean | string => {
+export const validateThemePicker: TextFieldSingleValidation = (
+  value: string,
+  { required }
+) => {
   if (!required && !value) {
     return true
   }
@@ -27,13 +30,17 @@ export const validateThemePicker = (value: string, { required }): boolean | stri
   return true
 }
 
-export const themePicker = (overrides = {}): Field => {
-  return {
+type ThemePickerArgs = (options?: { overrides?: Partial<TextField> }) => Field
+
+export const themePicker: ThemePickerArgs = ({ overrides = {} } = {}) => {
+  const textFieldResult: Field = {
     type: 'text',
     name: 'theme',
+    // @ts-expect-error idk why this is happening
     validate: validateThemePicker,
     defaultValue: 'default',
     ...(overrides || {}),
+    hasMany: false,
     admin: {
       ...(overrides?.admin || {}),
       position: 'sidebar',
@@ -42,4 +49,6 @@ export const themePicker = (overrides = {}): Field => {
       },
     },
   }
+
+  return textFieldResult
 }
