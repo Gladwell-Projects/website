@@ -42,7 +42,7 @@ export const fetchGlobals = async (): Promise<{
   }
 }
 
-export const fetchPage = async (incomingSlugSegments: string[]): Promise<null | Page> => {
+export const fetchPage = async (incomingSlugSegments: string): Promise<null | Page> => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config })
@@ -74,14 +74,12 @@ export const fetchPage = async (incomingSlugSegments: string[]): Promise<null | 
     },
   })
 
-  const pagePath = `/${slugSegments.join('/')}`
-
-  const page = data.docs.find(({ breadcrumbs }: Page) => {
-    if (!breadcrumbs) {
+  const page = data.docs.find(({ slug }: Page) => {
+    if (!slug) {
       return false
     }
-    const { url } = breadcrumbs[breadcrumbs.length - 1]
-    return url === pagePath
+
+    return true
   })
 
   if (page) {
@@ -97,22 +95,10 @@ export const fetchPages = async (): Promise<Partial<Page>[]> => {
     collection: 'pages',
     depth: 0,
     limit: 300,
-    select: {
-      breadcrumbs: true,
-    },
     where: {
-      and: [
-        {
-          slug: {
-            not_equals: 'cloud',
-          },
-        },
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-      ],
+      _status: {
+        equals: 'published',
+      },
     },
   })
 

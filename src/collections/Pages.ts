@@ -16,7 +16,7 @@ export const Pages: CollectionConfig = {
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
-          slug: data?.breadcrumbs || data?.slug,
+          slug: data?.slug,
           collection: 'pages',
           req,
         }),
