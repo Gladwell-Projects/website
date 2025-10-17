@@ -35,7 +35,7 @@ export const Pages: CollectionConfig = {
     delete: adminsAndEditors,
   },
   versions: {
-    drafts: true,
+    drafts: false,
   },
   labels: { singular: 'Page', plural: 'Pages' },
   fields: [
