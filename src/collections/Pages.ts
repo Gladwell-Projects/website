@@ -4,9 +4,13 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { themePicker } from '@/fields/theme'
-import { anyone } from './access/anyone'
-import { nestedDocs } from '@/fields/nested-docs'
-import { createBreadcrumbsField } from '@payloadcms/plugin-nested-docs'
+import lexicalDefault from './lexical/defaultFeatures'
+import lexicalWithBlocks from './lexical/withBlocks'
+import { Gallery } from '../blocks/Gallery'
+import { Text } from '../blocks/Text'
+import { Headline } from '../blocks/Headline'
+import { LgImage } from '../blocks/LargeImage'
+import { MdImage } from '../blocks/MediumImage'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -30,6 +34,7 @@ export const Pages: CollectionConfig = {
   },
   access: {
     read: published,
+    readVersions: adminsAndEditors,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: adminsAndEditors,
@@ -37,7 +42,6 @@ export const Pages: CollectionConfig = {
   versions: {
     drafts: true,
   },
-  labels: { singular: 'Page', plural: 'Pages' },
   fields: [
     {
       name: 'title',
@@ -48,7 +52,17 @@ export const Pages: CollectionConfig = {
     themePicker(),
     {
       name: 'content',
-      type: 'richText',
+      type: 'blocks',
+      blockReferences: [
+        'headline',
+        'text',
+        'lgImage',
+        'mdImage',
+        'smImage',
+        'gallery',
+        'twoImage',
+      ],
+      blocks: [],
     },
   ],
 }

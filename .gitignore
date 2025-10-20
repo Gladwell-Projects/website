@@ -56,3 +56,4 @@ node_modules/
 # certs
 /certs
 sqldata
+sql/update-status

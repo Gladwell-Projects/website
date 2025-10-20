@@ -11,7 +11,7 @@ import {
   dateToLong,
   dateToNumeric,
   timeOnly,
-} from '../../_utilities/convertCMSDate'
+} from '../../../../utilities/convertCMSDate'
 
 const CalendarEventList = (props: {
   date: Date

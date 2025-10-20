@@ -1,5 +1,7 @@
 import React from 'react'
 import ThemeSwitch from '../_ui/ThemeSwitch'
+import { Metadata } from 'next'
+import { generateMeta } from '@/utilities/generateMeta'
 
 export default function HomePage() {
   return (
@@ -7,4 +9,21 @@ export default function HomePage() {
       <ThemeSwitch templateTheme="default" />
     </>
   )
+}
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
+export async function generateMetadata({}: Args): Promise<Metadata> {
+  const page = {
+    slug: '/',
+    meta: {
+      title: 'Gladwell Projects',
+    },
+  }
+
+  return generateMeta({ doc: page })
 }

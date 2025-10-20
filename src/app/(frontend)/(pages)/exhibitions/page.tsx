@@ -1,17 +1,19 @@
 import React from 'react'
-import { currentThemeFromNav, fetchCollection } from '../../_data'
+import { currentThemeFromNav, fetchExhibitions } from '../../_data'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
 import ExhibitionsList from './components/ExhibitionList'
+import { Metadata } from 'next'
+import { generateMeta } from '@/utilities/generateMeta'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
 
   const exhibitions: Partial<Exhibition>[] = draft
-    ? await fetchCollection('exhibitions', 'startDate')
-    : await unstable_cache(fetchCollection)('exhibitions', 'startDate')
+    ? await fetchExhibitions('startDate')
+    : await unstable_cache(fetchExhibitions)('startDate')
 
   const slug = '/exhibitions'
 
@@ -78,3 +80,21 @@ const Exhibitions = async () => {
 }
 
 export default Exhibitions
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
+export async function generateMetadata({}: Args): Promise<Metadata> {
+  const page = {
+    slug: '/exhibitions',
+    meta: {
+      title: 'Exhibitions | Gladwell Projects',
+      description: 'Gladwell Projects Exhibitions',
+    },
+  }
+
+  return generateMeta({ doc: page })
+}

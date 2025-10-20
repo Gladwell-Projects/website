@@ -11,6 +11,7 @@ import {
   Press,
   Event,
   Footer,
+  ViewingRoom,
 } from '@/payload-types'
 
 export const payloadConfig = await config
@@ -25,7 +26,7 @@ export const fetchGlobals = async (): Promise<{
 
   const mainMenu = await payload.findGlobal({
     slug: 'main-menu',
-    depth: 1,
+    depth: 2,
   })
   const branding = await payload.findGlobal({
     slug: 'branding',
@@ -46,12 +47,11 @@ export const fetchPage = async (incomingSlugSegments: string): Promise<null | Pa
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config })
-  const slugSegments = incomingSlugSegments || ['home']
-  const slug = slugSegments.at(-1)
+  const slug = incomingSlugSegments
 
   const data = await payload.find({
     collection: 'pages',
-    depth: 2,
+    depth: 3,
     draft,
     limit: 1,
     where: {
@@ -104,6 +104,69 @@ export const fetchPages = async (): Promise<Partial<Page>[]> => {
 
   return data.docs
 }
+export const fetchViewingRooms = async (): Promise<Partial<ViewingRoom>[]> => {
+  const payload = await getPayload({ config })
+  const data = await payload.find({
+    collection: 'viewingRooms',
+    depth: 2,
+    limit: 300,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  return data.docs
+}
+
+export const fetchViewingRoom = async (
+  incomingSlugSegments: string
+): Promise<null | ViewingRoom> => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config })
+  const slug = incomingSlugSegments
+
+  const data = await payload.find({
+    collection: 'viewingRooms',
+    depth: 2,
+    draft,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  const page = data.docs.find(({ slug }: ViewingRoom) => {
+    if (!slug) {
+      return false
+    }
+
+    return true
+  })
+
+  if (page) {
+    return page
+  }
+
+  return null
+}
 
 export const fetchCollection = async (
   collection: CollectionSlug,
@@ -115,6 +178,11 @@ export const fetchCollection = async (
     collection,
     depth: 2,
     limit: 300,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
     sort,
   })
 
@@ -134,6 +202,108 @@ export const fetchEventsByMonth = async (
   })
 
   return data.docs
+}
+
+export const fetchExhibitions = async (sort: string): Promise<Partial<Exhibition>[]> => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'exhibitions',
+    depth: 2,
+    draft,
+    sort,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  return data.docs
+}
+export const fetchExhibition = async (slug: string) => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'exhibitions',
+    depth: 2,
+    draft,
+    limit: 1,
+    where: {
+      and: [
+        { slug: { equals: slug } },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  return data.docs[0]
+}
+
+export const fetchArtists = async (sort: string): Promise<Partial<Artist>[]> => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'artists',
+    depth: 2,
+    draft,
+    sort,
+    where: {
+      and: [
+        {
+          isRepresented: {
+            equals: true,
+          },
+        },
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+      ],
+    },
+  })
+
+  return data.docs
+}
+
+export const fetchArtist = async (slug: string): Promise<Partial<Artist>> => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'artists',
+    depth: 2,
+    draft,
+    limit: 1,
+    where: {
+      and: [
+        { slug: { equals: slug } },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  return data.docs[0]
 }
 
 export const fetchDocument = async (

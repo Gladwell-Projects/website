@@ -1,6 +1,5 @@
-import React from 'react'
-import { fetchDocument } from '../../../_data'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import React, { cache } from 'react'
+import { fetchExhibition } from '../../../_data'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import ThemeSwitch from '@/app/(frontend)/_ui/ThemeSwitch'
@@ -9,9 +8,16 @@ import SubGrid from '@/app/(frontend)/_ui/pageGrid'
 import Headline from '@/app/(frontend)/_ui/Headline'
 import Content from '@/app/(frontend)/_ui/PageContent'
 import { unstable_cache } from 'next/cache'
-import { Exhibition, Media } from '@/payload-types'
+import { Artist, Exhibition, Media } from '@/payload-types'
 import Image from 'next/image'
-import { dateISO, dateToLong } from '@/app/(frontend)/_utilities/convertCMSDate'
+import { dateISO, dateToLong } from '@/utilities/convertCMSDate'
+import PageBlocks from '@/app/(frontend)/_ui/PageBlocks'
+import Link from 'next/link'
+import { Caption } from '@/app/(frontend)/_ui/Image'
+import { Metadata } from 'next'
+import { generateMeta } from '@/utilities/generateMeta'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
@@ -19,8 +25,8 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
   const { slug } = await params
 
   const page: Partial<Exhibition> = draft
-    ? await fetchDocument('exhibitions', slug)
-    : await unstable_cache(fetchDocument)('exhibitions', slug)
+    ? await fetchExhibition(slug)
+    : await unstable_cache(fetchExhibition)(slug)
 
   if (!page) {
     notFound()
@@ -32,6 +38,12 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
 
   const startShort = dateISO(page.startDate)
   const endShort = dateISO(page.endDate)
+
+  const artists = page.featuredArtists as Artist[]
+
+  const pressRelease = page.pressRelease as Media
+
+  const checklist = page.checklist as Media
 
   return (
     <SubGrid>
@@ -45,18 +57,98 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
           <address className="text-xl not-italic">{page.location}</address>
         </div>
         {cover && (
-          <Image
-            src={cover.url}
-            width={cover.width}
-            height={cover.height}
-            alt={cover.alt}
-            className="col-span-full my-2 h-auto w-full md:col-span-5 md:-col-start-6"
-          />
+          <div className="col-span-full my-2 grid h-auto w-full grid-cols-subgrid md:col-span-5 md:-col-start-6">
+            <Image
+              src={cover.url}
+              width={cover.width}
+              height={cover.height}
+              alt={cover.alt}
+              className="col-span-full"
+            />
+            <Caption caption={cover.caption} />
+          </div>
         )}
       </Headline>
-      <Content>{page.content && <RichText data={page.content} />}</Content>
+      <Content>
+        {pressRelease && (
+          <Link className="col-span-4 no-underline" href={pressRelease.url}>
+            Press Release&emsp;<small>(PDF)</small>
+          </Link>
+        )}
+        {checklist && (
+          <Link className="col-span-4 no-underline" href={checklist.url}>
+            Checklist&emsp;<small>(PDF)</small>
+          </Link>
+        )}
+
+        {artists.length > 0 && (
+          <div className="col-span-full">
+            <h4 className="col-span-full m-0">Artists</h4>
+            <ul className="col-span-full m-0 w-full columns-1 place-self-start sm:columns-2 md:columns-2 lg:columns-3">
+              {artists.map((artist) => {
+                return (
+                  <li key={artist.id}>
+                    {artist.isRepresented && (
+                      <Link
+                        href={{ pathname: `/artists/${artist.slug}` }}
+                        className="font-medium text-(--theme-text)"
+                      >
+                        {artist.title}
+                      </Link>
+                    )}
+                    {!artist.isRepresented && (
+                      <span className="font-medium text-(--theme-text)">
+                        {artist.title}
+                      </span>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
+        {page.content && <PageBlocks data={page.content} />}
+      </Content>
     </SubGrid>
   )
 }
 
 export default ExhibitionPage
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
+export async function generateMetadata({
+  params: paramsPromise,
+}: Args): Promise<Metadata> {
+  const { slug = 'home' } = await paramsPromise
+  // Decode to support slugs with special characters
+  const decodedSlug = decodeURIComponent(slug)
+  const page = await queryPageBySlug({ slug: decodedSlug })
+
+  return generateMeta({ doc: page })
+}
+
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'exhibitions',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})

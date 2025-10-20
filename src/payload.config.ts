@@ -21,6 +21,9 @@ import BrandSettings from './globals/Branding'
 import { ViewingRooms } from './collections/ViewingRooms'
 import plugins from './plugins'
 import { Footer } from './globals/Footer'
+import lexicalDefault from './collections/lexical/defaultFeatures'
+
+import { blocks } from './blocks'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,7 +43,7 @@ export default buildConfig({
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
-            email: 'nathan@itsallwong.com',
+            email: 'gladwell@itsallwong.com',
             password: 'M@cAr9HETk$a&',
             prefillOnly: false,
           }
@@ -85,7 +88,8 @@ export default buildConfig({
     ViewingRooms,
     Clients,
   ],
-  editor: lexicalEditor(),
+  blocks,
+  editor: lexicalDefault,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

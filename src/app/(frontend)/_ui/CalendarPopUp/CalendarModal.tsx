@@ -5,7 +5,7 @@ import { OnArgs } from 'react-calendar/dist/shared/types.js'
 import useSWR from 'swr'
 import { fetcher, query } from './getEvents'
 import { Suspense } from 'react'
-import { dateToNumeric } from '../../_utilities/convertCMSDate'
+import { dateToNumeric } from '../../../../utilities/convertCMSDate'
 import { fetchCollection } from '../../_data'
 
 const CalendarModal = (props: {

@@ -1,37 +1,37 @@
-import React from 'react'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import React, { cache } from 'react'
 import { LivePreviewListener } from '@/components/frontend/LivePreviewListener'
 import { notFound } from 'next/navigation'
 import ThemeSwitch from '@/app/(frontend)/_ui/ThemeSwitch'
-import { Artist, Media } from '@/payload-types'
+import { Media } from '@/payload-types'
 import { draftMode } from 'next/headers'
 import Headline from '@/app/(frontend)/_ui/Headline'
 import Content from '@/app/(frontend)/_ui/PageContent'
 import SubGrid from '@/app/(frontend)/_ui/pageGrid'
-import { fetchDocument } from '@/app/(frontend)/_data'
+import { fetchArtist } from '@/app/(frontend)/_data'
 import { unstable_cache } from 'next/cache'
 import Image from 'next/image'
+import PageBlocks from '@/app/(frontend)/_ui/PageBlocks'
+import Gallery from '@/app/(frontend)/_ui/Gallery'
+import { Metadata } from 'next'
+import { generateMeta } from '@/utilities/generateMeta'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 const getArtist = async (slug: string, draft?: boolean) =>
-  draft
-    ? fetchDocument('artists', slug)
-    : unstable_cache(fetchDocument, [`artist-${slug}`])('artists', slug)
+  draft ? fetchArtist(slug) : unstable_cache(fetchArtist, [`artist-${slug}`])(slug)
 
 const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await params
-  // const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug)
-  const page = (await getArtist(slug, draft)) as Artist
 
-  if (!page) {
-    notFound()
-  }
+  const page = await getArtist(slug, draft)
 
   if (!page) {
     notFound()
   }
 
   const cover = page.profileImage as Media
+  const survey = page.surveyArtworks as Media[]
 
   return (
     <SubGrid>
@@ -57,10 +57,51 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
         )}
       </Headline>
       <Content>
-        <RichText data={page.content} />
+        <PageBlocks data={page.content} />
+        {survey.length > 0 && (
+          <Gallery galleryItems={survey} defaultState="Grid" header="Survey" />
+        )}
       </Content>
     </SubGrid>
   )
 }
 
 export default ArtistBioPage
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
+export async function generateMetadata({
+  params: paramsPromise,
+}: Args): Promise<Metadata> {
+  const { slug = 'home' } = await paramsPromise
+  // Decode to support slugs with special characters
+  const decodedSlug = decodeURIComponent(slug)
+  const page = await queryPageBySlug({ slug: decodedSlug })
+
+  return generateMeta({ doc: page })
+}
+
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'artists',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})

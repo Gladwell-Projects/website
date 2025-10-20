@@ -10,7 +10,7 @@ const ImagePreview: TextFieldServerComponent = async ({ data, payload }) => {
       disableErrors: true,
     })
 
-    if (media) {
+    if (media.mimeType.startsWith('image/')) {
       return (
         <div>
           <p>Preview:</p>
@@ -25,7 +25,7 @@ const ImagePreview: TextFieldServerComponent = async ({ data, payload }) => {
           </p>
         </div>
       )
-    }
+    } else return <p>{media.mimeType}</p>
   }
   return <p></p>
 }

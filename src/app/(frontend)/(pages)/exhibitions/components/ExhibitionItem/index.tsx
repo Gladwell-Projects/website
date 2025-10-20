@@ -1,4 +1,4 @@
-import { dateToLong } from '@/app/(frontend)/_utilities/convertCMSDate'
+import { dateToLong } from '@/utilities/convertCMSDate'
 import { Artist, Exhibition, Media } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,7 +28,7 @@ const ExhibitionItem = ({ exhibition }: { exhibition: Partial<Exhibition> }) => 
           />
         )}
         <div className="absolute -inset-5 z-0 origin-left scale-x-100 bg-linear-to-r from-(--theme-bg) from-50% to-transparent transition-transform group-hover:scale-x-70 group-hover:transition-transform md:scale-x-200 group-hover:md:scale-x-50"></div>
-        <div className="z-1 col-span-full grid w-full grid-cols-subgrid place-items-start text-shadow-[1px_-1px_0px_var(--color-blue)]">
+        <div className="z-1 col-span-full grid w-full grid-cols-subgrid place-items-start text-shadow-[1px_-1px_0px_var(--theme-bg)]">
           <div className="col-span-full grid auto-rows-auto grid-cols-subgrid place-items-start md:-col-end-2">
             <h2 className="col-span-full">{exhibition.title}</h2>
             <div className="col-span-full md:col-span-6">

@@ -26,6 +26,7 @@ export const MainMenu: GlobalConfig = {
         components: {
           RowLabel: 'src/globals/CustomRowLabelTabs',
         },
+        initCollapsed: true,
       },
       fields: [
         {
@@ -61,6 +62,7 @@ export const MainMenu: GlobalConfig = {
         components: {
           RowLabel: 'src/globals/CustomRowLabelTabs',
         },
+        initCollapsed: true,
       },
       fields: [
         {

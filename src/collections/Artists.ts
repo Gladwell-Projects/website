@@ -4,7 +4,6 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
-import { anyone } from './access/anyone'
 
 export const Artists: CollectionConfig = {
   slug: 'artists',
@@ -50,9 +49,13 @@ export const Artists: CollectionConfig = {
       hooks: {
         beforeValidate: [
           ({ data }) => {
+            let title
             if (data) {
-              return `${data.firstName ? data.firstName : 'unknown'}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? `, ${data.suffix}` : ''}`
+              title = `${data.firstName ? data.firstName : ''}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? `, ${data.suffix}` : ''}`
+            } else {
+              title = 'unknown'
             }
+            return title
           },
         ],
       },
@@ -137,7 +140,17 @@ export const Artists: CollectionConfig = {
             },
             {
               name: 'content',
-              type: 'richText',
+              type: 'blocks',
+              blockReferences: [
+                'headline',
+                'text',
+                'lgImage',
+                'mdImage',
+                'smImage',
+                'gallery',
+                'twoImage',
+              ],
+              blocks: [],
             },
             {
               name: 'socialLinks',

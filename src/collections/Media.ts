@@ -1,4 +1,6 @@
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+import lexicalBasic from './lexical/basicFeatures'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -19,7 +21,7 @@ export const Media: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      label: 'This image is of an artwork.',
+      label: 'This is an image of an artwork.',
     },
     {
       name: 'preview',
@@ -49,6 +51,7 @@ export const Media: CollectionConfig = {
         {
           name: 'caption',
           type: 'richText',
+          editor: lexicalBasic,
         },
       ],
     },

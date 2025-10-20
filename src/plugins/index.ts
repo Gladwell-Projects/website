@@ -26,7 +26,7 @@ const plugins: Plugin[] = [
   seoPlugin({
     generateTitle,
     generateURL,
-    collections: ['pages', 'exhibitions', 'press', 'events', 'artists'],
+    collections: ['pages', 'exhibitions', 'press', 'events', 'artists', 'media'],
     uploadsCollection: 'media',
     generateDescription: ({ doc }) => doc.plainText,
     tabbedUI: false,

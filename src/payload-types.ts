@@ -66,7 +66,15 @@ export interface Config {
     users: UserAuthOperations;
     clients: ClientAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    headline: Headline;
+    text: Text;
+    lgImage: LgImage;
+    mdImage: MdImage;
+    smImage: SmImage;
+    gallery: Gallery;
+    twoImage: TwoImage;
+  };
   collections: {
     media: Media;
     artists: Artist;
@@ -166,6 +174,66 @@ export interface ClientAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "headline".
+ */
+export interface Headline {
+  width?: ('half' | 'three-quarter' | 'full') | null;
+  headline?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'headline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text".
+ */
+export interface Text {
+  text?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lgImage".
+ */
+export interface LgImage {
+  lgImage?: (string | null) | Media;
+  showCaption?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'lgImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -193,6 +261,14 @@ export interface Media {
     docs?: (string | Artist)[];
     hasNextPage?: boolean;
     totalDocs?: number;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -227,21 +303,7 @@ export interface Artist {
   nationality?: string | null;
   birthYear?: number | null;
   deathYear?: number | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
   socialLinks?: {
     website?: string | null;
     instagram?: string | null;
@@ -263,6 +325,52 @@ export interface Artist {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mdImage".
+ */
+export interface MdImage {
+  mdImage?: (string | null) | Media;
+  showCaption?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mdImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "smImage".
+ */
+export interface SmImage {
+  smImage?: (string | null) | Media;
+  showCaption?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'smImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  galleryHeader?: string | null;
+  defaultState?: ('Grid' | 'Slides') | null;
+  images?: (string | Media)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "twoImage".
+ */
+export interface TwoImage {
+  firstImage?: (string | null) | Media;
+  secondImage?: (string | null) | Media;
+  showCaption?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'twoImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "exhibitions".
  */
 export interface Exhibition {
@@ -278,24 +386,17 @@ export interface Exhibition {
   generateSlug?: boolean | null;
   slug: string;
   title: string;
+  /**
+   * PDF Please
+   */
+  pressRelease?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  checklist?: (string | null) | Media;
   featuredArtists?: (string | Artist)[] | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
   coverImage?: (string | null) | Media;
-  featuredArtworks?: (string | Media)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -406,21 +507,7 @@ export interface Page {
   generateSlug?: boolean | null;
   slug: string;
   theme?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -521,21 +608,9 @@ export interface Event {
 export interface ViewingRoom {
   id: string;
   title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  theme?: string | null;
+  cover?: (string | null) | Media;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -543,6 +618,7 @@ export interface ViewingRoom {
   slug: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -749,6 +825,13 @@ export interface MediaSelect<T extends boolean = true> {
   caption?: T;
   artworkId?: T;
   artist?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -778,7 +861,7 @@ export interface ArtistsSelect<T extends boolean = true> {
   nationality?: T;
   birthYear?: T;
   deathYear?: T;
-  content?: T;
+  content?: T | {};
   socialLinks?:
     | T
     | {
@@ -812,10 +895,11 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   title?: T;
+  pressRelease?: T;
+  checklist?: T;
   featuredArtists?: T;
-  content?: T;
+  content?: T | {};
   coverImage?: T;
-  featuredArtworks?: T;
   meta?:
     | T
     | {
@@ -917,7 +1001,7 @@ export interface PagesSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   theme?: T;
-  content?: T;
+  content?: T | {};
   meta?:
     | T
     | {
@@ -958,11 +1042,14 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ViewingRoomsSelect<T extends boolean = true> {
   title?: T;
-  content?: T;
+  theme?: T;
+  cover?: T;
+  content?: T | {};
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

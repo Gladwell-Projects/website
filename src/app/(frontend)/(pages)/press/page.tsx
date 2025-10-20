@@ -1,9 +1,11 @@
+import { Metadata } from 'next'
+import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media, Press } from '@/payload-types'
 import { currentThemeFromNav, fetchCollection } from '../../_data'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Headline from '../../_ui/Headline'
-import { CMSLink, CMSLinkType } from '../../_ui/CMSLinks'
+import { CMSLink } from '../../_ui/CMSLinks'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -102,3 +104,21 @@ const PressPage: React.FC = async () => {
 }
 
 export default PressPage
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
+}
+
+export async function generateMetadata({}: Args): Promise<Metadata> {
+  const page = {
+    slug: '/press',
+    meta: {
+      title: 'Press | Gladwell Projects',
+      description: 'Gladwell Projects in the Press',
+    },
+  }
+
+  return generateMeta({ doc: page })
+}

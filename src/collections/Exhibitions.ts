@@ -73,6 +73,42 @@ export const Exhibitions: CollectionConfig = {
               required: true,
             },
             {
+              type: 'row',
+              fields: [
+                {
+                  name: 'pressRelease',
+                  label: 'Press Release',
+                  admin: {
+                    description: 'PDF Please',
+                    width: '50%',
+                  },
+                  type: 'upload',
+                  relationTo: 'media',
+                  hasMany: false,
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'pdf',
+                    },
+                  },
+                },
+                {
+                  name: 'checklist',
+                  type: 'upload',
+                  admin: {
+                    description: 'PDF Please',
+                    width: '50%',
+                  },
+                  relationTo: 'media',
+                  hasMany: false,
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'pdf',
+                    },
+                  },
+                },
+              ],
+            },
+            {
               name: 'featuredArtists',
               type: 'relationship',
               relationTo: 'artists',
@@ -80,8 +116,17 @@ export const Exhibitions: CollectionConfig = {
             },
             {
               name: 'content',
-              type: 'richText',
-              label: 'Content',
+              type: 'blocks',
+              blockReferences: [
+                'headline',
+                'text',
+                'lgImage',
+                'mdImage',
+                'smImage',
+                'gallery',
+                'twoImage',
+              ],
+              blocks: [],
             },
           ],
         },
@@ -89,25 +134,10 @@ export const Exhibitions: CollectionConfig = {
           label: 'Images',
           fields: [
             {
-              type: 'group',
-              fields: [
-                {
-                  name: 'coverImage',
-                  type: 'upload',
-                  relationTo: 'media',
-                  displayPreview: true,
-                },
-                {
-                  name: 'featuredArtworks',
-                  type: 'upload',
-                  relationTo: 'media',
-                  hasMany: true,
-                  displayPreview: true,
-                  filterOptions: {
-                    isArt: { equals: true },
-                  },
-                },
-              ],
+              name: 'coverImage',
+              type: 'upload',
+              relationTo: 'media',
+              displayPreview: true,
             },
           ],
         },
