@@ -6,6 +6,24 @@ import useSWR from 'swr'
 import { fetcher, query } from './getEvents'
 import { dateToNumeric } from '../../../../utilities/convertCMSDate'
 
+export const DefaultCalendar = ({ activeMonth }: { activeMonth: Date }) => {
+  return (
+    <Calendar
+      value={null}
+      onChange={null}
+      maxDetail="month"
+      minDetail="year"
+      nextLabel="→"
+      prevLabel="←"
+      next2Label={null}
+      prev2Label={null}
+      calendarType="gregory"
+      showNeighboringMonth={false}
+      activeStartDate={activeMonth}
+    />
+  )
+}
+
 const CalendarModal = (props: {
   date: Date
   changeDate: (value: Date, event?: React.MouseEvent<HTMLButtonElement>) => void
@@ -21,26 +39,7 @@ const CalendarModal = (props: {
     fetcher
   )
 
-  if (error) return 'sorry there was an error finding that information'
-  if (isLoading) {
-    return (
-      <>
-        <Calendar
-          value={null}
-          onChange={null}
-          maxDetail="month"
-          minDetail="year"
-          nextLabel="→"
-          prevLabel="←"
-          next2Label={null}
-          prev2Label={null}
-          calendarType="gregory"
-          showNeighboringMonth={false}
-          activeStartDate={activeMonth}
-        />
-      </>
-    )
-  }
+  if (error || isLoading) return <DefaultCalendar activeMonth={activeMonth} />
 
   const handleActiveStartDateChange = ({ view, activeStartDate }: OnArgs) => {
     setActiveMonth(activeStartDate)

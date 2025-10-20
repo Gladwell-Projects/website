@@ -151,6 +151,7 @@ export const Artists: CollectionConfig = {
                 'smImage',
                 'gallery',
                 'twoImage',
+                'halfImage',
               ],
               blocks: [],
             },

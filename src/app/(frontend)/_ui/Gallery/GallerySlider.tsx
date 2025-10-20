@@ -16,10 +16,6 @@ const GallerySlider = (props: {
     return null
   }
 
-  if (!currentImg) {
-    return null
-  }
-
   const next = () => {
     if (currentImg === items.length - 1) {
       setCurrentImg(0)

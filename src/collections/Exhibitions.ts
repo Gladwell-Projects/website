@@ -128,6 +128,7 @@ export const Exhibitions: CollectionConfig = {
                 'smImage',
                 'gallery',
                 'twoImage',
+                'halfImage',
               ],
               blocks: [],
             },

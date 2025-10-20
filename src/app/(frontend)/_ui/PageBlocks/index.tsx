@@ -43,6 +43,16 @@ const PageBlocks = (props: { data: Content }) => {
               )
             case 'text':
               return <RichText key={block.id} data={block.text} />
+            case 'halfImage':
+              return (
+                <CMSImage
+                  key={block.id}
+                  image={block.image}
+                  showCaption={block.showCaption}
+                  blockSize={block.size}
+                  size="half"
+                />
+              )
             case 'lgImage':
               return (
                 <CMSImage

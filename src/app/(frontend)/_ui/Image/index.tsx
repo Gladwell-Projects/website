@@ -7,12 +7,14 @@ import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 export const CMSImage = (props: {
   image: string | Media
   showCaption: boolean
-  size?: 'medium' | 'large' | 'small'
+  size?: 'medium' | 'large' | 'small' | 'half'
   className?: string
   captionClasses?: string
   children?: React.ReactNode
+  blockSize?: 'full' | 'small' | 'x-small'
 }) => {
-  const { image, showCaption, size, className, captionClasses, children } = props
+  const { image, showCaption, size, className, captionClasses, children, blockSize } =
+    props
 
   if (typeof image !== 'object') {
     return null
@@ -27,15 +29,17 @@ export const CMSImage = (props: {
         ? 'md:col-span-9 col-span-full'
         : size === 'small'
           ? 'col-span-full md:col-span-6 '
-          : ''
+          : size === 'half'
+            ? 'col-span-full'
+            : ''
 
   return (
     <figure
       data-size={size}
-      className={`col-span-full grid grid-cols-subgrid [&+figure]:mt-0`}
+      className={`${size === 'half' ? 'col-span-full place-self-start md:col-span-6 md:col-start-7' : `col-span-full`} grid grid-cols-subgrid [&+figure]:mt-0`}
     >
       <Image
-        className={`${classes} ${className}`}
+        className={`${classes} w-auto place-self-center ${blockSize === 'full' ? 'col-span-full' : blockSize === 'small' ? 'md:col-span-4 md:col-start-2' : blockSize === 'x-small' ? (showCaption && hasText(caption) ? 'md:col-span-3 md:col-start-1' : 'md:col-span-3 md:col-start-3') : ''} ${className}`}
         alt={alt}
         src={url}
         width={width}
@@ -43,7 +47,12 @@ export const CMSImage = (props: {
       />
       {children}
       {showCaption && hasText(caption) && (
-        <Caption className={captionClasses} caption={caption} imgSize={size} />
+        <Caption
+          className={captionClasses}
+          caption={caption}
+          imgSize={size}
+          blockSize={blockSize}
+        />
       )}
     </figure>
   )
@@ -53,12 +62,13 @@ export const Caption = (props: {
   caption: SerializedEditorState
   imgSize?: string
   className?: string
+  blockSize?: string
 }) => {
-  const { caption, imgSize, className } = props
+  const { caption, imgSize, className, blockSize } = props
   return (
     <figcaption
       data-size={imgSize}
-      className={`${className ? className : `col-span-full mt-2.5 md:col-span-3 md:-col-end-1 ${imgSize === 'large' ? 'md:mt-0' : ''}`} relative font-mono text-xs [&_p]:m-0`}
+      className={`${blockSize === 'small' ? `mt-2.5 md:col-span-4 md:col-start-2` : ''} ${className ? className : `col-span-full mt-2.5 md:col-span-3 md:-col-end-1 ${imgSize === 'large' ? 'md:mt-0' : ''}`} relative font-mono text-xs [&_p]:m-0`}
     >
       <div className={`${imgSize === 'large' && 'md:absolute md:top-2.5 md:left-0'}`}>
         <RichText data={caption} />

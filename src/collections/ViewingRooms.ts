@@ -53,6 +53,7 @@ export const ViewingRooms: CollectionConfig = {
         'smImage',
         'gallery',
         'twoImage',
+        'halfImage',
       ],
       blocks: [],
     },

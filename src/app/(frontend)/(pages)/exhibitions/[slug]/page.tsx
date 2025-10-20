@@ -51,7 +51,9 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
   const startShort = dateISO(page.startDate)
   const endShort = dateISO(page.endDate)
 
-  const artists = page.featuredArtists as Artist[]
+  const artists = (page.featuredArtists as Artist[]).sort((a, b) =>
+    a.title.localeCompare(b.title)
+  )
 
   const pressRelease = page.pressRelease as Media
 

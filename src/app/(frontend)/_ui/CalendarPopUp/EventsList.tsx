@@ -13,6 +13,19 @@ import {
   timeOnly,
 } from '../../../../utilities/convertCMSDate'
 
+export const DefaultList = ({ activeMonthString }: { activeMonthString: string }) => {
+  return (
+    <ul>
+      <li className="events-headline sticky p-1 md:p-2">
+        <h6 className="text-base md:text-lg">{activeMonthString}</h6>
+      </li>
+      <li className="w-full list-none px-1 py-2 text-center hover:bg-[var(--theme-highlight)] md:px-2">
+        Loading events...
+      </li>
+    </ul>
+  )
+}
+
 const CalendarEventList = (props: {
   date: Date
   changeDate: (value: Date, event?: React.MouseEvent<HTMLButtonElement>) => void
@@ -31,20 +44,7 @@ const CalendarEventList = (props: {
     fetcher
   )
 
-  if (error) return 'sorry there was an error finding that information'
-
-  if (isLoading) {
-    return (
-      <ul>
-        <li className="events-headline sticky p-1 md:p-2">
-          <h6 className="text-base md:text-lg">{activeMonthString}</h6>
-        </li>
-        <li className="w-full list-none px-1 py-2 hover:bg-[var(--theme-highlight)] md:px-2">
-          Loading events...
-        </li>
-      </ul>
-    )
-  }
+  if (error || isLoading) return <DefaultList activeMonthString={activeMonthString} />
 
   const events = data.docs || []
 

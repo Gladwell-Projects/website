@@ -74,6 +74,7 @@ export interface Config {
     smImage: SmImage;
     gallery: Gallery;
     twoImage: TwoImage;
+    halfImage: HalfImage;
   };
   collections: {
     media: Media;
@@ -303,7 +304,7 @@ export interface Artist {
   nationality?: string | null;
   birthYear?: number | null;
   deathYear?: number | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   socialLinks?: {
     website?: string | null;
     instagram?: string | null;
@@ -371,6 +372,21 @@ export interface TwoImage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "halfImage".
+ */
+export interface HalfImage {
+  /**
+   * Half images take up half the space and will be on the right side if it follows a text block.
+   */
+  image?: (string | null) | Media;
+  size?: ('full' | 'small' | 'x-small') | null;
+  showCaption?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'halfImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "exhibitions".
  */
 export interface Exhibition {
@@ -395,7 +411,7 @@ export interface Exhibition {
    */
   checklist?: (string | null) | Media;
   featuredArtists?: (string | Artist)[] | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   coverImage?: (string | null) | Media;
   meta?: {
     title?: string | null;
@@ -507,7 +523,7 @@ export interface Page {
   generateSlug?: boolean | null;
   slug: string;
   theme?: string | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -610,7 +626,7 @@ export interface ViewingRoom {
   title: string;
   theme?: string | null;
   cover?: (string | null) | Media;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
