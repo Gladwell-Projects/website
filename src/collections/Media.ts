@@ -1,6 +1,8 @@
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import lexicalBasic from './lexical/basicFeatures'
+import { admins } from './access/admins'
+import { adminsAndEditors } from './access/adminsAndEditors'
+import { anyone } from './access/anyone'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -11,7 +13,11 @@ export const Media: CollectionConfig = {
   },
   enableQueryPresets: true,
   access: {
-    read: () => true,
+    read: anyone,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: adminsAndEditors,
+    unlock: admins,
   },
   fields: [
     {

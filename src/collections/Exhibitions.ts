@@ -3,6 +3,7 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { admins } from './access/admins'
 
 export const Exhibitions: CollectionConfig = {
   slug: 'exhibitions',
@@ -26,9 +27,11 @@ export const Exhibitions: CollectionConfig = {
   },
   access: {
     read: published,
+    readVersions: adminsAndEditors,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: adminsAndEditors,
+    unlock: admins,
   },
   versions: {
     drafts: true,

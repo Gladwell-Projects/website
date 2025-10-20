@@ -1,7 +1,7 @@
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
-import { fetchPage } from '../../_data'
+import { fetchPage, fetchPages } from '../../_data'
 import Headline from '../../_ui/Headline'
 import Content from '../../_ui/PageContent'
 import SubGrid from '../../_ui/pageGrid'
@@ -13,6 +13,18 @@ import configPromise from '@payload-config'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { cache } from 'react'
+
+export const generateStaticParams = async () => {
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'pages',
+    draft: false,
+    pagination: false,
+    limit: 100000,
+    depth: 2,
+  })
+  return pages.docs.map((page) => ({ slug: page.slug }))
+}
 
 const getPage = async (slug: string, draft?: boolean) =>
   draft ? fetchPage(slug) : unstable_cache(fetchPage, [`page-${slug}`])(slug)

@@ -14,6 +14,18 @@ import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { cache } from 'react'
 
+export const generateStaticParams = async () => {
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'viewingRooms',
+    draft: false,
+    pagination: false,
+    limit: 100000,
+    depth: 2,
+  })
+  return pages.docs.map((page) => ({ slug: page.slug }))
+}
+
 const getPage = async (slug: string, draft?: boolean) =>
   draft
     ? fetchViewingRoom(slug)

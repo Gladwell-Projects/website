@@ -1,10 +1,22 @@
 import { themePicker } from '@/fields/theme'
 import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
+import { published } from './access/published'
+import { adminsAndEditors } from './access/adminsAndEditors'
+import { admins } from './access/admins'
+
 export const ViewingRooms: CollectionConfig = {
   slug: 'viewingRooms',
   versions: {
     drafts: true,
+  },
+  access: {
+    read: published,
+    readVersions: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
+    unlock: admins,
+    create: adminsAndEditors,
   },
   admin: {
     group: 'Website',
@@ -14,6 +26,7 @@ export const ViewingRooms: CollectionConfig = {
     {
       type: 'text',
       name: 'title',
+      required: true,
     },
     themePicker(),
     {

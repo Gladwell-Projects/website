@@ -11,6 +11,7 @@ import { Text } from '../blocks/Text'
 import { Headline } from '../blocks/Headline'
 import { LgImage } from '../blocks/LargeImage'
 import { MdImage } from '../blocks/MediumImage'
+import { admins } from './access/admins'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -38,6 +39,7 @@ export const Pages: CollectionConfig = {
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: adminsAndEditors,
+    unlock: admins,
   },
   versions: {
     drafts: true,

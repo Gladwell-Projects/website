@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import CalendarPopup from '../../_ui/CalendarPopUp'
 import Headline from '../../_ui/Headline'
 import { generateMeta } from '@/utilities/generateMeta'
+
 const EventsPage = () => {
   return (
     <div className="col-span-full grid w-full grid-cols-subgrid gap-3">

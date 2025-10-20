@@ -607,7 +607,7 @@ export interface Event {
  */
 export interface ViewingRoom {
   id: string;
-  title?: string | null;
+  title: string;
   theme?: string | null;
   cover?: (string | null) | Media;
   content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage)[] | null;
@@ -626,6 +626,7 @@ export interface ViewingRoom {
  */
 export interface User {
   id: string;
+  name?: string | null;
   role: 'admin' | 'editor' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -1018,6 +1019,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -4,6 +4,7 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { admins } from './access/admins'
 // import { formatSlug } from '@/fields/slug/formatSlug'
 
 export const Press: CollectionConfig = {
@@ -30,9 +31,11 @@ export const Press: CollectionConfig = {
   },
   access: {
     read: published,
+    readVersions: adminsAndEditors,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: adminsAndEditors,
+    unlock: admins,
   },
   versions: {
     drafts: true,

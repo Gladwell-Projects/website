@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { admins, adminsField } from './access/admins'
 import { adminsAndEditors } from './access/adminsAndEditors'
+import { published } from './access/published'
 
 export const Clients: CollectionConfig = {
   slug: 'clients',
@@ -10,10 +11,11 @@ export const Clients: CollectionConfig = {
     group: 'Website',
   },
   access: {
-    read: adminsAndEditors,
+    read: published,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: admins,
+    unlock: admins,
   },
   auth: true,
   fields: [

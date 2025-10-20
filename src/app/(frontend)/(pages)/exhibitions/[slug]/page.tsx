@@ -19,6 +19,18 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
+export const generateStaticParams = async () => {
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'exhibitions',
+    draft: false,
+    pagination: false,
+    limit: 100000,
+    depth: 2,
+  })
+  return pages.docs.map((page) => ({ slug: page.slug }))
+}
+
 const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
 
