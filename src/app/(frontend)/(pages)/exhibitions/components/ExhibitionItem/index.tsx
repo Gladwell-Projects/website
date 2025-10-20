@@ -36,14 +36,16 @@ const ExhibitionItem = ({ exhibition }: { exhibition: Partial<Exhibition> }) => 
                 {start} &mdash; {end}
               </div>
               <div>
-                {artists.map((a, i) => {
-                  return (
-                    <span key={a.id}>
-                      {a.title}
-                      {i < artists.length - 1 ? ', ' : ''}
-                    </span>
-                  )
-                })}
+                {artists
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((a, i) => {
+                    return (
+                      <span key={a.id}>
+                        {a.title}
+                        {i < artists.length - 1 ? ', ' : ''}
+                      </span>
+                    )
+                  })}
               </div>
             </div>
           </div>
