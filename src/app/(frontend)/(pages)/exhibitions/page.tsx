@@ -7,6 +7,7 @@ import { Exhibition } from '@/payload-types'
 import ExhibitionsList from './components/ExhibitionList'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
+import Headline from '../../_ui/Headline'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -54,7 +55,7 @@ const Exhibitions = async () => {
   return (
     <div className="col-span-full grid grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
-      <h1 className="col-span-full">Exhibitions</h1>
+      <Headline title="Exhibitions" />
       {current.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
           <h6 className="col-span-full">Current</h6>

@@ -4,7 +4,7 @@ const Headline: React.FC<{
   className?: string
 }> = ({ title, children, className }) => {
   return (
-    <div className={`headline col-span-full grid grid-cols-subgrid py-4 ${className}`}>
+    <div className={`headline col-span-full grid grid-cols-subgrid py-8 ${className}`}>
       {title && <h1 className="col-span-full md:col-span-10">{title}</h1>}
       {children}
     </div>
