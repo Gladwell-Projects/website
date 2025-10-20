@@ -4,9 +4,7 @@ import Calendar, { TileClassNameFunc } from 'react-calendar'
 import { OnArgs } from 'react-calendar/dist/shared/types.js'
 import useSWR from 'swr'
 import { fetcher, query } from './getEvents'
-import { Suspense } from 'react'
 import { dateToNumeric } from '../../../../utilities/convertCMSDate'
-import { fetchCollection } from '../../_data'
 
 const CalendarModal = (props: {
   date: Date

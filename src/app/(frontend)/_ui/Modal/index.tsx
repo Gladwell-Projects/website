@@ -1,5 +1,5 @@
 'use client'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const Modal = (props: { children: React.ReactNode }) => {
   const { children } = props

@@ -4,13 +4,6 @@ import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { themePicker } from '@/fields/theme'
-import lexicalDefault from './lexical/defaultFeatures'
-import lexicalWithBlocks from './lexical/withBlocks'
-import { Gallery } from '../blocks/Gallery'
-import { Text } from '../blocks/Text'
-import { Headline } from '../blocks/Headline'
-import { LgImage } from '../blocks/LargeImage'
-import { MdImage } from '../blocks/MediumImage'
 import { admins } from './access/admins'
 
 export const Pages: CollectionConfig = {

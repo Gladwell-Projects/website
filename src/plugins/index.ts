@@ -1,7 +1,6 @@
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Plugin } from 'payload'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 
 import { Page, Exhibition, Artist, Event, Press } from '@/payload-types'

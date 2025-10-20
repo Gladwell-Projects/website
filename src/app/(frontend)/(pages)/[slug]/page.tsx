@@ -1,7 +1,7 @@
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
-import { fetchPage, fetchPages } from '../../_data'
+import { fetchPage } from '../../_data'
 import Headline from '../../_ui/Headline'
 import Content from '../../_ui/PageContent'
 import SubGrid from '../../_ui/pageGrid'
