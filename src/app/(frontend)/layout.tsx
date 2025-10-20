@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import { IBM_Plex_Mono } from 'next/font/google'
 
 import './main.css'
+import CursorSpotlight from './_ui/CursorSpotlight'
 
 const mono = IBM_Plex_Mono({
   subsets: ['latin'],
@@ -62,6 +63,7 @@ export default function RootLayout(props: {
         {children}
         {events}
         {newsletter}
+        <CursorSpotlight />
       </body>
     </ThemeProvider>
   )

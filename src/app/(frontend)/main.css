@@ -261,6 +261,23 @@
     line-height: var(--text-base--line-height);
   }
 
+  .spotlight {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    mix-blend-mode: difference;
+    filter: blur(4px);
+    border-radius: 50vw;
+    background: blue;
+    width: 2rem;
+    height: 2rem;
+    pointer-events: none;
+    content: " ";
+  }
+
   /* theme settings */
   .theme-default {
     --theme-text: var(--color-midnight);
