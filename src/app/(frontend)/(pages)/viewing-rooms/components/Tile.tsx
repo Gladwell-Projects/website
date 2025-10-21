@@ -27,6 +27,7 @@ const ViewingRoomTile = (props: { room: Partial<ViewingRoom> }) => {
             width={width}
             height={height}
             className="aspect-4/3 w-full object-cover"
+            sizes="(max-width: 448px) 100vw, 50vw"
           />
         </Link>
       )}

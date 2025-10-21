@@ -15,7 +15,7 @@ export default function cloudflareLoader({ src, width, quality }: ImageLoaderPro
 
   const params = [`width=${width}`]
   if (quality) {
-    params.push(`quality=${quality}`)
+    params.push(`quality=${quality || 80}`)
   }
   const zone = 'gladwellprojects.com'
   const paramsString = params.join(',')

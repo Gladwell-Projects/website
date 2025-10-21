@@ -22,16 +22,35 @@ export const CMSImage = (props: {
 
   const { alt, url, width, height, caption } = image
 
-  const classes =
-    size === 'large'
-      ? 'col-span-full'
-      : size === 'medium'
-        ? 'md:col-span-9 col-span-full'
-        : size === 'small'
-          ? 'col-span-full md:col-span-6 '
-          : size === 'half'
-            ? 'col-span-full'
-            : ''
+  const classes = () => {
+    switch (size) {
+      case 'large':
+        return 'col-span-full'
+      case 'medium':
+        return 'md:col-span-9 col-span-full'
+      case 'small':
+        return 'col-span-full md:col-span-6 '
+      case 'half':
+        return 'col-span-full'
+      default:
+        return null
+    }
+  }
+
+  const sizes = () => {
+    switch (size) {
+      case 'large':
+        return '100vw'
+      case 'medium':
+        return '(max-width: 448px) 100vw, 75vw'
+      case 'small':
+        return '(max-width: 448px) 100vw, 50vw'
+      case 'half':
+        return '(max-width: 448px) 100vw, 50vw'
+      default:
+        return '(max-width: 448px) 100vw, 50vw'
+    }
+  }
 
   return (
     <figure
@@ -39,11 +58,12 @@ export const CMSImage = (props: {
       className={`${size === 'half' ? 'col-span-full place-self-start md:col-span-6 md:col-start-7' : `col-span-full`} grid grid-cols-subgrid [&+figure]:mt-0`}
     >
       <Image
-        className={`${classes} w-auto place-self-center ${blockSize === 'full' ? 'col-span-full' : blockSize === 'small' ? 'md:col-span-4 md:col-start-2' : blockSize === 'x-small' ? (showCaption && hasText(caption) ? 'md:col-span-3 md:col-start-1' : 'md:col-span-3 md:col-start-3') : ''} ${className}`}
+        className={`${classes()} w-auto place-self-center ${blockSize === 'full' ? 'col-span-full' : blockSize === 'small' ? 'md:col-span-4 md:col-start-2' : blockSize === 'x-small' ? (showCaption && hasText(caption) ? 'md:col-span-3 md:col-start-1' : 'md:col-span-3 md:col-start-3') : ''} ${className}`}
         alt={alt}
         src={url}
         width={width}
         height={height}
+        sizes={sizes()}
       />
       {children}
       {showCaption && hasText(caption) && (

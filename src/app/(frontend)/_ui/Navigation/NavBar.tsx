@@ -49,6 +49,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
 
   return (
     <div
+      role="menu"
       className={`grid h-auto grid-flow-row auto-rows-auto items-center md:auto-cols-fr md:grid-flow-col md:grid-rows-[var(--text-base--line-height)] md:p-0 md:text-center ${className}`}
     >
       {data.map(({ link, label, theme }, i) => {
@@ -76,6 +77,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
               }
             }}
             onClick={handleClick}
+            role="menuitem"
           >
             {label}
           </CMSLink>

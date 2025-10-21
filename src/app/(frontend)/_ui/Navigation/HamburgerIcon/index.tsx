@@ -7,6 +7,9 @@ const HamburgerIcon = (props: {
 
   return (
     <button
+      aria-label="Open the Navigation Menu"
+      aria-expanded={isOpen}
+      aria-controls="navbar"
       onClick={onClick}
       className={`relative top-[-6px] h-[10px] w-4 [&_span]:absolute [&_span]:block [&_span]:h-[2px] [&_span]:w-4 [&_span]:bg-(--theme-text) ${className}`}
     >

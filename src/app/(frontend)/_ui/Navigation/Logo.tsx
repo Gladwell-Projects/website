@@ -6,7 +6,13 @@ import Link from 'next/link'
 const Logo = ({ className, variant }: { className: string; variant?: string }) => {
   return (
     <div className={`${className} logo-nav w-full place-self-center`}>
-      <Link href={'/'} className="flex w-full flex-row justify-between">
+      <Link
+        href={'/'}
+        className="flex w-full flex-row justify-between"
+        aria-label="navigate home"
+        title="Gladwell Projects Logo"
+        role="button"
+      >
         {variant === 'stacked' && (
           <GladwellProjects className="mb-1 h-[--spacing(6)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
         )}

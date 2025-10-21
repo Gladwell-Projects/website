@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import Modal from '../../_ui/Modal'
 import CalendarPopup from '../../_ui/CalendarPopUp'
 

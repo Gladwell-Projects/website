@@ -32,6 +32,7 @@ export type CMSLinkType = {
   type?: LinkType | null
   url?: string | null
   upload?: Media | null
+  role?: string
 }
 
 type GenerateSlugType = {
@@ -99,6 +100,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   reference,
   upload,
   url,
+  role,
 }) => {
   let href = generateHref({ type, reference, url, upload })
 
@@ -146,6 +148,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           prefetch={false}
+          role={role}
         >
           {label && label}
           {children && children}
@@ -162,6 +165,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        role={role}
       >
         {label && label}
         {children && children}

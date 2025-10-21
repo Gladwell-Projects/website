@@ -24,6 +24,7 @@ const ExhibitionItem = ({ exhibition }: { exhibition: Partial<Exhibition> }) => 
             height={cover.height}
             src={cover.url}
             alt={cover.alt}
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}

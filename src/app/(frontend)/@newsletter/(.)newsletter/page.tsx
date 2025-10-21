@@ -1,4 +1,4 @@
-'use client'
+export const dynamic = 'force-dynamic'
 import Modal from '../../_ui/Modal'
 import Newsletter from '../../_ui/Newsletter'
 

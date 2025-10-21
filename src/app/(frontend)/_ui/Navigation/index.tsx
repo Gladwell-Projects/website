@@ -4,7 +4,7 @@ import Logo from './Logo'
 import NavBar from './NavBar'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import HamburgerIcon from '../HamburgerIcon'
+import HamburgerIcon from './HamburgerIcon'
 
 const Navigation = (props: {
   navTemplate: 'condensed' | 'spread' | string | null

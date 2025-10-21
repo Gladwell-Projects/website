@@ -66,8 +66,8 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
       </Headline>
       <Content>
         {cv ? (
-          <Link className="col-span-4 no-underline" href={cv.url}>
-            Download CV&emsp;<small>(PDF)</small>
+          <Link className="col-span-full no-underline" href={cv.url}>
+            Download CV&ensp;<small>(PDF)</small>
           </Link>
         ) : null}
         <PageBlocks data={page.content} />

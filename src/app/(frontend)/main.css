@@ -150,7 +150,7 @@
   5.5 - 8.525
    */
 
-  --text-xs--line-height: --spacing(2);
+  --text-xs--line-height: --spacing(3);
   --text-sm--line-height: 1.6rem;
   --text-base--line-height: 1.6rem;
   --text-lg--line-height: --spacing(4);

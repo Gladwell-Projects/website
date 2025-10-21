@@ -46,6 +46,7 @@ const PressPage: React.FC = async () => {
                     width={image.width}
                     height={image.height}
                     alt={image.alt}
+                    sizes="(max-width: 448px) 100vw, 50vw"
                   />
                 )}
                 <div className="relative">

@@ -12,7 +12,10 @@ const Footer = async (props: { children?: React.ReactNode }) => {
       className={`footer mt-4 grid grid-cols-12 justify-center gap-3 bg-gradient-to-b from-(--theme-bg) from-50% to-(--theme-accent) px-2 py-8 text-xs md:place-items-start`}
     >
       <div className="col-span-full grid grid-cols-subgrid md:col-span-6">
-        <GladwellProjects className="col-span-full mb-2 h-6 w-auto fill-(--theme-text) md:col-span-2" />
+        <GladwellProjects
+          title="Gladwell Projects Logo"
+          className="col-span-full mb-2 h-6 w-auto fill-(--theme-text) md:col-span-2"
+        />
         <div className="tagline col-span-full">
           <div className="font-bold">{footer.tagline}</div>
           <div>{footer.siteDescription}</div>

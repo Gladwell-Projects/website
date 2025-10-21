@@ -29,26 +29,26 @@ const Gallery = (props: {
         className="col-span-full -m-2 grid grid-cols-subgrid gap-y-4 bg-[color-mix(in_oklab,_white_0,var(--theme-bg))] p-2 pt-4 pb-8"
       >
         <div className="col-span-full grid grid-cols-subgrid place-items-end">
-          <div className="col-span-full text-right">
+          <div className="col-span-full flex gap-2 text-right">
             <button
+              aria-label="switch gallery to grid view"
               onClick={gridView}
-              className={`relative mx-2 cursor-pointer border-2 border-(--theme-bg) bg-(--theme-bg) ${view === 'Grid' && 'outline-4 outline-(--theme-highlight)'}`}
+              className={`cursor-pointer border-2 border-(--theme-bg) bg-(--theme-bg) ${view === 'Grid' ? 'outline-4 outline-(--theme-highlight) [&>span>span]:border-(--theme-bg) [&>span>span]:bg-(--theme-text)' : '[&>span>span]:border-2'}`}
             >
-              <span className="relativem block h-3 w-3 border-2 border-(--theme-text)">
-                <span className="absolute top-[50%] left-[50%] h-3 w-px -translate-[50%] bg-(--theme-text)">
-                  {' '}
-                </span>
-                <span className="absolute top-[50%] left-[50%] h-px w-3 -translate-[50%] bg-(--theme-text)">
-                  {' '}
-                </span>
+              <span className="m-0 grid h-2.5 w-2.5 grid-cols-2 grid-rows-2 gap-[2px] overflow-hidden p-0">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </span>
               {/* grid */}
             </button>
             <button
+              aria-label="switch gallery to slides view"
               onClick={slideView}
-              className={`row-start-1 cursor-pointer border-2 border-(--theme-bg) ${view === 'Slides' && 'outline-4 outline-(--theme-highlight)'}`}
+              className={`row-start-1 cursor-pointer border-2 border-(--theme-bg) ${view === 'Slides' ? 'outline-4 outline-(--theme-highlight) [&_span]:bg-(--theme-text)' : '[&_span]:border-2'}`}
             >
-              <span className="relative block h-3 w-3 border-2 border-(--theme-text)"></span>
+              <span className="block h-2.5 w-2.5"></span>
               {/* slides */}
             </button>
           </div>
