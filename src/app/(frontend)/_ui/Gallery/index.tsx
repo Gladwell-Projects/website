@@ -23,10 +23,11 @@ const Gallery = (props: {
 
   return (
     <>
-      <h4 className="col-span-full" id={`gallery-${blockId}`}>
-        {header}
-      </h4>
-      <div className="col-span-full -m-2 grid grid-cols-subgrid gap-y-4 bg-[color-mix(in_oklab,_white_0,var(--theme-bg))] p-2 pt-4 pb-8">
+      <h4 className="col-span-full">{header}</h4>
+      <div
+        id={`gallery-${blockId}`}
+        className="col-span-full -m-2 grid grid-cols-subgrid gap-y-4 bg-[color-mix(in_oklab,_white_0,var(--theme-bg))] p-2 pt-4 pb-8"
+      >
         <div className="col-span-full grid grid-cols-subgrid place-items-end">
           <div className="col-span-full text-right">
             <button

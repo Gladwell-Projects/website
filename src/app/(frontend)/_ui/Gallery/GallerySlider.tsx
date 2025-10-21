@@ -46,10 +46,10 @@ const GallerySlider = (props: {
       >
         &larr;
       </button>
-      <div className="col-span-10 grid h-[75vh] w-full grid-cols-subgrid">
+      <div className="col-span-10 grid w-full grid-cols-subgrid">
         <figure className="col-span-full grid grid-cols-subgrid">
           <Image
-            className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8"
+            className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8 md:h-[65vh]"
             alt={alt}
             width={width}
             height={height}
