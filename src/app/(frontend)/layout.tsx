@@ -5,6 +5,7 @@ import { IBM_Plex_Mono } from 'next/font/google'
 
 import './main.css'
 import CursorSpotlight from './_ui/CursorSpotlight'
+import { FathomAnalytics } from '../fathom'
 
 const mono = IBM_Plex_Mono({
   subsets: ['latin'],
@@ -60,6 +61,7 @@ export default function RootLayout(props: {
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
       <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+        <FathomAnalytics />
         <CursorSpotlight />
         {children}
         {events}
