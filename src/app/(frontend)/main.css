@@ -218,7 +218,7 @@
     --theme-bg: var(--color-white);
     --theme-accent: var(--color-glow);
     --theme-link: var(--color-blue);
-    --theme-link-visited: var(--color-web3);
+    --theme-link-visited: var(--color-blue-400);
     --theme-highlight: var(--color-glow-300);
     --theme-shadow: var(--color-midnight-400);
     --theme-accent: var(--color-glow);
@@ -435,6 +435,9 @@
     &:visited {
       color: var(--theme-link-visited);
     }
+  }
+  hr {
+    margin: 0 0 --spacing(4);
   }
 }
 

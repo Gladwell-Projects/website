@@ -85,13 +85,13 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
       </Headline>
       <Content>
         {pressRelease && (
-          <Link className="col-span-4 no-underline" href={pressRelease.url}>
-            Press Release&emsp;<small>(PDF)</small>
+          <Link className="col-span-6 no-underline md:col-span-4" href={pressRelease.url}>
+            Download Press Release&emsp;<small>(PDF)</small>
           </Link>
         )}
         {checklist && (
-          <Link className="col-span-4 no-underline" href={checklist.url}>
-            Checklist&emsp;<small>(PDF)</small>
+          <Link className="col-span-6 no-underline md:col-span-4" href={checklist.url}>
+            Download Checklist&emsp;<small>(PDF)</small>
           </Link>
         )}
 

@@ -9,13 +9,13 @@ import Content from '@/app/(frontend)/_ui/PageContent'
 import SubGrid from '@/app/(frontend)/_ui/pageGrid'
 import { fetchArtist } from '@/app/(frontend)/_data'
 import { unstable_cache } from 'next/cache'
-import Image from 'next/image'
 import PageBlocks from '@/app/(frontend)/_ui/PageBlocks'
 import Gallery from '@/app/(frontend)/_ui/Gallery'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import Link from 'next/link'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -42,15 +42,19 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
     notFound()
   }
 
-  const cover = page.profileImage as Media
-  const survey = page.surveyArtworks as Media[]
+  const survey =
+    Array.isArray(page.surveyArtworks) && typeof page.surveyArtworks[0] === 'object'
+      ? page.surveyArtworks
+      : []
+
+  const cv = typeof page.cvUpload === 'object' ? page.cvUpload : null
 
   return (
     <SubGrid>
       <ThemeSwitch templateTheme="default" />
       {draft && <LivePreviewListener />}
       <Headline title={page.title}>
-        <h4 className="text-glow-600 col-span-6 row-start-2">
+        <h4 className="text-glow-600 col-span-6">
           {!page.deathYear && page.birthYear && 'b. '}
           {page.birthYear && `${page.birthYear}`}
           {page.deathYear && !page.birthYear && 'd. '}
@@ -59,16 +63,13 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {(page.birthYear || page.deathYear) && page.nationality && ','}{' '}
           {page.nationality && page.nationality}
         </h4>
-        {cover && (
-          <Image
-            src={cover.url}
-            width={cover.width}
-            height={cover.height}
-            alt={cover.alt}
-          />
-        )}
       </Headline>
       <Content>
+        {cv ? (
+          <Link className="col-span-4 no-underline" href={cv.url}>
+            Download CV&emsp;<small>(PDF)</small>
+          </Link>
+        ) : null}
         <PageBlocks data={page.content} />
         {survey.length > 0 && (
           <Gallery galleryItems={survey} defaultState="Grid" header="Survey" />

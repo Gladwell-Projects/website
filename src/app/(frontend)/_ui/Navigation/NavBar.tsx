@@ -54,9 +54,10 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
       {data.map(({ link, label, theme }, i) => {
         const { reference } = link
 
-        if (!theme && reference.relationTo === 'pages') {
-          // @ts-expect-error we are only finding theme on referenceTo pages
-          theme = reference.value.theme
+        let CMSTheme = theme || 'default'
+
+        if (reference && 'theme' in reference.value) {
+          CMSTheme = reference.value.theme
         }
 
         return (
@@ -66,7 +67,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
             {...link}
             onMouseEnter={() => {
               if (isHome) {
-                setTheme(theme)
+                setTheme(CMSTheme)
               }
             }}
             onMouseLeave={() => {

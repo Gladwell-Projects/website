@@ -48,10 +48,19 @@ const PressPage: React.FC = async () => {
                     alt={image.alt}
                   />
                 )}
-                <RichText data={press.content} />
+                <div className="relative">
+                  <div className="absolute bottom-0 m-0 h-8 w-full bg-linear-to-t from-(color:--theme-bg) to-transparent"></div>
+                  <RichText
+                    data={press.content}
+                    className="max-h-[--spacing(65)] max-w-full overflow-hidden overflow-ellipsis"
+                  ></RichText>
+                </div>
                 <footer className="[&_li]:inline">
                   {relatedExhibitions.length > 0 && (
-                    <ul className="text-sm italic">
+                    <ul className="italic">
+                      <li className="pr-2 text-sm font-normal tracking-widest uppercase not-italic">
+                        Exhibitions:
+                      </li>
                       {relatedExhibitions.map((e, i) => {
                         return (
                           <li key={e.id}>
@@ -68,6 +77,9 @@ const PressPage: React.FC = async () => {
                   )}
                   {relatedArtists.length > 0 && (
                     <ul className="text-sm italic">
+                      <li className="pr-2 text-sm font-normal tracking-widest uppercase not-italic">
+                        Artists:
+                      </li>
                       {relatedArtists.map((e, i) => {
                         return (
                           <li key={e.id}>
@@ -83,6 +95,9 @@ const PressPage: React.FC = async () => {
                     </ul>
                   )}
                   <ul className="font-bold not-italic">
+                    <li className="pr-2 text-sm font-normal tracking-widest uppercase">
+                      Read More:
+                    </li>
                     {links.map((link, i) => {
                       return (
                         <li key={link.id}>

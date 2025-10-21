@@ -39,17 +39,17 @@ const GallerySlider = (props: {
   const { alt, url, width, height, caption } = items[currentImg]
 
   return (
-    <div className="col-span-full grid grid-cols-subgrid">
+    <div className="col-span-full grid grid-cols-subgrid overflow-hidden">
       <button
         onClick={previous}
         className="col-span-1 cursor-pointer place-self-center-safe text-2xl"
       >
         &larr;
       </button>
-      <div className="relative col-span-10 grid grid-cols-subgrid">
+      <div className="col-span-10 grid h-[75vh] w-full grid-cols-subgrid">
         <figure className="col-span-full grid grid-cols-subgrid">
           <Image
-            className="col-span-full m-auto max-h-[calc(100dvh_-_--spacing(12))] w-auto object-scale-down md:col-span-8"
+            className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8"
             alt={alt}
             width={width}
             height={height}
