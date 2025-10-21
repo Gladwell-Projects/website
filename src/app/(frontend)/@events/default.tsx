@@ -1,3 +1,3 @@
-export default function Default(): React.FC {
+export default function Default(): React.ReactNode {
   return null
 }

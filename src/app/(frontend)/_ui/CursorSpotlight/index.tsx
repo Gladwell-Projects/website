@@ -36,6 +36,7 @@ const CursorSpotlight = () => {
       console.log('touch!')
       window.addEventListener('touchmove', handleTouchMove)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return <div className="spotlight" style={{ left: `${x}px`, top: `${y}px` }}></div>

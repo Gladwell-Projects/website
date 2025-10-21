@@ -12,6 +12,8 @@ import {
   dateToNumeric,
   timeOnly,
 } from '../../../../utilities/convertCMSDate'
+import { Event } from '@/payload-types'
+import Link from 'next/link'
 
 export const DefaultList = ({ activeMonthString }: { activeMonthString: string }) => {
   return (
@@ -46,7 +48,7 @@ const CalendarEventList = (props: {
 
   if (error || isLoading) return <DefaultList activeMonthString={activeMonthString} />
 
-  const events = data.docs || []
+  const events = data.docs as Event[]
 
   return (
     <ul>
@@ -88,8 +90,23 @@ const CalendarEventList = (props: {
                 <div className="event-details p-0">
                   <RichText data={e.content} />
                   {e.isLinked && (
+                    // @ts-expect-error link is not string?
                     <CMSLink {...e.link}>{e.link.newTab ? ' ↗︎' : ''}</CMSLink>
                   )}
+                  {Array.isArray(e.relatedExhibitions) &&
+                    e.relatedExhibitions.map((exhibition) => {
+                      if (typeof exhibition !== 'object') {
+                        return null
+                      }
+                      return (
+                        <Link
+                          key={exhibition.id}
+                          href={`/exhibitions/${exhibition.slug}`}
+                        >
+                          {exhibition.title} ↗︎
+                        </Link>
+                      )
+                    })}
                 </div>
               )}
             </li>
