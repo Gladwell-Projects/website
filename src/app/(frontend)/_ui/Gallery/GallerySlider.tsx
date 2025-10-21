@@ -39,11 +39,8 @@ const GallerySlider = (props: {
   const { alt, url, width, height, caption } = items[currentImg]
 
   return (
-    <div className="col-span-full grid grid-cols-subgrid overflow-hidden">
-      <button
-        onClick={previous}
-        className="col-span-1 cursor-pointer place-self-center-safe text-2xl"
-      >
+    <div className="col-span-full grid grid-cols-subgrid overflow-visible [&_button]:col-span-1 [&_button]:h-full [&_button]:cursor-pointer [&_button]:place-self-center-safe [&_button]:px-1 [&_button]:text-lg [&_button]:md:text-2xl">
+      <button onClick={previous} className="-ml-2">
         &larr;
       </button>
       <div className="col-span-10 grid w-full grid-cols-subgrid">
@@ -61,10 +58,7 @@ const GallerySlider = (props: {
           />
         </figure>
       </div>
-      <button
-        onClick={next}
-        className="col-span-1 cursor-pointer place-self-center-safe text-2xl"
-      >
+      <button onClick={next} className="-mr-2">
         &rarr;
       </button>
     </div>
