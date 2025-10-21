@@ -33,6 +33,13 @@ const Navigation = (props: {
   }, [setNavMaxHeight, navMaxHeight, screenMd, isOpen, navTemplate])
 
   useEffect(() => {
+    const style =
+      'font-family:verdana, sans-serif; font-weight:normal; font-style:italic; font-size: 1.25em; margin:1em;'
+    console.log(
+      '%cwebsite made by nathan wong, email nathan@itsallwong.com for more info :-)',
+      style
+    )
+
     const checkScreenSize = () => {
       setScreenMd(window.innerWidth > 768)
     }
@@ -63,7 +70,7 @@ const Navigation = (props: {
       window.removeEventListener('resize', checkScreenSize)
       document.removeEventListener('scroll', scrollListener)
     }
-  })
+  }, [])
 
   return (
     <nav
