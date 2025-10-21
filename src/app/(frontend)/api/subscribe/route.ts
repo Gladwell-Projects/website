@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+
 interface MailchimpErrorResponse {
   type: string
   title: string
@@ -6,6 +7,7 @@ interface MailchimpErrorResponse {
   detail: string
   instance: string
 }
+
 export async function POST(request: NextRequest) {
   try {
     type Form = {
@@ -76,9 +78,9 @@ export async function POST(request: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
       }
     )
-  } catch (e) {
+  } catch (e: any) {
     return NextResponse.json(
-      { error: e },
+      { error: e.message },
       {
         status: 500,
         headers: { 'Content-Type': 'application/json' },

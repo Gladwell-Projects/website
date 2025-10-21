@@ -60,10 +60,10 @@ export default function RootLayout(props: {
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
       <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+        <CursorSpotlight />
         {children}
         {events}
         {newsletter}
-        <CursorSpotlight />
       </body>
     </ThemeProvider>
   )

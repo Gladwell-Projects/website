@@ -23,7 +23,7 @@ const Newsletter = () => {
     const data = Object.fromEntries(formData.entries())
 
     try {
-      const response = await fetch('/api/newsletter', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

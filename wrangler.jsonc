@@ -45,7 +45,13 @@
   "images": {
     "binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
   },
-
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+    },
+  },
   // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`
   // "env": {
