@@ -10,8 +10,6 @@ const CursorSpotlight = () => {
   const handleMouseMove = (e: MouseEvent) => {
     setX(e.pageX)
     setY(e.pageY)
-
-    console.log('mouse moving')
   }
 
   const handleTouchMove = (event: TouchEvent) => {
@@ -29,11 +27,9 @@ const CursorSpotlight = () => {
 
   useEffect(() => {
     if (!isTouch) {
-      console.log('not a touch!')
       window.addEventListener('mousemove', handleMouseMove)
     }
     if (isTouch) {
-      console.log('touch!')
       window.addEventListener('touchmove', handleTouchMove)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

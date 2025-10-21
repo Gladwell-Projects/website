@@ -28,7 +28,6 @@ const Navigation = (props: {
     if (!screenMd && navTemplate !== 'spread') {
       const navs = [...document.querySelectorAll('#navbars div')]
       const navHeights = navs.map((a) => a.clientHeight)
-      // console.log(navHeights)
       setNavMaxHeight(navHeights.reduce((a, b) => a + b))
     }
   }, [setNavMaxHeight, navMaxHeight, screenMd, isOpen, navTemplate])

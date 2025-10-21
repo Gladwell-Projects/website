@@ -32,7 +32,6 @@ const Newsletter = () => {
       })
 
       const messages = (await response.json()) as ResponseJson
-      console.log(messages)
 
       if (response.ok) {
         setMessage(messages.message)

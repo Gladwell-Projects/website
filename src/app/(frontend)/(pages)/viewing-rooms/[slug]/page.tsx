@@ -34,7 +34,6 @@ const getPage = async (slug: string, draft?: boolean) =>
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await params
-  console.log(slug)
   // const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug)
   const page = await getPage(slug, draft)
 

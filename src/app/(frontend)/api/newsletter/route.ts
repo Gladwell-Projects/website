@@ -77,7 +77,6 @@ export async function POST(request: NextRequest) {
       }
     )
   } catch (e) {
-    console.log(e)
     return NextResponse.json(
       { error: e },
       {
