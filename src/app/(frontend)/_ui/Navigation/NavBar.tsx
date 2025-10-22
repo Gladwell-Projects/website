@@ -43,22 +43,22 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  const handleClick = () => {
-    setTheme(theme)
-  }
-
   return (
     <div
       role="menu"
       className={`grid h-auto grid-flow-row auto-rows-auto items-center md:auto-cols-fr md:grid-flow-col md:grid-rows-[var(--text-base--line-height)] md:p-0 md:text-center ${className}`}
     >
-      {data.map(({ link, label, theme }, i) => {
+      {data.map(({ link, label, theme: linkTheme }, i) => {
         const { reference } = link
 
-        let CMSTheme = theme || 'default'
+        let CMSTheme = linkTheme || 'default'
 
         if (reference && 'theme' in reference.value) {
           CMSTheme = reference.value.theme
+        }
+
+        if (link.url === '/events') {
+          CMSTheme = theme
         }
 
         return (
@@ -76,7 +76,10 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
                 setTheme('default')
               }
             }}
-            onClick={handleClick}
+            onNavigate={async () => {
+              await setTheme(CMSTheme)
+            }}
+            customId={CMSTheme}
             role="menuitem"
           >
             {label}

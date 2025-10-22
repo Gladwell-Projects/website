@@ -1,6 +1,5 @@
 import React from 'react'
 import { currentThemeFromNav, fetchExhibitions } from '../../_data'
-import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
@@ -8,6 +7,7 @@ import ExhibitionsList from './components/ExhibitionList'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import Headline from '../../_ui/Headline'
+import ThemeSwitch from '../../_ui/ThemeSwitch'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -18,7 +18,7 @@ const Exhibitions = async () => {
 
   const slug = '/exhibitions'
 
-  const pageTheme = await currentThemeFromNav(slug)
+  const pageTheme = await currentThemeFromNav([slug])
 
   const today = new Date()
 
@@ -45,7 +45,6 @@ const Exhibitions = async () => {
     return (
       <div className="col-span-full grid grid-cols-subgrid">
         <ThemeSwitch templateTheme={pageTheme} />
-
         <h1 className="col-span-full">Exhibitions</h1>
         <h6 className="col-span-12">Nothing here yet...</h6>
       </div>

@@ -35,7 +35,12 @@ const CursorSpotlight = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <div className="spotlight" style={{ left: `${x}px`, top: `${y}px` }}></div>
+  return (
+    <div
+      className="spotlight h-[25vw] w-[25vw] shadow-[inset_0_0_4vw_6vw_black] md:h-[10vw] md:w-[10vw] md:shadow-[inset_0_0_1vw_3vw_black]"
+      style={{ left: `${x}px`, top: `${y}px` }}
+    ></div>
+  )
 }
 
 export default CursorSpotlight

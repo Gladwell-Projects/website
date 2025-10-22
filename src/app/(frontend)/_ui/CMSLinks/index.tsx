@@ -33,6 +33,7 @@ export type CMSLinkType = {
   url?: string | null
   upload?: Media | null
   role?: string
+  onNavigate?: () => void
 }
 
 type GenerateSlugType = {
@@ -101,6 +102,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   upload,
   url,
   role,
+  onNavigate,
 }) => {
   let href = generateHref({ type, reference, url, upload })
 
@@ -144,7 +146,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
           {...newTabProps}
           className={className}
           id={customId ?? ''}
-          onClick={onClick}
+          onNavigate={onNavigate}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           prefetch={false}

@@ -17,7 +17,8 @@ const ViewingRoomsPage: React.FC = async () => {
 
   const slug = '/viewing-rooms'
 
-  const pageTheme = await currentThemeFromNav(slug)
+  const pageTheme = await currentThemeFromNav([slug])
+
   if (viewingRooms.length < 1) {
     return (
       <SubGrid>

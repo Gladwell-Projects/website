@@ -17,7 +17,7 @@ const ArtistsPage: React.FC = async () => {
 
   const slug = '/artists'
 
-  const pageTheme = await currentThemeFromNav(slug)
+  const pageTheme = await currentThemeFromNav([slug])
 
   return (
     <SubGrid>

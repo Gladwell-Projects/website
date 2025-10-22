@@ -15,7 +15,11 @@ export const ThemeProvider = ({
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
-      <html lang="en" className={`theme-${theme} ${className}`}>
+      <html
+        lang="en"
+        data-scroll-behavior="smooth"
+        className={`theme-${theme} ${className}`}
+      >
         {children}
       </html>
     </ThemeContext.Provider>

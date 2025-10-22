@@ -337,15 +337,37 @@ export const fetchDocument = async (
   return data.docs[0]
 }
 
-export const currentThemeFromNav = async (fromSlug: string) => {
-  const nav = (await fetchGlobals()).mainMenu
-
+export const currentThemeFromNav = async (fromSlugs: string[]) => {
+  const payload = await getPayload({ config })
+  let foundItem
+  const nav = await payload.findGlobal({
+    slug: 'main-menu',
+    depth: 2,
+  })
   const menuItems = [...nav['menu-items-top'], ...nav['menu-items-bot']]
 
-  const foundItem = menuItems.find(
+  const slug = fromSlugs[fromSlugs.length - 1]
+  const collection = fromSlugs[0] as CollectionSlug
+
+  foundItem = menuItems.find(
     // @ts-expect-error slug
-    (item) => fromSlug === (item.link?.url || item.link.reference?.value?.slug)
+    (item) => slug === (item.link?.url || item.link.reference?.value?.slug)
   )
 
-  return foundItem ? foundItem.theme : 'default'
+  if (!foundItem) {
+    foundItem = await payload.find({
+      collection,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    })
+  }
+
+  if ('theme' in foundItem) {
+    return foundItem.theme
+  }
+
+  return 'default'
 }

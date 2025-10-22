@@ -2,21 +2,24 @@ import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media, Press } from '@/payload-types'
 import { currentThemeFromNav, fetchCollection } from '../../_data'
-import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Headline from '../../_ui/Headline'
 import { CMSLink } from '../../_ui/CMSLinks'
 import Link from 'next/link'
 import Image from 'next/image'
+import ThemeSwitch from '../../_ui/ThemeSwitch'
 
 const PressPage: React.FC = async () => {
-  const theme = await currentThemeFromNav('/press')
   const items = (await fetchCollection('press', 'date')) as Partial<Press>[]
+
+  const slug = '/press'
+
+  const pageTheme = await currentThemeFromNav([slug])
 
   if (items.length < 1) {
     return (
       <div className="col-span-full">
-        <ThemeSwitch templateTheme={theme} />
+        <ThemeSwitch templateTheme={pageTheme} />
         <Headline title="Press" />
         <h6>Nothing to see here yet...</h6>
       </div>
@@ -25,7 +28,7 @@ const PressPage: React.FC = async () => {
 
   return (
     <div className="col-span-full md:grid md:grid-cols-subgrid">
-      <ThemeSwitch templateTheme={theme} />
+      <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Press" className="md:col-span-full" />
       <ul className="md:col-span-full md:grid md:grid-cols-subgrid">
         {items.map((press) => {
