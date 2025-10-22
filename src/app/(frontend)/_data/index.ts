@@ -43,6 +43,78 @@ export const fetchGlobals = async (): Promise<{
   }
 }
 
+export const fetchPress = async () => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'press',
+    limit: 999999,
+    pagination: false,
+    where: {
+      and: [
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  return data.docs
+}
+
+export const fetchPressItem = async (slug: string) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'press',
+    depth: 2,
+    draft,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  const page = data.docs.find(({ slug }: Press) => {
+    if (!slug) {
+      return false
+    }
+
+    return true
+  })
+
+  if (page) {
+    return page
+  }
+
+  return null
+}
+
 export const fetchPage = async (incomingSlugSegments: string): Promise<null | Page> => {
   const { isEnabled: draft } = await draftMode()
 
@@ -187,6 +259,51 @@ export const fetchCollection = async (
   })
 
   return data.docs
+}
+
+export const fetchEvent = async (slug: string) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'events',
+    depth: 2,
+    draft,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
+    },
+  })
+
+  const page = data.docs.find(({ slug }: Event) => {
+    if (!slug) {
+      return false
+    }
+
+    return true
+  })
+
+  if (page) {
+    return page
+  }
+
+  return null
 }
 
 export const fetchEventsByMonth = async (
@@ -337,32 +454,23 @@ export const fetchDocument = async (
   return data.docs[0]
 }
 
-export const currentThemeFromNav = async (fromSlugs: string[]) => {
+export const currentThemeFromNav = async (fromSlug: string) => {
   const payload = await getPayload({ config })
-  let foundItem
   const nav = await payload.findGlobal({
     slug: 'main-menu',
     depth: 2,
   })
   const menuItems = [...nav['menu-items-top'], ...nav['menu-items-bot']]
 
-  const slug = fromSlugs[fromSlugs.length - 1]
-  const collection = fromSlugs[0] as CollectionSlug
+  const slug = fromSlug.startsWith('/') ? fromSlug : `/${fromSlug}`
 
-  foundItem = menuItems.find(
+  const foundItem = menuItems.find(
     // @ts-expect-error slug
     (item) => slug === (item.link?.url || item.link.reference?.value?.slug)
   )
 
   if (!foundItem) {
-    foundItem = await payload.find({
-      collection,
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
-    })
+    return 'default'
   }
 
   if ('theme' in foundItem) {

@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import type { Media, Page, Artist, Exhibition, Press, Event } from '@/payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
+import { fetchGlobals } from '@/app/(frontend)/_data'
+import { getServerSideURL } from './getURL'
 
 export const generateMeta = async (args: {
   doc:
@@ -12,26 +14,42 @@ export const generateMeta = async (args: {
     | Partial<Exhibition>
     | Partial<Event>
     | null
+  colSlug?: string
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, colSlug } = args
+
+  const defaults = (await fetchGlobals()).branding
 
   const ogImage = doc?.meta?.image as Media
 
-  const title = doc?.meta?.title ? doc?.meta?.title : `${doc?.title} | Gladwell Projects`
+  const defaultImage = defaults.logo as Media
+
+  const baseUrl = getServerSideURL()
+
+  const url = `${baseUrl}${colSlug ? colSlug : ''}${Array.isArray(doc?.slug) ? `/${doc?.slug.join('/')}` : `${doc?.slug.startsWith('/') ? doc.slug : `/${doc.slug}`}`}`
+
+  const title = doc?.meta?.title ? doc?.meta?.title : `${doc?.title} | ${defaults.title}`
 
   return {
-    description: doc?.meta?.description,
+    metadataBase: new URL(baseUrl),
+    description: doc?.meta?.description || defaults.description,
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
+      description: doc?.meta?.description || defaults.description,
       images: ogImage
         ? [
             {
               url: ogImage.url,
             },
           ]
-        : undefined,
+        : defaultImage
+          ? [
+              {
+                url: defaultImage.url,
+              },
+            ]
+          : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url,
     }),
     title,
   }

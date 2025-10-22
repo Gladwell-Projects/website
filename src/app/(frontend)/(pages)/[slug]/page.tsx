@@ -10,9 +10,9 @@ import { unstable_cache } from 'next/cache'
 import PageBlocks from '../../_ui/PageBlocks'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { cache } from 'react'
+import { colors } from '@/fields/theme'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -61,8 +61,6 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   )
 }
 
-export default Page
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -75,28 +73,42 @@ export async function generateMetadata({
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({ slug: decodedSlug })
+  const page = await fetchPage(decodedSlug)
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, colSlug: '' })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
-
+export const generateViewport = async (
+  props: PageProps<'/[slug]'>
+): Promise<Viewport> => {
+  const { slug } = await props.params
   const payload = await getPayload({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'pages',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+  const page = (
+    await payload.find({
+      collection: 'pages',
+      draft: false,
+      pagination: false,
+      limit: 1,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+      depth: 2,
+    })
+  ).docs[0]
 
-  return result.docs?.[0] || null
-})
+  if (!page) {
+    return null
+  }
+
+  const pageTheme = 'theme' in page ? page.theme : 'default'
+
+  const themeColor = colors.find((a) => a.theme === pageTheme).code
+
+  return {
+    themeColor,
+  }
+}
+
+export default Page

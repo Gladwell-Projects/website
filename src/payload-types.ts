@@ -523,6 +523,7 @@ export interface Page {
   generateSlug?: boolean | null;
   slug: string;
   theme?: string | null;
+  themeBG?: string | null;
   content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   meta?: {
     title?: string | null;
@@ -625,6 +626,7 @@ export interface ViewingRoom {
   id: string;
   title: string;
   theme?: string | null;
+  themeBG?: string | null;
   cover?: (string | null) | Media;
   content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   /**
@@ -1018,6 +1020,7 @@ export interface PagesSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   theme?: T;
+  themeBG?: T;
   content?: T | {};
   meta?:
     | T
@@ -1061,6 +1064,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ViewingRoomsSelect<T extends boolean = true> {
   title?: T;
   theme?: T;
+  themeBG?: T;
   cover?: T;
   content?: T | {};
   generateSlug?: T;
@@ -1171,6 +1175,7 @@ export interface MainMenu {
     | {
         label: string;
         theme?: string | null;
+        themeBG?: string | null;
         link?: {
           type?: ('reference' | 'custom' | 'upload') | null;
           newTab?: boolean | null;
@@ -1210,6 +1215,7 @@ export interface MainMenu {
     | {
         label: string;
         theme?: string | null;
+        themeBG?: string | null;
         link?: {
           type?: ('reference' | 'custom' | 'upload') | null;
           newTab?: boolean | null;
@@ -1381,6 +1387,7 @@ export interface MainMenuSelect<T extends boolean = true> {
     | {
         label?: T;
         theme?: T;
+        themeBG?: T;
         link?:
           | T
           | {
@@ -1398,6 +1405,7 @@ export interface MainMenuSelect<T extends boolean = true> {
     | {
         label?: T;
         theme?: T;
+        themeBG?: T;
         link?:
           | T
           | {

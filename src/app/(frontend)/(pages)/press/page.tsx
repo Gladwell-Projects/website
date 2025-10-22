@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media, Press } from '@/payload-types'
 import { currentThemeFromNav, fetchCollection } from '../../_data'
@@ -8,13 +8,14 @@ import { CMSLink } from '../../_ui/CMSLinks'
 import Link from 'next/link'
 import Image from 'next/image'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
+import { colors } from '@/fields/theme'
 
 const PressPage: React.FC = async () => {
   const items = (await fetchCollection('press', 'date')) as Partial<Press>[]
 
-  const slug = '/press'
+  const slug = 'press'
 
-  const pageTheme = await currentThemeFromNav([slug])
+  const pageTheme = await currentThemeFromNav(slug)
 
   if (items.length < 1) {
     return (
@@ -122,8 +123,6 @@ const PressPage: React.FC = async () => {
   )
 }
 
-export default PressPage
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -141,3 +140,15 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export const generateViewport = async (): Promise<Viewport> => {
+  const slug = 'press'
+  const pageTheme = await currentThemeFromNav(slug)
+  const themeColor = colors.find((a) => a.theme === pageTheme).code
+
+  return {
+    themeColor,
+  }
+}
+
+export default PressPage

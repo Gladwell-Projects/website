@@ -4,10 +4,11 @@ import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
 import ExhibitionsList from './components/ExhibitionList'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import Headline from '../../_ui/Headline'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
+import { colors } from '@/fields/theme'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -16,9 +17,9 @@ const Exhibitions = async () => {
     ? await fetchExhibitions('startDate')
     : await unstable_cache(fetchExhibitions)('startDate')
 
-  const slug = '/exhibitions'
+  const slug = 'exhibitions'
 
-  const pageTheme = await currentThemeFromNav([slug])
+  const pageTheme = await currentThemeFromNav(slug)
 
   const today = new Date()
 
@@ -79,8 +80,6 @@ const Exhibitions = async () => {
   )
 }
 
-export default Exhibitions
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -98,3 +97,15 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export const generateViewport = async (): Promise<Viewport> => {
+  const slug = 'exhibitions'
+  const pageTheme = await currentThemeFromNav(slug)
+  const themeColor = colors.find((a) => a.theme === pageTheme).code
+
+  return {
+    themeColor,
+  }
+}
+
+export default Exhibitions

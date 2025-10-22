@@ -4,19 +4,16 @@ import { useEffect, useState } from 'react'
 
 const CursorSpotlight = () => {
   const [isTouch, setIsTouch] = useState<boolean | null>(null)
-  const [x, setX] = useState<number>(null)
-  const [y, setY] = useState<number>(null)
+  const [position, setPosition] = useState({ x: null, y: null })
 
   const handleMouseMove = (e: MouseEvent) => {
-    setX(e.pageX)
-    setY(e.pageY)
+    setPosition({ x: e.clientX, y: e.clientY })
   }
 
   const handleTouchMove = (event: TouchEvent) => {
     const { touches, changedTouches } = event
     const touch = touches[0] ?? changedTouches[0]
-    setX(touch.pageX)
-    setY(touch.pageY)
+    setPosition({ x: touch.clientX, y: touch.clientY })
   }
 
   useEffect(() => {
@@ -37,8 +34,9 @@ const CursorSpotlight = () => {
 
   return (
     <div
-      className="spotlight h-[25vw] w-[25vw] shadow-[inset_0_0_4vw_6vw_black] md:h-[10vw] md:w-[10vw] md:shadow-[inset_0_0_1vw_3vw_black]"
-      style={{ left: `${x}px`, top: `${y}px` }}
+      id="spotlight"
+      className="spotlight fixed h-[25vw] w-[25vw] shadow-[inset_0_0_4vw_6vw_black] md:h-[10vw] md:w-[10vw] md:shadow-[inset_0_0_1vw_3vw_black]"
+      style={{ top: position.y, left: position.x }}
     ></div>
   )
 }

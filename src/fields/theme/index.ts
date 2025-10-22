@@ -1,4 +1,4 @@
-import { Field, TextField, TextFieldSingleValidation } from 'payload'
+import { Field, FieldHook, TextField, TextFieldSingleValidation } from 'payload'
 
 export const colors = [
   { theme: 'default', code: '#FFFFFF', text: '#000000' },
@@ -14,6 +14,11 @@ export const colors = [
   { theme: 'web3', code: 'hsla(257, 100%, 64%, 1)', text: '#FFFFFF' },
 ]
 const themes = colors.map((c) => c.theme)
+
+export const changeBg: FieldHook = ({ siblingData }) => {
+  const theme = siblingData.theme
+  return colors.find((a) => a.theme === theme).code
+}
 
 export const validateThemePicker: TextFieldSingleValidation = (
   value: string,
@@ -50,5 +55,16 @@ export const themePicker: ThemePickerArgs = ({ overrides = {} } = {}) => {
     },
   }
 
-  return textFieldResult
+  const themeBG: Field = {
+    type: 'text',
+    name: 'themeBG',
+    admin: {
+      // hidden: true,
+    },
+    hooks: {
+      beforeValidate: [changeBg],
+    },
+  }
+
+  return { type: 'group', fields: [textFieldResult, themeBG] }
 }

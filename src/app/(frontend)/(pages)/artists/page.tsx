@@ -17,7 +17,7 @@ const ArtistsPage: React.FC = async () => {
 
   const slug = '/artists'
 
-  const pageTheme = await currentThemeFromNav([slug])
+  const pageTheme = await currentThemeFromNav(slug)
 
   return (
     <SubGrid>
@@ -27,8 +27,6 @@ const ArtistsPage: React.FC = async () => {
     </SubGrid>
   )
 }
-
-export default ArtistsPage
 
 type Args = {
   params: Promise<{
@@ -47,3 +45,5 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export default ArtistsPage

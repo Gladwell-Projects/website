@@ -21,7 +21,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
   const page = {
     slug: '/',
     meta: {
-      title: 'Gladwell Projects',
+      title: 'Gladwell Projects — Do Nothing Without Intention',
     },
   }
 

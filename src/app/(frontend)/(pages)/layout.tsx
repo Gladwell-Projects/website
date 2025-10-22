@@ -1,7 +1,7 @@
 import Header from '../_ui/Header'
 import Footer from '../_ui/Footer'
 
-const App = async (props: { children: React.ReactNode }) => {
+const App = (props: { children: React.ReactNode }) => {
   const { children } = props
 
   return (

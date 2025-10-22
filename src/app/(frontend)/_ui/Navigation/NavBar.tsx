@@ -25,7 +25,7 @@ type MenuType = {
         | 'artists'
         | 'exhibitions'
         | 'press'
-        | 'viewingRooms'
+        | 'viewing-rooms'
         | 'events'
       value: Page | Artist | Exhibition | Press | ViewingRoom | Event
     } | null

@@ -7,9 +7,8 @@ import { currentThemeFromNav } from '../../_data'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 
 const EventsPage = async () => {
-  const slug = '/events'
-
-  const pageTheme = await currentThemeFromNav([slug])
+  const slug = 'events'
+  const pageTheme = await currentThemeFromNav(slug)
 
   return (
     <div className="col-span-full grid w-full grid-cols-subgrid gap-3">
@@ -19,8 +18,6 @@ const EventsPage = async () => {
     </div>
   )
 }
-
-export default EventsPage
 
 type Args = {
   params: Promise<{
@@ -39,3 +36,5 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export default EventsPage

@@ -39,14 +39,7 @@ export default buildConfig({
     timezones: {
       defaultTimezone: 'America/New_York',
     },
-    autoLogin:
-      process.env.NODE_ENV === 'development'
-        ? {
-            email: 'gladwell@itsallwong.com',
-            password: 'M@cAr9HETk$a&',
-            prefillOnly: false,
-          }
-        : false,
+    autoLogin: false,
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),

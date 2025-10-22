@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 export type LinkType = 'custom' | 'reference' | 'upload' | null
 export type Reference = {
-  relationTo: 'pages' | 'artists' | 'exhibitions' | 'press' | 'viewingRooms' | 'events'
+  relationTo: 'pages' | 'artists' | 'exhibitions' | 'press' | 'viewing-rooms' | 'events'
   value: Page | Artist | Exhibition | Press | ViewingRoom | Event
 }
 
@@ -62,7 +62,7 @@ const generateHref = (args: GenerateSlugType): string => {
       return `/exhibitions/${reference.value.slug}`
     }
 
-    if (reference.relationTo === 'viewingRooms') {
+    if (reference.relationTo === 'viewing-rooms') {
       return `/viewing-rooms/${reference.value.slug}`
     }
 

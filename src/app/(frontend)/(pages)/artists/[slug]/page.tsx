@@ -25,6 +25,20 @@ export const generateStaticParams = async () => {
     pagination: false,
     limit: 100000,
     depth: 2,
+    where: {
+      and: [
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+        {
+          isRepresented: {
+            equals: true,
+          },
+        },
+      ],
+    },
   })
   return pages.docs.map((page) => ({ slug: page.slug }))
 }
@@ -54,7 +68,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
       <ThemeSwitch templateTheme="default" />
       {draft && <LivePreviewListener />}
       <Headline title={page.title}>
-        <h4 className="text-glow-600 col-span-6">
+        <h4 className="text-glow-700 col-span-6">
           {!page.deathYear && page.birthYear && 'b. '}
           {page.birthYear && `${page.birthYear}`}
           {page.deathYear && !page.birthYear && 'd. '}
@@ -79,8 +93,6 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
   )
 }
 
-export default ArtistBioPage
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -93,28 +105,9 @@ export async function generateMetadata({
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({ slug: decodedSlug })
+  const page = await fetchArtist(decodedSlug)
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, colSlug: '/artists' })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
-
-  const payload = await getPayload({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'artists',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})
+export default ArtistBioPage

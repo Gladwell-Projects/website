@@ -22,8 +22,6 @@ const GallerySlider = (props: {
     isSolo = true
   }
 
-  console.log('is solo', isSolo)
-
   const next = () => {
     if (currentImg === items.length - 1) {
       setCurrentImg(0)

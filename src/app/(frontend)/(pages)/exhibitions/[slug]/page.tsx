@@ -14,10 +14,11 @@ import { dateISO, dateToLong } from '@/utilities/convertCMSDate'
 import PageBlocks from '@/app/(frontend)/_ui/PageBlocks'
 import Link from 'next/link'
 import { Caption } from '@/app/(frontend)/_ui/Image'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { colors } from '@/fields/theme'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -128,8 +129,6 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
   )
 }
 
-export default ExhibitionPage
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -142,28 +141,36 @@ export async function generateMetadata({
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({ slug: decodedSlug })
+  const page = await fetchExhibition(decodedSlug)
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, colSlug: '/exhibitions' })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
-
+export const generateViewport = async (
+  props: PageProps<'/exhibitions/[slug]'>
+): Promise<Viewport> => {
+  const { slug } = await props.params
   const payload = await getPayload({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'exhibitions',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+  const page = (
+    await payload.find({
+      collection: 'exhibitions',
+      draft: false,
+      pagination: false,
+      limit: 1,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+      depth: 2,
+    })
+  ).docs[0]
 
-  return result.docs?.[0] || null
-})
+  const themeColor = colors.find((a) => a.theme === 'default').code
+
+  return {
+    themeColor,
+  }
+}
+
+export default ExhibitionPage

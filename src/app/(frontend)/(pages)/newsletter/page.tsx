@@ -1,12 +1,9 @@
 import Newsletter from '../../_ui/Newsletter'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-
 const PressPage: React.FC = () => {
   return <Newsletter />
 }
-
-export default PressPage
 
 type Args = {
   params: Promise<{
@@ -25,3 +22,5 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export default PressPage

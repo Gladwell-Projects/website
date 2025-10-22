@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import React from 'react'
 import { currentThemeFromNav, fetchViewingRooms } from '../../_data'
@@ -8,6 +8,7 @@ import SubGrid from '../../_ui/pageGrid'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import ViewingRoomTile from './components/Tile'
+import { colors } from '@/fields/theme'
 
 const ViewingRoomsPage: React.FC = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -15,9 +16,9 @@ const ViewingRoomsPage: React.FC = async () => {
     ? await fetchViewingRooms()
     : await unstable_cache(fetchViewingRooms, ['viewingRooms'])()
 
-  const slug = '/viewing-rooms'
+  const slug = 'viewing-rooms'
 
-  const pageTheme = await currentThemeFromNav([slug])
+  const pageTheme = await currentThemeFromNav(slug)
 
   if (viewingRooms.length < 1) {
     return (
@@ -41,8 +42,6 @@ const ViewingRoomsPage: React.FC = async () => {
   )
 }
 
-export default ViewingRoomsPage
-
 type Args = {
   params: Promise<{
     slug?: string
@@ -60,3 +59,15 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 
   return generateMeta({ doc: page })
 }
+
+export const generateViewport = async (): Promise<Viewport> => {
+  const slug = 'viewing-rooms'
+  const pageTheme = await currentThemeFromNav(slug)
+  const themeColor = colors.find((a) => a.theme === pageTheme).code
+
+  return {
+    themeColor,
+  }
+}
+
+export default ViewingRoomsPage
