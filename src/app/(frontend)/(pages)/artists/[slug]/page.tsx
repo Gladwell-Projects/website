@@ -68,7 +68,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
       <ThemeSwitch templateTheme="default" />
       {draft && <LivePreviewListener />}
       <Headline title={page.title}>
-        <h4 className="text-glow-700 col-span-6">
+        <div className="text-glow-700 col-span-6 text-xl font-bold">
           {!page.deathYear && page.birthYear && 'b. '}
           {page.birthYear && `${page.birthYear}`}
           {page.deathYear && !page.birthYear && 'd. '}
@@ -76,7 +76,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {page.deathYear && `${page.deathYear}`}
           {(page.birthYear || page.deathYear) && page.nationality && ','}{' '}
           {page.nationality && page.nationality}
-        </h4>
+        </div>
       </Headline>
       <Content>
         {cv ? (

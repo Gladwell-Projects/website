@@ -99,7 +99,7 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
 
         {artists.length > 0 && (
           <div className="col-span-full">
-            <h4 className="col-span-full m-0">Artists</h4>
+            <h2 className="col-span-full m-0 text-xl">Artists</h2>
             <ul className="col-span-full m-0 w-full columns-1 place-self-start sm:columns-2 md:columns-2 lg:columns-3">
               {artists.map((artist) => {
                 return (

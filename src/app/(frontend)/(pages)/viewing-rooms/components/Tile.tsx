@@ -31,14 +31,14 @@ const ViewingRoomTile = (props: { room: Partial<ViewingRoom> }) => {
           />
         </Link>
       )}
-      <h3 className="col-span-8 w-full place-self-center text-left">
+      <div className="col-span-8 w-full place-self-center text-left text-2xl font-bold">
         <Link
           href={`/viewing-rooms/${room.slug}`}
           className="text-(--theme-text) no-underline"
         >
           {room.title}
         </Link>
-      </h3>
+      </div>
     </div>
   )
 }

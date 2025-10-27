@@ -58,21 +58,21 @@ const Exhibitions = async () => {
       <Headline title="Exhibitions" />
       {current.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h6 className="col-span-full">Current</h6>
+          <h2 className="col-span-full text-lg tracking-widest uppercase">Current</h2>
           <ExhibitionsList exhibitions={current} />
         </div>
       )}
 
       {upcoming.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h6 className="col-span-full">Upcoming</h6>
+          <h2 className="col-span-full text-lg tracking-widest uppercase">Upcoming</h2>
           <ExhibitionsList exhibitions={upcoming} />
         </div>
       )}
 
       {past.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h6>Archive</h6>
+          <h2 className="col-span-full text-base tracking-widest uppercase">Past</h2>
           <ExhibitionsList exhibitions={past} />
         </div>
       )}
