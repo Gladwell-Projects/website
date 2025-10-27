@@ -2,12 +2,12 @@
 
 ### To Do
 
-- [ ] implement cloudflare images fully with src set and everything...
-- [ ] update JSX converter for lexical field
-- [ ] images gallery block
-- [ ] captions
-- [ ] double check figma comparison
-- [ ] prevent opening modals if the url is already the current route
+- [x] implement cloudflare images fully with src set and everything...
+- [x] update JSX converter for lexical field
+- [x] images gallery block
+- [x] captions
+- [x] double check figma comparison
+- [x] prevent opening modals if the url is already the current route
 - [ ] reconsider the data utility to be more efficient
 - [ ] make static generation better -- themes
 - [ ] viewing rooms

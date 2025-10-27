@@ -59,7 +59,7 @@ export const themePicker: ThemePickerArgs = ({ overrides = {} } = {}) => {
     type: 'text',
     name: 'themeBG',
     admin: {
-      // hidden: true,
+      hidden: true,
     },
     hooks: {
       beforeValidate: [changeBg],

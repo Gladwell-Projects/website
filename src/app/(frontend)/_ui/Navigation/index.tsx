@@ -74,11 +74,11 @@ const Navigation = (props: {
 
   return (
     <nav
-      className={`page-nav ${!isVisible && 'nav-not-visible'} fixed top-0 left-0 z-99 m-0 grid w-dvw text-center transition-transform md:grid-cols-1 ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(2)] relative col-span-full w-full grid-rows-3 p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && `${!screenMd && 'grid-cols-2'} grid-rows-[--spacing(6)_repeat(auto-fill,_1fr)] gap-0.5 bg-gradient-to-b from-(--theme-bg) from-90% to-transparent p-2 pb-0 md:pb-2`}`}
+      className={`page-nav ${!isVisible && 'nav-not-visible'} fixed top-0 left-0 z-99 m-0 grid w-dvw gap-2 text-center transition-transform md:grid-cols-1 md:gap-0.5 ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(2)] relative col-span-full w-full grid-rows-3 p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && `${!screenMd && 'grid-cols-2'} auto-rows-min bg-gradient-to-b from-(--theme-bg) from-90% to-transparent p-2 pb-0 md:auto-rows-fr md:pb-2`}`}
     >
       <style>{`:root{--nav-max-height: ${navMaxHeight}px}`}</style>
       <Logo
-        className={`${navTemplate === 'spread' && 'row-start-2'}`}
+        className={`${navTemplate === 'spread' && 'row-start-2'} md:pb-[--spacing(1)]`}
         variant={screenMd ? 'spread' : navTemplate === 'spread' ? 'spread' : 'stacked'}
       />
       {!screenMd && navTemplate !== 'spread' && (
@@ -98,7 +98,7 @@ const Navigation = (props: {
       ) : (
         <nav
           id="navbars"
-          className={`${isOpen ? 'max-h-(--nav-max-height)' : 'max-h-0'} col-span-full mt-2 overflow-hidden text-left text-xl transition-all md:text-base`}
+          className={`${isOpen ? 'max-h-(--nav-max-height)' : 'max-h-0'} col-span-full overflow-hidden text-left text-xl transition-all md:text-base`}
         >
           {/* @ts-expect-error type number problem with database schema  */}
           <NavBar data={nav['menu-items-top']} />
