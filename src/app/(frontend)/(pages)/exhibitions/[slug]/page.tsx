@@ -79,7 +79,7 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
               height={cover.height}
               alt={cover.alt}
               className="col-span-full"
-              sizes="(width >= 384px) 50vw, 100vw"
+              sizes="(width >=48rem) 50vw, 100vw"
               loading="eager"
               fetchPriority="high"
             />

@@ -42,13 +42,13 @@ export const CMSImage = (props: {
       case 'large':
         return '100vw'
       case 'medium':
-        return '(width <= 448px) 100vw, 75vw'
+        return '(width >= 48rem) 100vw, 75vw'
       case 'small':
-        return '(width <= 448px) 100vw, 50vw'
+        return '(width >=48rem) 100vw, 50vw'
       case 'half':
-        return '(width <= 448px) 100vw, 50vw'
+        return '(width >=48rem) 100vw, 50vw'
       default:
-        return '(width <= 448px) 100vw, 50vw'
+        return '(width >=48rem) 100vw, 50vw'
     }
   }
 

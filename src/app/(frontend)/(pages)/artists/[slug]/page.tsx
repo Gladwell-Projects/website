@@ -86,14 +86,14 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
         </div>
       </Headline>
       {page.profileImage && typeof page.profileImage === 'object' && (
-        <div className="col-span-6 grid grid-cols-subgrid py-8">
+        <div className="col-span-full grid grid-cols-subgrid md:col-span-6 md:py-8">
           <Image
             src={page.profileImage.url}
             alt={page.profileImage.alt}
             width={page.profileImage.width}
             height={page.profileImage.height}
-            sizes="(width <= 384px) 100vw, 50vw"
-            className="col-span-2 col-start-3"
+            sizes="(width >= 48rem) 50vw, 68vw"
+            className="col-span-8 col-start-3 pb-4 md:col-span-2 md:col-start-3"
           />
         </div>
       )}

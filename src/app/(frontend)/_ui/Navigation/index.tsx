@@ -75,11 +75,11 @@ const Navigation = (props: {
   return (
     // Navigation, pull request
     <nav
-      className={`page-nav ${!isVisible && 'nav-not-visible'} fixed top-0 left-0 z-99 m-0 grid w-dvw gap-2 text-center transition-transform md:grid-cols-1 md:gap-0.5 ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(2)] relative col-span-full w-full grid-rows-3 p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && `${!screenMd && 'grid-cols-2'} auto-rows-min bg-gradient-to-b from-(--theme-bg) from-90% to-transparent p-2 pb-0 md:auto-rows-fr md:pb-2`}`}
+      className={`page-nav ${!isVisible && 'nav-not-visible'} fixed top-0 left-0 z-99 m-0 grid w-dvw gap-2 text-center transition-transform md:grid-cols-1 md:gap-0.5 ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(2)] relative col-span-full w-full grid-rows-3 p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && `${!screenMd && 'grid-cols-2'} auto-rows-min bg-linear-to-b from-(--theme-bg) from-90% to-transparent p-2 pb-0 md:auto-rows-fr md:pb-2`}`}
     >
       <style>{`:root{--nav-max-height: ${navMaxHeight}px}`}</style>
       <Logo
-        className={`${navTemplate === 'spread' && 'row-start-2'} md:pb-[--spacing(1)]`}
+        className={`${navTemplate === 'spread' && 'row-start-2'} md:pb-1`}
         variant={screenMd ? 'spread' : navTemplate === 'spread' ? 'spread' : 'stacked'}
       />
       {!screenMd && navTemplate !== 'spread' && (
