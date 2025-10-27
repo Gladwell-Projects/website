@@ -40,10 +40,9 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
                 ? artist.surveyArtworks[0]
                 : null
           return (
-            <>
+            <div key={artist.id} className="contents">
               {cover && (
                 <Image
-                  key={artist.id}
                   src={cover.url}
                   width={cover.width}
                   height={cover.height}
@@ -51,10 +50,10 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
                   sizes="100vw"
                   quality="80"
                   loading="eager"
-                  className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} absolute top-0 left-0 h-full w-full object-cover transition-opacity duration-75`}
+                  className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-75`}
                 />
               )}
-            </>
+            </div>
           )
         })}
       </div>
