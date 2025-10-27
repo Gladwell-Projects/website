@@ -73,8 +73,17 @@ export const Artists: CollectionConfig = {
       },
     },
     {
-      name: 'profileImage',
+      name: 'cover',
       label: 'Featured Image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'profileImage',
+      label: 'Artist Headshot',
       type: 'upload',
       relationTo: 'media',
       admin: {

@@ -296,6 +296,7 @@ export interface Artist {
   generateSlug?: boolean | null;
   slug: string;
   isRepresented?: boolean | null;
+  cover?: (string | null) | Media;
   profileImage?: (string | null) | Media;
   firstName?: string | null;
   middleName?: string | null;
@@ -872,6 +873,7 @@ export interface ArtistsSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   isRepresented?: T;
+  cover?: T;
   profileImage?: T;
   firstName?: T;
   middleName?: T;
