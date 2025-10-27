@@ -44,7 +44,7 @@ const GalleryGrid = (props: {
               width={width}
               height={height}
               className="place-self-center"
-              sizes="(max-width: 384px) 100vw, (max-width:512px) 40vw, (max-width:672px) 30vw, 55vw"
+              sizes="(width<= 384px) 100vw, (385px <= width <= 512px) 40vw, (513px <= width <= 672px) 30vw, 55vw"
             />
             <Caption className="col-start-1 row-start-auto" caption={caption} />
           </div>

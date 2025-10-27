@@ -67,7 +67,7 @@ const GallerySlider = (props: {
             width={width}
             height={height}
             src={url}
-            sizes="(max-width: 384px) 60vw, 100vw"
+            sizes="(width <= 384px) 60vw, 100vw"
           />
           <Caption
             className="col-span-full mt-2 mb-0 block w-auto md:col-span-2 md:-col-end-1 md:mt-0 [&_p]:last:mb-0"
@@ -86,7 +86,7 @@ const GallerySlider = (props: {
               width={nextImage.width}
               height={nextImage.height}
               src={nextImage.url}
-              sizes="(max-width: 384px) 60vw, 100vw"
+              sizes="(width <= 384px) 60vw, 100vw"
             />
           )}
           {typeof previousImage === 'object' && (
@@ -96,7 +96,7 @@ const GallerySlider = (props: {
               width={previousImage.width}
               height={previousImage.height}
               src={previousImage.url}
-              sizes="(max-width: 384px) 60vw, 100vw"
+              sizes="(width <= 384px) 60vw, 100vw"
             />
           )}
         </div>

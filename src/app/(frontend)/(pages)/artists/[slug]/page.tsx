@@ -92,14 +92,14 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
             alt={page.profileImage.alt}
             width={page.profileImage.width}
             height={page.profileImage.height}
-            sizes="(max-width: 384px) 100vw, 50vw"
+            sizes="(width <= 384px) 100vw, 50vw"
             className="col-span-2 col-start-3"
           />
         </div>
       )}
       <Content>
         {cv ? (
-          <Link className="col-span-full no-underline" href={cv.url}>
+          <Link className="col-span-full no-underline" href={cv.url} prefetch={false}>
             Download CV&ensp;<small>(PDF)</small>
           </Link>
         ) : null}

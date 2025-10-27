@@ -40,7 +40,7 @@ const TwoUpImage = (props: { image: Media | number; showCaption: boolean }) => {
           height={height}
           src={url}
           className="mb-2 grow object-contain"
-          sizes="(max-width: 448px) 100vw, 50vw"
+          sizes="(width <= 448px) 100vw, 50vw"
         />
         {showCaption && (
           <Caption className="min-h-8 w-full place-self-end" caption={caption} />

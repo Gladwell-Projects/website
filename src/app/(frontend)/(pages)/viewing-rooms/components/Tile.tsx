@@ -14,7 +14,7 @@ const ViewingRoomTile = (props: { room: Partial<ViewingRoom> }) => {
   return (
     <div
       key={room.id}
-      className={`${room.theme ? `theme-${room.theme}` : ''} col-span-full grid grid-cols-subgrid gap-2 bg-(--theme-bg) p-2 text-(color:--theme-text)`}
+      className={`${room.theme ? `theme-${room.theme}` : ''} col-span-full grid grid-cols-subgrid gap-2 bg-(--theme-bg) p-2 text-(--theme-text)`}
     >
       {room.cover && (
         <Link
@@ -27,7 +27,7 @@ const ViewingRoomTile = (props: { room: Partial<ViewingRoom> }) => {
             width={width}
             height={height}
             className="aspect-4/3 w-full object-cover"
-            sizes="(max-width: 448px) 100vw, 50vw"
+            sizes="(width <= 448px) 100vw, 50vw"
           />
         </Link>
       )}
