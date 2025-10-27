@@ -71,7 +71,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
         title={page.title}
         className={`${
           page.profileImage && typeof page.profileImage === 'object'
-            ? 'col-span-full grid grid-cols-subgrid md:col-span-6'
+            ? 'col-span-full grid auto-rows-min grid-cols-subgrid md:col-span-6'
             : null
         }`}
       >
