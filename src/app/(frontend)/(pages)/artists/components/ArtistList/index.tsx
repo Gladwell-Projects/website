@@ -34,25 +34,28 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
       <div className="pointer-events-none fixed inset-0 z-99 col-span-full h-full w-full object-contain">
         {data.map((artist) => {
           const cover =
-            artist.profileImage && typeof artist.profileImage === 'object'
-              ? artist.profileImage
+            artist.cover && typeof artist.cover === 'object'
+              ? artist.cover
               : artist.surveyArtworks[0] && typeof artist.surveyArtworks[0] === 'object'
                 ? artist.surveyArtworks[0]
                 : null
+
+          if (!cover) {
+            return null
+          }
+
           return (
             <div key={artist.id} className="contents">
-              {cover && (
-                <Image
-                  src={cover.url}
-                  width={cover.width}
-                  height={cover.height}
-                  alt={cover.alt}
-                  sizes="100vw"
-                  quality="80"
-                  loading="eager"
-                  className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-75`}
-                />
-              )}
+              <Image
+                src={cover.url}
+                width={cover.width}
+                height={cover.height}
+                alt={cover.alt}
+                sizes="100vw"
+                quality="80"
+                loading="eager"
+                className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-75`}
+              />
             </div>
           )
         })}
