@@ -17,7 +17,7 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
             <li
               key={artist.id}
               id={artist.id}
-              className="z-1 col-span-full w-full py-0 text-xl md:col-span-6 md:py-1.5"
+              className="z-0 col-span-full w-full py-0 text-xl hover:z-9999 md:col-span-6 md:py-1.5"
             >
               <Link
                 href={{ pathname: `/artists/${artist.slug}` }}
@@ -31,7 +31,7 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
           )
         })}
       </ul>
-      <div className="pointer-events-none fixed inset-0 z-0 col-span-full h-full w-full object-contain">
+      <div className="pointer-events-none fixed inset-0 z-99 col-span-full h-full w-full object-contain">
         {data.map((artist) => {
           const cover =
             artist.profileImage && typeof artist.profileImage === 'object'
@@ -43,14 +43,15 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
             <>
               {cover && (
                 <Image
+                  key={artist.id}
                   src={cover.url}
                   width={cover.width}
                   height={cover.height}
                   alt={cover.alt}
-                  sizes="50vw"
+                  sizes="100vw"
                   quality="80"
                   loading="eager"
-                  className={`${currentArtist === artist.id ? 'visible' : 'hidden'} absolute top-[50%] left-[50%] h-full max-h-[50dvh] w-full max-w-[50dvw] -translate-[50%] object-contain`}
+                  className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} absolute top-0 left-0 h-full w-full object-cover transition-opacity duration-75`}
                 />
               )}
             </>
