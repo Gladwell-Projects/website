@@ -149,7 +149,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
           onNavigate={onNavigate}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          prefetch={false}
+          prefetch="auto"
           role={role}
         >
           {label && label}

@@ -35,10 +35,7 @@ const Navigation = (props: {
   useEffect(() => {
     const style =
       'font-family:verdana, sans-serif; font-weight:normal; font-style:italic; font-size: 1.25em; margin:1em;'
-    console.log(
-      '%cwebsite made by nathan wong, email nathan@itsallwong.com for more info :-)',
-      style
-    )
+    console.log('%cSite by Nathan Wong', style)
 
     const checkScreenSize = () => {
       setScreenMd(window.innerWidth > 768)
