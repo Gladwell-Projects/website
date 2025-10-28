@@ -440,6 +440,21 @@
 }
 
 @layer components {
+  .content ul {
+    padding-left: --spacing(4);
+    li {
+      padding-left: --spacing(1);
+      list-style-type: "●";
+    }
+  }
+  .content ol {
+    counter-reset: orderedList;
+    padding-left: --spacing(4.5);
+    li {
+      padding-left: --spacing(0.5);
+      list-style: decimal;
+    }
+  }
   .modal-wrapper {
     position: fixed;
     top: 0;
