@@ -62,12 +62,12 @@ const GallerySlider = (props: {
       <div className="col-span-10 col-start-2 grid w-full grid-cols-subgrid">
         <figure className="col-span-full grid grid-cols-subgrid">
           <Image
-            className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8 md:h-[65vh]"
+            className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
             alt={alt}
             width={width}
             height={height}
             src={url}
-            sizes="(max-width: 384px) 60vw, 100vw"
+            sizes="(width>=48rem) 70vw, 85vw"
           />
           <Caption
             className="col-span-full mt-2 mb-0 block w-auto md:col-span-2 md:-col-end-1 md:mt-0 [&_p]:last:mb-0"
@@ -81,22 +81,22 @@ const GallerySlider = (props: {
         >
           {typeof nextImage === 'object' && (
             <Image
-              className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8 md:h-[65vh]"
+              className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
               alt={nextImage.alt}
               width={nextImage.width}
               height={nextImage.height}
               src={nextImage.url}
-              sizes="(max-width: 384px) 60vw, 100vw"
+              sizes="(width>=48rem) 70vw, 85vw"
             />
           )}
           {typeof previousImage === 'object' && (
             <Image
-              className="col-span-full m-auto block h-[75vh] w-full object-contain md:col-span-8 md:h-[65vh]"
+              className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
               alt={previousImage.alt}
               width={previousImage.width}
               height={previousImage.height}
               src={previousImage.url}
-              sizes="(max-width: 384px) 60vw, 100vw"
+              sizes="(width>=48rem) 70vw, 85vw"
             />
           )}
         </div>

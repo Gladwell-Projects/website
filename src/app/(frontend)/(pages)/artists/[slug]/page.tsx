@@ -1,8 +1,7 @@
-import React, { cache } from 'react'
+import React from 'react'
 import { LivePreviewListener } from '@/components/frontend/LivePreviewListener'
 import { notFound } from 'next/navigation'
 import ThemeSwitch from '@/app/(frontend)/_ui/ThemeSwitch'
-import { Media } from '@/payload-types'
 import { draftMode } from 'next/headers'
 import Headline from '@/app/(frontend)/_ui/Headline'
 import Content from '@/app/(frontend)/_ui/PageContent'
@@ -16,6 +15,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -67,8 +67,15 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
     <SubGrid>
       <ThemeSwitch templateTheme="default" />
       {draft && <LivePreviewListener />}
-      <Headline title={page.title}>
-        <div className="text-glow-700 col-span-6 text-xl font-bold">
+      <Headline
+        title={page.title}
+        className={`${
+          page.profileImage && typeof page.profileImage === 'object'
+            ? 'col-span-full grid auto-rows-min grid-cols-subgrid md:col-span-6'
+            : null
+        }`}
+      >
+        <div className="text-glow-700 col-span-full text-xl font-bold md:col-span-6">
           {!page.deathYear && page.birthYear && 'b. '}
           {page.birthYear && `${page.birthYear}`}
           {page.deathYear && !page.birthYear && 'd. '}
@@ -78,9 +85,21 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {page.nationality && page.nationality}
         </div>
       </Headline>
+      {page.profileImage && typeof page.profileImage === 'object' && (
+        <div className="col-span-full grid grid-cols-subgrid md:col-span-6 md:py-8">
+          <Image
+            src={page.profileImage.url}
+            alt={page.profileImage.alt}
+            width={page.profileImage.width}
+            height={page.profileImage.height}
+            sizes="(width >= 48rem) 50vw, 68vw"
+            className="col-span-8 col-start-3 pb-4 md:col-span-2 md:col-start-3"
+          />
+        </div>
+      )}
       <Content>
         {cv ? (
-          <Link className="col-span-full no-underline" href={cv.url}>
+          <Link className="col-span-full no-underline" href={cv.url} prefetch={false}>
             Download CV&ensp;<small>(PDF)</small>
           </Link>
         ) : null}

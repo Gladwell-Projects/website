@@ -7,7 +7,7 @@ const App = (props: { children: React.ReactNode }) => {
   return (
     <>
       <main
-        className={`grid flex-grow-1 grid-cols-12 place-items-start gap-1 p-2 pt-(--nav-height) md:gap-3`}
+        className={`grid grow grid-cols-12 place-items-start gap-1 p-2 pt-(--nav-height) md:gap-3`}
       >
         <Header navTemplate="condensed" />
         {children}

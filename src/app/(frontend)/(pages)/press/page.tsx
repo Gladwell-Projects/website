@@ -50,14 +50,14 @@ const PressPage: React.FC = async () => {
                     width={image.width}
                     height={image.height}
                     alt={image.alt}
-                    sizes="(max-width: 448px) 100vw, 50vw"
+                    sizes="(width >=48rem) 50vw, 100vw"
                   />
                 )}
                 <div className="relative">
-                  <div className="absolute bottom-0 m-0 h-8 w-full bg-linear-to-t from-(color:--theme-bg) to-transparent"></div>
+                  <div className="absolute bottom-0 m-0 h-8 w-full bg-linear-to-t from-(--theme-bg) to-transparent"></div>
                   <RichText
                     data={press.content}
-                    className="max-h-[--spacing(65)] max-w-full overflow-hidden overflow-ellipsis"
+                    className="max-h-65 max-w-full overflow-hidden overflow-ellipsis"
                   ></RichText>
                 </div>
                 <footer className="[&_li]:inline">

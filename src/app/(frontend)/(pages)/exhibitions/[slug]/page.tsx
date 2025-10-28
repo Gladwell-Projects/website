@@ -79,7 +79,9 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
               height={cover.height}
               alt={cover.alt}
               className="col-span-full"
-              sizes="(max-width: 384px) 100vw, 40vw"
+              sizes="(width >=48rem) 50vw, 100vw"
+              loading="eager"
+              fetchPriority="high"
             />
             <Caption caption={cover.caption} />
           </div>
@@ -87,12 +89,20 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
       </Headline>
       <Content>
         {pressRelease && (
-          <Link className="col-span-6 no-underline md:col-span-4" href={pressRelease.url}>
+          <Link
+            className="col-span-6 no-underline md:col-span-4"
+            href={pressRelease.url}
+            prefetch={false}
+          >
             Download Press Release&ensp;<small>(PDF)</small>
           </Link>
         )}
         {checklist && (
-          <Link className="col-span-6 no-underline md:col-span-4" href={checklist.url}>
+          <Link
+            className="col-span-6 no-underline md:col-span-4"
+            href={checklist.url}
+            prefetch={false}
+          >
             Download Checklist&ensp;<small>(PDF)</small>
           </Link>
         )}
