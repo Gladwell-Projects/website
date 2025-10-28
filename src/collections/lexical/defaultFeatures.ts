@@ -13,6 +13,8 @@ import {
   HeadingFeature,
   BlockquoteFeature,
   UploadFeature,
+  UnorderedListFeature,
+  OrderedListFeature,
   HorizontalRuleFeature,
 } from '@payloadcms/richtext-lexical'
 
@@ -32,6 +34,8 @@ export const defaultFeatures = [
   SubscriptFeature(),
   SuperscriptFeature(),
   FixedToolbarFeature(),
+  OrderedListFeature(),
+  UnorderedListFeature(),
 ]
 
 const lexicalDefault = lexicalEditor({

@@ -10,10 +10,20 @@ import {
   SubscriptFeature,
   SuperscriptFeature,
   UnderlineFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+  BlockquoteFeature,
+  HorizontalRuleFeature,
+  IndentFeature,
+  InlineCodeFeature,
+  InlineToolbarFeature,
 } from '@payloadcms/richtext-lexical'
 
 const lexicalText = lexicalEditor({
   features: [
+    ParagraphFeature(),
+    OrderedListFeature(),
+    UnorderedListFeature(),
     BoldFeature(),
     UnderlineFeature(),
     LinkFeature(),
@@ -21,9 +31,13 @@ const lexicalText = lexicalEditor({
     StrikethroughFeature(),
     SubscriptFeature(),
     SuperscriptFeature(),
-    ParagraphFeature(),
     FixedToolbarFeature(),
     HeadingFeature(),
+    BlockquoteFeature(),
+    HorizontalRuleFeature(),
+    IndentFeature(),
+    InlineCodeFeature(),
+    InlineToolbarFeature(),
   ],
 })
 
