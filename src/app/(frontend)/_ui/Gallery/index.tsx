@@ -21,13 +21,14 @@ const Gallery = (props: {
     setView('Slides')
   }
 
+  const galleryId = blockId
+    ? `gallery-${blockId}`
+    : `gallery-${encodeURIComponent(header)}`
+
   return (
-    <>
+    <div id={galleryId} className="col-span-full grid grid-cols-subgrid">
       <h2 className="col-span-full text-xl">{header}</h2>
-      <div
-        id={`gallery-${blockId}`}
-        className="col-span-full -m-2 grid grid-cols-subgrid gap-y-4 bg-[color-mix(in_oklab,_white_0,var(--theme-bg))] p-2 pt-4 pb-8"
-      >
+      <div className="col-span-full -m-2 grid grid-cols-subgrid gap-y-4 bg-[color-mix(in_oklab,white_0,var(--theme-bg))] p-2 pt-4 pb-8">
         <div className="col-span-full grid grid-cols-subgrid place-items-end">
           <div className="col-span-full flex gap-2 text-right">
             <button
@@ -59,6 +60,7 @@ const Gallery = (props: {
             currentImg={currentImg}
             setCurrentImg={setCurrentImg}
             blockId={blockId}
+            galleryId={galleryId}
           />
         )}
         {view == 'Grid' && (
@@ -67,10 +69,11 @@ const Gallery = (props: {
             setCurrentImg={setCurrentImg}
             setView={setView}
             blockId={blockId}
+            galleryId={galleryId}
           />
         )}
       </div>
-    </>
+    </div>
   )
 }
 

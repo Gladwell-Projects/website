@@ -9,6 +9,7 @@ const GallerySlider = (props: {
   currentImg: number
   setCurrentImg: React.Dispatch<null | number>
   blockId: string
+  galleryId: string
 }) => {
   const { items, currentImg, setCurrentImg } = props
 

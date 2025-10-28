@@ -10,8 +10,9 @@ const GalleryGrid = (props: {
   setCurrentImg: React.Dispatch<null | number>
   setView: React.Dispatch<'Grid' | 'Slides'>
   blockId: string
+  galleryId?: string
 }) => {
-  const { items, setCurrentImg, setView, blockId } = props
+  const { items, setCurrentImg, setView, galleryId } = props
   const router = useRouter()
 
   const openItem = (e: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +22,7 @@ const GalleryGrid = (props: {
 
     setCurrentImg(index)
     setView('Slides')
-    router.push(`#gallery-${blockId}`)
+    router.push(`#${galleryId}`)
   }
 
   return (
@@ -43,7 +44,7 @@ const GalleryGrid = (props: {
               src={url}
               width={width}
               height={height}
-              className="place-self-center"
+              className="aspect-7/8 place-self-center object-contain"
               sizes="(width >= 96rem) 17vw, (96rem > width >= 64rem) 25vw, (64rem > width >= 40rem) 35vw, 50vw "
             />
             <Caption className="col-start-1 row-start-auto" caption={caption} />
