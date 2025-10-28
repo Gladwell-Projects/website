@@ -14,12 +14,12 @@ const Logo = ({ className, variant }: { className: string; variant?: string }) =
         role="button"
       >
         {variant === 'stacked' && (
-          <GladwellProjects className="mb-1 h-[--spacing(6)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
+          <GladwellProjects className="mb-1 h-6 overflow-visible fill-(--theme-text) transition-(--theme-transition)" />
         )}
         {variant !== 'stacked' && (
           <>
-            <Gladwell className="h-[var(--text-base)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
-            <Projects className="h-[var(--text-base)] overflow-visible fill-[var(--theme-text)] transition-[var(--theme-transition)]" />
+            <Gladwell className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)" />
+            <Projects className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)" />
           </>
         )}
       </Link>
