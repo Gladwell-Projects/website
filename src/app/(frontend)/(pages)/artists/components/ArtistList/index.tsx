@@ -1,8 +1,7 @@
 'use client'
-import { Artist, Media } from '@/payload-types'
+import { Artist } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const ArtistList = (props: { data: Partial<Artist>[] }) => {
@@ -31,14 +30,16 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
           )
         })}
       </ul>
-      <div className="pointer-events-none fixed inset-0 z-99 col-span-full h-full w-full object-contain">
+      <div className="pointer-events-none invisible fixed inset-0 z-99 col-span-full hidden h-full w-full object-contain md:visible md:block">
         {data.map((artist) => {
           const cover =
             artist.cover && typeof artist.cover === 'object'
               ? artist.cover
-              : artist.surveyArtworks[0] && typeof artist.surveyArtworks[0] === 'object'
-                ? artist.surveyArtworks[0]
-                : null
+              : artist.profileImage && typeof artist.profileImage === 'object'
+                ? artist.profileImage
+                : artist.surveyArtworks[0] && typeof artist.surveyArtworks[0] === 'object'
+                  ? artist.surveyArtworks[0]
+                  : null
 
           if (!cover) {
             return null
