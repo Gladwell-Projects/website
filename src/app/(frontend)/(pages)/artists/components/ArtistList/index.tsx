@@ -1,8 +1,7 @@
 'use client'
-import { Artist, Media } from '@/payload-types'
+import { Artist } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const ArtistList = (props: { data: Partial<Artist>[] }) => {
@@ -31,28 +30,33 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
           )
         })}
       </ul>
-      <div className="pointer-events-none fixed inset-0 z-99 col-span-full h-full w-full object-contain">
+      <div className="pointer-events-none invisible fixed inset-0 z-99 col-span-full hidden h-full w-full object-contain md:visible md:block">
         {data.map((artist) => {
           const cover =
-            artist.profileImage && typeof artist.profileImage === 'object'
-              ? artist.profileImage
-              : artist.surveyArtworks[0] && typeof artist.surveyArtworks[0] === 'object'
-                ? artist.surveyArtworks[0]
-                : null
+            artist.cover && typeof artist.cover === 'object'
+              ? artist.cover
+              : artist.profileImage && typeof artist.profileImage === 'object'
+                ? artist.profileImage
+                : artist.surveyArtworks[0] && typeof artist.surveyArtworks[0] === 'object'
+                  ? artist.surveyArtworks[0]
+                  : null
+
+          if (!cover) {
+            return null
+          }
+
           return (
             <div key={artist.id} className="contents">
-              {cover && (
-                <Image
-                  src={cover.url}
-                  width={cover.width}
-                  height={cover.height}
-                  alt={cover.alt}
-                  sizes="100vw"
-                  quality="80"
-                  loading="eager"
-                  className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-75`}
-                />
-              )}
+              <Image
+                src={cover.url}
+                width={cover.width}
+                height={cover.height}
+                alt={cover.alt}
+                sizes="100vw"
+                quality="80"
+                loading="eager"
+                className={`${currentArtist === artist.id ? 'opacity-100' : 'opacity-0'} fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-75`}
+              />
             </div>
           )
         })}
