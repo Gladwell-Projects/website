@@ -118,11 +118,13 @@ export interface Config {
     'main-menu': MainMenu;
     branding: Branding;
     footer: Footer;
+    analytics: Analytics;
   };
   globalsSelect: {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     branding: BrandingSelect<false> | BrandingSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    analytics: AnalyticsSelect<false> | AnalyticsSelect<true>;
   };
   locale: null;
   user:
@@ -1381,6 +1383,15 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics".
+ */
+export interface Analytics {
+  id: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu_select".
  */
 export interface MainMenuSelect<T extends boolean = true> {
@@ -1487,6 +1498,15 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics_select".
+ */
+export interface AnalyticsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

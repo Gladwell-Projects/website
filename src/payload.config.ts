@@ -23,6 +23,7 @@ import { Footer } from './globals/Footer'
 import lexicalDefault from './collections/lexical/defaultFeatures'
 
 import { blocks } from './blocks'
+import AnalyticsDash from './globals/Analytics'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -63,12 +64,14 @@ export default buildConfig({
       },
     },
   },
+  //@ts-expect-error there's a typescript error that says this is not allowed. Showed up when I reinstalled the lexical editor.
+  editor: lexicalDefault,
   email: resendAdapter({
     defaultFromAddress: 'noreply@notifs.gladwellprojects.com',
     defaultFromName: 'Gladwell Projects',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
-  globals: [MainMenu, BrandSettings, Footer],
+  globals: [MainMenu, BrandSettings, Footer, AnalyticsDash],
   collections: [
     Media,
     Artists,
@@ -81,7 +84,6 @@ export default buildConfig({
     Clients,
   ],
   blocks,
-  editor: lexicalDefault,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

@@ -20,7 +20,7 @@ export default function cloudflareLoader({ src, width, quality }: ImageLoaderPro
   const zone = 'gladwellprojects.com'
   const paramsString = params.join(',')
 
-  let source = `https://website.gladwell-projects.workers.dev/`
+  let source = `https://preview.gladwellprojects.com/`
 
   if (getClientSideURL() === 'https://gladwellprojects.com/') {
     source = ''
