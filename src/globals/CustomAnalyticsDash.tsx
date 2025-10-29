@@ -1,9 +1,8 @@
 'use client'
-import { useEffect } from 'react'
-
 import IFrameResizer from '@iframe-resizer/react'
+import React from 'react'
 
-const CustomAnalyticsDash: React.FC<{}> = ({}) => {
+const CustomAnalyticsDash: React.FC = () => {
   const fathomURL = process.env.FATHOM_DASHBOARD
 
   return (

@@ -1,11 +1,13 @@
 import { PayloadRequest, CollectionSlug } from 'payload'
 
-const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
+const collectionPrefixMap: Partial<Record<CollectionSlug | string, string>> = {
   artists: '/artists',
   pages: '',
   exhibitions: '/exhibitions',
+  fairs: '/fairs',
   press: '/press',
   events: '/events',
+  viewingRooms: '/viewing-rooms',
 }
 
 type Props = {
@@ -14,7 +16,7 @@ type Props = {
   req: PayloadRequest
 }
 
-export const generatePreviewPath = ({ collection, slug }: Props) => {
+export const generatePreviewPath = ({ collection, slug, req }: Props) => {
   // Allow empty strings, e.g. for the homepage
   if (slug === undefined || slug === null) {
     return null

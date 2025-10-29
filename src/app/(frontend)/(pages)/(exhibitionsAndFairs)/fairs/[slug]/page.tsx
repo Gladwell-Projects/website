@@ -1,5 +1,5 @@
-import React, { cache } from 'react'
-import { fetchExhibition } from '../../../_data'
+import React from 'react'
+import { fetchExhibition, fetchFair } from '../../../../_data'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import ThemeSwitch from '@/app/(frontend)/_ui/ThemeSwitch'
@@ -28,6 +28,20 @@ export const generateStaticParams = async () => {
     pagination: false,
     limit: 100000,
     depth: 2,
+    where: {
+      and: [
+        {
+          _status: {
+            equals: true,
+          },
+        },
+        {
+          type: {
+            equals: 'fair',
+          },
+        },
+      ],
+    },
   })
   return pages.docs.map((page) => ({ slug: page.slug }))
 }
@@ -38,8 +52,8 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
   const { slug } = await params
 
   const page: Partial<Exhibition> = draft
-    ? await fetchExhibition(slug)
-    : await unstable_cache(fetchExhibition)(slug)
+    ? await fetchFair(slug)
+    : await unstable_cache(fetchFair)(slug)
 
   if (!page) {
     notFound()

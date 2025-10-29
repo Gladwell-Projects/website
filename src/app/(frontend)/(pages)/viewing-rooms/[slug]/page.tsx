@@ -12,7 +12,6 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { cache } from 'react'
 import { colors } from '@/fields/theme'
 
 export const generateStaticParams = async () => {

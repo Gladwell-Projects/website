@@ -13,9 +13,11 @@ export async function GET(req: NextRequest): Promise<Response> {
   const { searchParams } = new URL(req.url)
 
   const path = searchParams.get('path')
-  const collection = searchParams.get('collection') as CollectionSlug
+  const collection = searchParams.get('collection') as CollectionSlug | string
   const slug = searchParams.get('slug')
   const previewSecret = searchParams.get('previewSecret')
+
+  console.log(path)
 
   if (previewSecret !== process.env.PREVIEW_SECRET) {
     return new Response('You are not allowed to preview this page', {

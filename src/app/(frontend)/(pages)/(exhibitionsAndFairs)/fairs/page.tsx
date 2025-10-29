@@ -1,23 +1,23 @@
 import React from 'react'
-import { currentThemeFromNav, fetchExhibitions } from '../../_data'
+import { currentThemeFromNav, fetchFairs } from '../../../_data'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
-import ExhibitionsList from './components/ExhibitionList'
+import ExhibitionsList from '../_components/ExhibitionList'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import Headline from '../../_ui/Headline'
-import ThemeSwitch from '../../_ui/ThemeSwitch'
+import Headline from '../../../_ui/Headline'
+import ThemeSwitch from '../../../_ui/ThemeSwitch'
 import { colors } from '@/fields/theme'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
 
   const exhibitions: Partial<Exhibition>[] = draft
-    ? await fetchExhibitions('startDate')
-    : await unstable_cache(fetchExhibitions)('startDate')
+    ? await fetchFairs('startDate')
+    : await unstable_cache(fetchFairs)('startDate')
 
-  const slug = 'exhibitions'
+  const slug = 'fairs'
 
   const pageTheme = await currentThemeFromNav(slug)
 
@@ -46,7 +46,7 @@ const Exhibitions = async () => {
     return (
       <div className="col-span-full grid grid-cols-subgrid">
         <ThemeSwitch templateTheme={pageTheme} />
-        <h1 className="col-span-full">Exhibitions</h1>
+        <h1 className="col-span-full">Fairs</h1>
         <h6 className="col-span-12">Nothing here yet...</h6>
       </div>
     )
@@ -55,25 +55,25 @@ const Exhibitions = async () => {
   return (
     <div className="col-span-full grid grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Exhibitions" />
+      <Headline title="Fairs" />
       {current.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
           <h2 className="col-span-full text-lg tracking-widest uppercase">Current</h2>
-          <ExhibitionsList exhibitions={current} />
+          <ExhibitionsList exhibitions={current} slug={slug} />
         </div>
       )}
 
       {upcoming.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
           <h2 className="col-span-full text-lg tracking-widest uppercase">Upcoming</h2>
-          <ExhibitionsList exhibitions={upcoming} />
+          <ExhibitionsList exhibitions={upcoming} slug={slug} />
         </div>
       )}
 
       {past.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
           <h2 className="col-span-full text-base tracking-widest uppercase">Past</h2>
-          <ExhibitionsList exhibitions={past} />
+          <ExhibitionsList exhibitions={past} slug={slug} />
         </div>
       )}
     </div>

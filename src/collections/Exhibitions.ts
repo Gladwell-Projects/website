@@ -12,14 +12,17 @@ export const Exhibitions: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'startDate', 'type'],
+    defaultColumns: ['title', 'featuredArtists', 'startDate', 'type'],
     livePreview: {
-      url: ({ data, req }) =>
-        generatePreviewPath({
+      url: ({ data, req }) => {
+        const collection = data.type === 'exhibition' ? 'exhibitions' : 'fairs'
+
+        return generatePreviewPath({
           slug: data?.slug,
-          collection: 'exhibitions',
+          collection,
           req,
-        }),
+        })
+      },
     },
     preview: (data, { req }) =>
       generatePreviewPath({

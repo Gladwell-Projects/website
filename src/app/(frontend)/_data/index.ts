@@ -331,14 +331,52 @@ export const fetchExhibitions = async (sort: string): Promise<Partial<Exhibition
     draft,
     sort,
     where: {
-      _status: {
-        equals: 'published',
-      },
+      and: [
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+        {
+          type: {
+            equals: 'exhibition',
+          },
+        },
+      ],
     },
   })
 
   return data.docs
 }
+
+export const fetchFairs = async (sort: string): Promise<Partial<Exhibition>[]> => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.find({
+    collection: 'exhibitions',
+    depth: 2,
+    draft,
+    sort,
+    where: {
+      and: [
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+        {
+          type: {
+            equals: 'fair',
+          },
+        },
+      ],
+    },
+  })
+
+  return data.docs
+}
+
 export const fetchExhibition = async (slug: string) => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config })
@@ -366,6 +404,8 @@ export const fetchExhibition = async (slug: string) => {
 
   return data.docs[0]
 }
+
+export const fetchFair = (slug: string) => fetchExhibition(slug)
 
 export const fetchArtists = async (sort: string): Promise<Partial<Artist>[]> => {
   const { isEnabled: draft } = await draftMode()

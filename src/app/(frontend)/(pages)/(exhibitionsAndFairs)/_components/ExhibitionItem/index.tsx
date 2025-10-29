@@ -3,7 +3,13 @@ import { Artist, Exhibition, Media } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ExhibitionItem = ({ exhibition }: { exhibition: Partial<Exhibition> }) => {
+const ExhibitionItem = ({
+  exhibition,
+  slug,
+}: {
+  exhibition: Partial<Exhibition>
+  slug: string
+}) => {
   const artists = exhibition.featuredArtists as Partial<Artist>[]
 
   const cover = exhibition.coverImage as Partial<Media>
@@ -15,7 +21,7 @@ const ExhibitionItem = ({ exhibition }: { exhibition: Partial<Exhibition> }) => 
   return (
     <li className="group relative col-span-full -mx-2 grid grid-cols-subgrid overflow-hidden px-2 py-6">
       <Link
-        href={{ pathname: `/exhibitions/${exhibition.slug}` }}
+        href={{ pathname: `/${slug}/${exhibition.slug}` }}
         className="col-span-full grid w-full grid-cols-subgrid text-(--theme-link) no-underline"
       >
         {cover && (
