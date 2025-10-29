@@ -46,7 +46,7 @@ const Exhibitions = async () => {
     return (
       <div className="col-span-full grid grid-cols-subgrid">
         <ThemeSwitch templateTheme={pageTheme} />
-        <h1 className="col-span-full">Fairs</h1>
+        <Headline title="Fairs" />
         <h6 className="col-span-12">Nothing here yet...</h6>
       </div>
     )
