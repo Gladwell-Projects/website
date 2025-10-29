@@ -399,6 +399,7 @@ export interface Exhibition {
   endDate: string;
   endDate_tz: SupportedTimezones;
   location?: string | null;
+  type?: ('exhibition' | 'fair') | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -828,7 +829,7 @@ export interface PayloadQueryPreset {
     | number
     | boolean
     | null;
-  relatedCollection: 'media';
+  relatedCollection: 'media' | 'exhibitions';
   /**
    * This is a temporary field used to determine if updating the preset would remove the user's access to it. When `true`, this record will be deleted after running the preset's `validate` function.
    */
@@ -915,6 +916,7 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   endDate?: T;
   endDate_tz?: T;
   location?: T;
+  type?: T;
   generateSlug?: T;
   slug?: T;
   title?: T;

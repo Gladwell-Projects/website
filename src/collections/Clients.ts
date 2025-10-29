@@ -9,6 +9,7 @@ export const Clients: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Website',
+    hidden: true,
   },
   access: {
     read: published,

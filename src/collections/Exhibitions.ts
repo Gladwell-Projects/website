@@ -7,9 +7,12 @@ import { admins } from './access/admins'
 
 export const Exhibitions: CollectionConfig = {
   slug: 'exhibitions',
+  labels: { plural: 'Exhibitions & Art Fairs', singular: 'Exhibition or Art Fair' },
+  enableQueryPresets: true,
   admin: {
     group: 'Website',
     useAsTitle: 'title',
+    defaultColumns: ['title', 'startDate', 'type'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -36,7 +39,6 @@ export const Exhibitions: CollectionConfig = {
   versions: {
     drafts: true,
   },
-  labels: { singular: 'Exhibition', plural: 'Exhibitions' },
   fields: [
     {
       name: 'startDate',
@@ -59,6 +61,17 @@ export const Exhibitions: CollectionConfig = {
     {
       name: 'location',
       type: 'textarea',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'type',
+      type: 'select',
+      options: [
+        { label: 'Exhibition', value: 'exhibition' },
+        { label: 'Art Fair', value: 'fair' },
+      ],
       admin: {
         position: 'sidebar',
       },

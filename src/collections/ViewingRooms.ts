@@ -21,6 +21,7 @@ export const ViewingRooms: CollectionConfig = {
   admin: {
     group: 'Website',
     useAsTitle: 'title',
+    hidden: true,
   },
   fields: [
     {

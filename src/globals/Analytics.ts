@@ -1,5 +1,3 @@
-// process.env.FATHOM_DASHBOARD
-
 import { adminsAndEditors } from '@/collections/access/adminsAndEditors'
 import { GlobalConfig } from 'payload'
 
