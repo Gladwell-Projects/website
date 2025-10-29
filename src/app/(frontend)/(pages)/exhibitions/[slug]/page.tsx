@@ -110,10 +110,10 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
         {artists.length > 0 && (
           <div className="col-span-full">
             <h2 className="col-span-full m-0 text-xl">Artists</h2>
-            <ul className="col-span-full m-0 w-full columns-1 place-self-start sm:columns-2 md:columns-2 lg:columns-3">
+            <ul className="col-span-full m-0 w-full columns-1 place-self-start p-0 sm:columns-2 md:columns-2 lg:columns-3">
               {artists.map((artist) => {
                 return (
-                  <li key={artist.id}>
+                  <li key={artist.id} className="list-none p-0">
                     {artist.isRepresented && (
                       <Link
                         href={{ pathname: `/artists/${artist.slug}` }}
