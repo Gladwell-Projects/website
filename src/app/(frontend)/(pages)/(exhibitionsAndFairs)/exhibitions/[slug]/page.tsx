@@ -23,12 +23,12 @@ export const generateStaticParams = async () => {
       and: [
         {
           _status: {
-            equals: true,
+            equals: 'published',
           },
         },
         {
           type: {
-            equals: 'fair',
+            equals: 'exhibition',
           },
         },
       ],

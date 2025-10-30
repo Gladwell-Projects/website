@@ -23,7 +23,7 @@ export const generateStaticParams = async () => {
       and: [
         {
           _status: {
-            equals: true,
+            equals: 'published',
           },
         },
         {

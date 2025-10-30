@@ -93,7 +93,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
             width={page.profileImage.width}
             height={page.profileImage.height}
             sizes="(width >= 48rem) 50vw, 68vw"
-            className="col-span-8 col-start-3 pb-4 md:col-span-2 md:col-start-3"
+            className="col-span-8 col-start-3 pb-4 md:col-span-full"
           />
         </div>
       )}
