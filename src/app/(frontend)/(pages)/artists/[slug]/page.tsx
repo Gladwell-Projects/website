@@ -67,14 +67,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
     <SubGrid>
       <ThemeSwitch templateTheme="default" />
       {draft && <LivePreviewListener />}
-      <Headline
-        title={page.title}
-        className={`${
-          page.profileImage && typeof page.profileImage === 'object'
-            ? 'col-span-full grid auto-rows-min grid-cols-subgrid md:col-span-6'
-            : null
-        }`}
-      >
+      <Headline title={page.title}>
         <div className="text-glow-700 col-span-full text-xl font-bold md:col-span-6">
           {!page.deathYear && page.birthYear && 'b. '}
           {page.birthYear && `${page.birthYear}`}
@@ -84,25 +77,25 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {(page.birthYear || page.deathYear) && page.nationality && ','}{' '}
           {page.nationality && page.nationality}
         </div>
-      </Headline>
-      {page.profileImage && typeof page.profileImage === 'object' && (
-        <div className="col-span-full grid grid-cols-subgrid md:col-span-6 md:py-8">
-          <Image
-            src={page.profileImage.url}
-            alt={page.profileImage.alt}
-            width={page.profileImage.width}
-            height={page.profileImage.height}
-            sizes="(width >= 48rem) 50vw, 68vw"
-            className="col-span-8 col-start-3 pb-4 md:col-span-full"
-          />
-        </div>
-      )}
-      <Content>
         {cv ? (
           <Link className="col-span-full no-underline" href={cv.url} prefetch={false}>
             Download CV&ensp;<small>(PDF)</small>
           </Link>
         ) : null}
+      </Headline>
+      <Content>
+        {page.profileImage && typeof page.profileImage === 'object' && (
+          <div className="col-span-full grid grid-cols-subgrid md:col-span-4 md:col-start-8 md:row-start-1">
+            <Image
+              src={page.profileImage.url}
+              alt={page.profileImage.alt}
+              width={page.profileImage.width}
+              height={page.profileImage.height}
+              sizes="(width >= 48rem) 50vw, 68vw"
+              className="col-span-8 col-start-3 pb-4 md:col-span-full"
+            />
+          </div>
+        )}
         <PageBlocks data={page.content} />
         {survey.length > 0 && (
           <Gallery galleryItems={survey} defaultState="Grid" header="Survey" />
