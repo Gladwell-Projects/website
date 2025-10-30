@@ -23,10 +23,16 @@ export const Gallery: Block = {
       relationTo: 'media',
       hasMany: true,
       displayPreview: true,
-      filterOptions: {
-        mimeType: {
-          contains: 'image',
-        },
+      filterOptions: () => {
+        return {
+          and: [
+            {
+              mimeType: {
+                contains: 'image',
+              },
+            },
+          ],
+        }
       },
     },
   ],

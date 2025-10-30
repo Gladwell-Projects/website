@@ -58,3 +58,5 @@ node_modules/
 sqldata
 sql/update-status
 prod-data.sql
+website.sql
+websitedata.sql

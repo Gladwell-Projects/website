@@ -89,7 +89,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    displayPreview: false,
+    displayPreview: true,
     adminThumbnail: 'small',
   },
 }

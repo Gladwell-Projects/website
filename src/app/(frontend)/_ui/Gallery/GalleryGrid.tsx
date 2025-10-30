@@ -26,7 +26,7 @@ const GalleryGrid = (props: {
   }
 
   return (
-    <div className="col-span-full grid auto-rows-fr grid-cols-subgrid gap-3">
+    <div className="col-span-full grid auto-rows-fr grid-cols-subgrid gap-3 gap-y-4">
       {items.map((item, i) => {
         if (typeof item !== 'object') {
           return null
