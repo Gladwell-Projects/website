@@ -77,11 +77,6 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           {(page.birthYear || page.deathYear) && page.nationality && ','}{' '}
           {page.nationality && page.nationality}
         </div>
-        {cv ? (
-          <Link className="col-span-full no-underline" href={cv.url} prefetch={false}>
-            Download CV&ensp;<small>(PDF)</small>
-          </Link>
-        ) : null}
       </Headline>
       <Content>
         {page.profileImage && typeof page.profileImage === 'object' && (
@@ -97,6 +92,17 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
           </div>
         )}
         <PageBlocks data={page.content} />
+
+        {cv ? (
+          <Link
+            className="col-span-full py-4 no-underline"
+            href={cv.url}
+            prefetch={false}
+          >
+            Download CV&ensp;<small>(PDF)</small>
+          </Link>
+        ) : null}
+
         {survey.length > 0 && (
           <Gallery galleryItems={survey} defaultState="Grid" header="Survey" />
         )}
