@@ -63,17 +63,19 @@ const GallerySlider = (props: {
       <div className="col-span-10 col-start-2 grid w-full grid-cols-subgrid">
         <figure className="col-span-full grid grid-cols-subgrid">
           <Image
-            className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
+            className={`col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 ${caption ? 'md:col-start-1' : 'md:col-start-2'} md:h-[65vh]`}
             alt={alt}
             width={width}
             height={height}
             src={url}
             sizes="(width>=48rem) 70vw, 85vw"
           />
-          <Caption
-            className="col-span-full mt-2 mb-0 block w-auto md:col-span-2 md:-col-end-1 md:mt-0 [&_p]:last:mb-0"
-            caption={caption}
-          />
+          {caption && (
+            <Caption
+              className="col-span-full mt-2 mb-0 block w-auto md:col-span-2 md:-col-end-1 md:mt-0 [&_p]:last:mb-0"
+              caption={caption}
+            />
+          )}
         </figure>
         <div
           aria-hidden="true"
