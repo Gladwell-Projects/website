@@ -125,6 +125,22 @@ export const Exhibitions: CollectionConfig = {
                     },
                   },
                 },
+                {
+                  name: 'previewPdf',
+                  label: 'Preview PDF',
+                  admin: {
+                    description: 'PDF Please',
+                    width: '50%',
+                  },
+                  type: 'upload',
+                  relationTo: 'media',
+                  hasMany: false,
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'pdf',
+                    },
+                  },
+                },
               ],
             },
             {

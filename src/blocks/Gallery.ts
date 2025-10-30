@@ -23,6 +23,9 @@ export const Gallery: Block = {
       relationTo: 'media',
       hasMany: true,
       displayPreview: true,
+      /*
+       * TODO: ADD FILTERING FOR EXISTING IMAGES IN THE UPLOAD FIELD
+       */
       filterOptions: () => {
         return {
           and: [

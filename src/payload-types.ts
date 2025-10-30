@@ -406,6 +406,10 @@ export interface Exhibition {
    * PDF Please
    */
   checklist?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  previewPdf?: (string | null) | Media;
   featuredArtists?: (string | Artist)[] | null;
   content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   coverImage?: (string | null) | Media;
@@ -907,6 +911,7 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   title?: T;
   pressRelease?: T;
   checklist?: T;
+  previewPdf?: T;
   featuredArtists?: T;
   content?: T | {};
   coverImage?: T;
