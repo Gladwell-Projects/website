@@ -13,7 +13,14 @@ import Headline from '@/app/(frontend)/_ui/Headline'
 
 const ExhibitionContent = (props: { page: Partial<Exhibition>; draft: boolean }) => {
   const { page, draft } = props
-  const cover = page.coverImage ? (page.coverImage as Media) : null
+
+  const cover =
+    page.featuredImg && typeof page.featuredImg === 'object'
+      ? page.featuredImg
+      : page.coverImage && typeof page.coverImage === 'object'
+        ? page.coverImage
+        : null
+
   const start = dateToLong(page.startDate, page.startDate_tz)
   const end = dateToLong(page.endDate, page.startDate_tz)
 
@@ -56,7 +63,7 @@ const ExhibitionContent = (props: { page: Partial<Exhibition>; draft: boolean })
               loading="eager"
               fetchPriority="high"
             />
-            <Caption caption={cover.caption} />
+            {cover.caption && <Caption caption={cover.caption} />}
           </div>
         )}
       </Headline>

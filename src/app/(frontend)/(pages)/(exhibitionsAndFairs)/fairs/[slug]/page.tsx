@@ -44,7 +44,7 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
 
   const page: Partial<Exhibition> = draft
     ? await fetchFair(slug)
-    : await unstable_cache(fetchFair)(slug)
+    : await unstable_cache(fetchFair, [`fair-${slug}`])(slug)
 
   if (!page) {
     notFound()

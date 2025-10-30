@@ -172,6 +172,21 @@ export const Exhibitions: CollectionConfig = {
             {
               name: 'coverImage',
               type: 'upload',
+              admin: {
+                description:
+                  'This is the image that is used as the background for the list on the frontend',
+              },
+              relationTo: 'media',
+              displayPreview: true,
+            },
+            {
+              name: 'featuredImg',
+              label: 'Featured Image',
+              admin: {
+                description:
+                  'This image is the image in the first section of the page, this will default to the cover image if it is not set.',
+              },
+              type: 'upload',
               relationTo: 'media',
               displayPreview: true,
             },

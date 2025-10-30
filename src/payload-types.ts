@@ -412,7 +412,14 @@ export interface Exhibition {
   previewPdf?: (string | null) | Media;
   featuredArtists?: (string | Artist)[] | null;
   content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  /**
+   * This is the image that is used as the background for the list on the frontend
+   */
   coverImage?: (string | null) | Media;
+  /**
+   * This image is the image in the first section of the page, this will default to the cover image if it is not set.
+   */
+  featuredImg?: (string | null) | Media;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -915,6 +922,7 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   featuredArtists?: T;
   content?: T | {};
   coverImage?: T;
+  featuredImg?: T;
   meta?:
     | T
     | {
