@@ -37,7 +37,7 @@ const GalleryGrid = (props: {
             onClick={openItem}
             key={id}
             data-index={i}
-            className="col-span-6 grid cursor-pointer grid-cols-1 grid-rows-[1fr_auto] gap-2 sm:col-span-4 lg:col-span-3 2xl:col-span-2"
+            className="col-span-6 grid cursor-pointer grid-cols-1 grid-rows-[min-content_1fr] gap-2 sm:col-span-4 lg:col-span-3 2xl:col-span-2"
           >
             <Image
               alt={alt}
