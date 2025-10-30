@@ -9,7 +9,7 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Media',
     groupBy: true,
-    defaultColumns: ['filename', 'caption', 'artworkId', 'artist', 'preview'],
+    defaultColumns: ['filename', 'caption', 'artworkId', 'preview'],
   },
   enableQueryPresets: true,
   access: {
@@ -76,12 +76,6 @@ export const Media: CollectionConfig = {
               name: 'artworkId',
               type: 'text',
               label: 'Artwork ID',
-            },
-            {
-              name: 'artist',
-              type: 'join',
-              collection: 'artists',
-              on: 'surveyArtworks',
             },
           ],
         },

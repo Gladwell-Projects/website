@@ -91,11 +91,7 @@ export interface Config {
     'payload-migrations': PayloadMigration;
     'payload-query-presets': PayloadQueryPreset;
   };
-  collectionsJoins: {
-    media: {
-      artist: 'artists';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
@@ -260,11 +256,6 @@ export interface Media {
     [k: string]: unknown;
   } | null;
   artworkId?: string | null;
-  artist?: {
-    docs?: (string | Artist)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -276,48 +267,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "artists".
- */
-export interface Artist {
-  id: string;
-  title?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  isRepresented?: boolean | null;
-  cover?: (string | null) | Media;
-  profileImage?: (string | null) | Media;
-  firstName?: string | null;
-  middleName?: string | null;
-  lastName?: string | null;
-  suffix?: string | null;
-  nationality?: string | null;
-  birthYear?: number | null;
-  deathYear?: number | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
-  socialLinks?: {
-    website?: string | null;
-    instagram?: string | null;
-    twitter?: string | null;
-  };
-  cvUpload?: (string | null) | Media;
-  surveyArtworks?: (string | Media)[] | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -379,6 +328,48 @@ export interface HalfImage {
   id?: string | null;
   blockName?: string | null;
   blockType: 'halfImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artists".
+ */
+export interface Artist {
+  id: string;
+  title?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  isRepresented?: boolean | null;
+  cover?: (string | null) | Media;
+  profileImage?: (string | null) | Media;
+  firstName?: string | null;
+  middleName?: string | null;
+  lastName?: string | null;
+  suffix?: string | null;
+  nationality?: string | null;
+  birthYear?: number | null;
+  deathYear?: number | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  socialLinks?: {
+    website?: string | null;
+    instagram?: string | null;
+    twitter?: string | null;
+  };
+  cvUpload?: (string | null) | Media;
+  surveyArtworks?: (string | Media)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -850,7 +841,6 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   artworkId?: T;
-  artist?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

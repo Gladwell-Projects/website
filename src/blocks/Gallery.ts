@@ -26,16 +26,8 @@ export const Gallery: Block = {
       /*
        * TODO: ADD FILTERING FOR EXISTING IMAGES IN THE UPLOAD FIELD
        */
-      filterOptions: () => {
-        return {
-          and: [
-            {
-              mimeType: {
-                contains: 'image',
-              },
-            },
-          ],
-        }
+      filterOptions: {
+        mimeType: { contains: 'image' },
       },
     },
   ],
