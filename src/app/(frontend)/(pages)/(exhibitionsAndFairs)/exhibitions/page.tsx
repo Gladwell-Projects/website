@@ -58,9 +58,7 @@ const Exhibitions = async () => {
       <Headline title="Exhibitions" />
       {current.length > 0 && (
         <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2 className="col-span-full text-lg tracking-widest uppercase">
-            Current Exhibition
-          </h2>
+          <h2 className="col-span-full text-lg tracking-widest uppercase">On View</h2>
           <ExhibitionsList exhibitions={current} slug={slug} />
         </div>
       )}
