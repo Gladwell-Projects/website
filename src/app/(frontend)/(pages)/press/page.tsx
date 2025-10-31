@@ -1,8 +1,8 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { Artist, Exhibition, Media, Press } from '@/payload-types'
-import { currentThemeFromNav, fetchCollection, fetchPress } from '../../_data'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import { Artist, Exhibition, Media } from '@/payload-types'
+import { currentThemeFromNav, fetchPress } from '../../_data'
+import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
 import Headline from '../../_ui/Headline'
 import { CMSLink } from '../../_ui/CMSLinks'
 import Link from 'next/link'
@@ -11,6 +11,7 @@ import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { colors } from '@/fields/theme'
 import { unstable_cache } from 'next/cache'
 import { draftMode } from 'next/headers'
+import { dateToLong } from '@/utilities/convertCMSDate'
 
 const PressPage: React.FC = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -50,7 +51,13 @@ const PressPage: React.FC = async () => {
                     {press.strapline}
                   </strong>
                 )}
-                <h2 className="text-xl">{press.title}</h2>
+                <h2 className="text-2xl">{press.title}</h2>
+                <time
+                  className="align-top text-sm font-bold tracking-widest uppercase"
+                  dateTime={press.date}
+                >
+                  {dateToLong(press.date)}
+                </time>
               </div>
               <div className="md:col-span-6">
                 {press.featuredImage && (
@@ -60,6 +67,7 @@ const PressPage: React.FC = async () => {
                     height={image.height}
                     alt={image.alt}
                     sizes="(width >=48rem) 50vw, 100vw"
+                    className="mb-4"
                   />
                 )}
                 <div className="relative">
@@ -100,22 +108,26 @@ const PressPage: React.FC = async () => {
                             {i > 0 && (
                               <span className="px-1 font-bold not-italic">&bull;</span>
                             )}
-                            <Link href={{ pathname: `/artists/${e.slug}` }}>
-                              {e.title}
-                            </Link>
+                            {e.isRepresented ? (
+                              <Link href={{ pathname: `/artists/${e.slug}` }}>
+                                {e.title}
+                              </Link>
+                            ) : (
+                              e.title
+                            )}
                           </li>
                         )
                       })}
                     </ul>
                   )}
                   <ul className="font-bold not-italic">
-                    <li className="pr-2 text-sm font-normal tracking-widest uppercase">
+                    <li>
                       <Link href={`/press/${press.slug}`}>Read More</Link>
                     </li>
-                    {links.map((link, i) => {
+                    {links.map((link) => {
                       return (
                         <li key={link.id}>
-                          {i > 0 && <span className="px-1 font-bold"> &bull; </span>}
+                          <span className="px-1 font-bold"> &bull; </span>
                           {/* @ts-expect-error cms links number error... */}
                           <CMSLink {...link.link}> ↗</CMSLink>
                         </li>

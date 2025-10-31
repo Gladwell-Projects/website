@@ -242,8 +242,8 @@
     @apply lg:[--font-size-base-px:21px];
     @apply md:[--nav-height:--spacing(18)];
     @apply md:[--text-xs--line-height:--spacing(2)];
-    @apply md:[--text-sm--line-height:1.55rem];
-    @apply md:[--text-base--line-height:1.55rem];
+    @apply md:[--text-sm--line-height:1.75rem];
+    @apply md:[--text-base--line-height:1.75rem];
     @apply md:[--text-lg--line-height:--spacing(4)];
     @apply md:[--text-xl--line-height:--spacing(6)];
     @apply md:[--text-2xl--line-height:--spacing(7)];
@@ -440,19 +440,25 @@
 }
 
 @layer components {
-  .content ul {
-    padding-left: --spacing(4);
-    li {
-      padding-left: --spacing(1);
-      list-style-type: "●";
+  .richtext-field {
+    ul {
+      padding-left: --spacing(4);
+      li {
+        padding-left: --spacing(1);
+        list-style-type: "●";
+      }
     }
-  }
-  .content ol {
-    counter-reset: orderedList;
-    padding-left: --spacing(4.5);
-    li {
-      padding-left: --spacing(0.5);
-      list-style: decimal;
+    ol {
+      counter-reset: orderedList;
+      padding-left: --spacing(4.5);
+      li {
+        padding-left: --spacing(0.5);
+        list-style: decimal;
+      }
+    }
+    blockquote {
+      margin: --spacing(4);
+      font-style: italic;
     }
   }
   .modal-wrapper {

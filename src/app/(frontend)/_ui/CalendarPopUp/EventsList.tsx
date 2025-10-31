@@ -1,6 +1,6 @@
 'use client'
 
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
 import { useState } from 'react'
 import { CMSLink } from '../CMSLinks'
 import { fetcher, query } from './getEvents'
@@ -21,7 +21,7 @@ export const DefaultList = ({ activeMonthString }: { activeMonthString: string }
       <li className="events-headline sticky p-1 md:p-2">
         <h6 className="text-base md:text-lg">{activeMonthString}</h6>
       </li>
-      <li className="w-full list-none px-1 py-2 text-center hover:bg-[var(--theme-highlight)] md:px-2">
+      <li className="w-full list-none px-1 py-2 text-center hover:bg-(--theme-highlight) md:px-2">
         Loading events...
       </li>
     </ul>
@@ -61,7 +61,7 @@ const CalendarEventList = (props: {
           return (
             <li
               key={e.id}
-              className={`w-full list-none px-1 py-2 hover:bg-[var(--theme-highlight)] md:px-2 ${dateMatches ? 'bg-[var(--theme-highlight)]' : ''}`}
+              className={`w-full list-none px-1 py-2 hover:bg-(--theme-highlight) md:px-2 ${dateMatches ? 'bg-(--theme-highlight)' : ''}`}
               onClick={() => {
                 if (openEvent === e.id) {
                   setOpenEvent(null)

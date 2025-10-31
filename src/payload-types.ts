@@ -455,6 +455,7 @@ export interface Press {
     };
     [k: string]: unknown;
   };
+  contentBlocks?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
   featuredImage?: (string | null) | Media;
   relatedArtists?: (string | Artist)[] | null;
   relatedExhibitions?: (string | Exhibition)[] | null;
@@ -935,6 +936,7 @@ export interface PressSelect<T extends boolean = true> {
   slug?: T;
   date?: T;
   content?: T;
+  contentBlocks?: T | {};
   featuredImage?: T;
   relatedArtists?: T;
   relatedExhibitions?: T;

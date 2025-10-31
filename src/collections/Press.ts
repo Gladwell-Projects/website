@@ -69,8 +69,25 @@ export const Press: CollectionConfig = {
     },
     {
       name: 'content',
+      label: 'Summary',
       type: 'richText',
       required: true,
+    },
+    {
+      name: 'contentBlocks',
+      type: 'blocks',
+      label: 'Content',
+      blockReferences: [
+        'headline',
+        'text',
+        'lgImage',
+        'mdImage',
+        'smImage',
+        'gallery',
+        'twoImage',
+        'halfImage',
+      ],
+      blocks: [],
     },
     {
       name: 'featuredImage',

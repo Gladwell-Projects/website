@@ -23,7 +23,7 @@ export const GladwellRichtext: React.FC<{
   return (
     <RichText
       converters={jsxConverters}
-      className={`col-span-full col-start-1 ${className ? className : 'sm:col-span-8 sm:col-start-1 lg:col-span-6 lg:col-start-1'}`}
+      className={`richtext-field col-span-full col-start-1 ${className ? className : 'sm:col-span-8 sm:col-start-1 lg:col-span-6 lg:col-start-1'}`}
       data={data}
     />
   )
