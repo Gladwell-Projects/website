@@ -45,7 +45,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    livePreview: {},
+    livePreview: {
+      breakpoints: [
+        {
+          label: 'Mobile',
+          name: 'mobile',
+          width: 375,
+          height: 667,
+        },
+      ],
+    },
     meta: {
       titleSuffix: '— Gladwell Projects',
       description: 'Gladwell Projects Admin Panel',

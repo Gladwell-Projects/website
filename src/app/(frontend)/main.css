@@ -242,8 +242,8 @@
     @apply lg:[--font-size-base-px:21px];
     @apply md:[--nav-height:--spacing(18)];
     @apply md:[--text-xs--line-height:--spacing(2)];
-    @apply md:[--text-sm--line-height:1.75rem];
-    @apply md:[--text-base--line-height:1.75rem];
+    @apply md:[--text-sm--line-height:1.7rem];
+    @apply md:[--text-base--line-height:1.7rem];
     @apply md:[--text-lg--line-height:--spacing(4)];
     @apply md:[--text-xl--line-height:--spacing(6)];
     @apply md:[--text-2xl--line-height:--spacing(7)];

@@ -17,14 +17,14 @@ export const Press: CollectionConfig = {
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
-          slug: '/',
+          slug: data?.slug,
           collection: 'press',
           req,
         }),
     },
     preview: (data, { req }) =>
       generatePreviewPath({
-        slug: '/',
+        slug: data?.slug as string,
         collection: 'press',
         req,
       }),
