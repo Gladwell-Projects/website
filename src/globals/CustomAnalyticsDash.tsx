@@ -9,6 +9,7 @@ const CustomAnalyticsDash: React.FC = () => {
     <>
       <IFrameResizer
         license="GPLv3"
+        waitForLoad={true}
         src={fathomURL}
         bodyBackground="transparent"
         style={{ width: '100%', height: '100vh', border: 'none', outline: 'none' }}
