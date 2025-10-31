@@ -52,6 +52,7 @@ export const fetchPress = async () => {
     collection: 'press',
     limit: 999999,
     pagination: false,
+    sort: '-date',
     where: {
       and: [
         ...(draft

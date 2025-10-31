@@ -1,7 +1,7 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media, Press } from '@/payload-types'
-import { currentThemeFromNav, fetchCollection } from '../../_data'
+import { currentThemeFromNav, fetchCollection, fetchPress } from '../../_data'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Headline from '../../_ui/Headline'
 import { CMSLink } from '../../_ui/CMSLinks'
@@ -9,15 +9,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { colors } from '@/fields/theme'
+import { unstable_cache } from 'next/cache'
+import { draftMode } from 'next/headers'
 
 const PressPage: React.FC = async () => {
-  const items = (await fetchCollection('press', 'date')) as Partial<Press>[]
+  const { isEnabled: draft } = await draftMode()
+  const page = draft
+    ? await fetchPress()
+    : await unstable_cache(fetchPress, ['artists'])()
 
-  const slug = 'press'
+  const slug = '/press'
 
   const pageTheme = await currentThemeFromNav(slug)
 
-  if (items.length < 1) {
+  if (page.length < 1) {
     return (
       <div className="col-span-full">
         <ThemeSwitch templateTheme={pageTheme} />
@@ -31,8 +36,8 @@ const PressPage: React.FC = async () => {
     <div className="col-span-full md:grid md:grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Press" className="md:col-span-full" />
-      <ul className="md:col-span-full md:grid md:grid-cols-subgrid">
-        {items.map((press) => {
+      <ul className="col-span-full grid grid-cols-subgrid gap-y-8">
+        {page.map((press) => {
           const relatedExhibitions = press.relatedExhibitions as Partial<Exhibition>[]
           const relatedArtists = press.relatedArtists as Partial<Artist>[]
           const links = press.links
@@ -40,8 +45,12 @@ const PressPage: React.FC = async () => {
           return (
             <li key={press.id} className="md:col-span-full md:grid md:grid-cols-subgrid">
               <div className="md:col-span-6">
-                {press.strapline && <h6>{press.strapline}</h6>}
-                <h2>{press.title}</h2>
+                {press.strapline && (
+                  <strong className="text-base tracking-widest uppercase">
+                    {press.strapline}
+                  </strong>
+                )}
+                <h2 className="text-xl">{press.title}</h2>
               </div>
               <div className="md:col-span-6">
                 {press.featuredImage && (
@@ -101,7 +110,7 @@ const PressPage: React.FC = async () => {
                   )}
                   <ul className="font-bold not-italic">
                     <li className="pr-2 text-sm font-normal tracking-widest uppercase">
-                      Read More:
+                      <Link href={`/press/${press.slug}`}>Read More</Link>
                     </li>
                     {links.map((link, i) => {
                       return (
