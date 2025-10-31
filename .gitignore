@@ -60,3 +60,4 @@ sql/update-status
 prod-data.sql
 website.sql
 websitedata.sql
+.env.development

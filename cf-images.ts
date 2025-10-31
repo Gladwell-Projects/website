@@ -1,6 +1,6 @@
 'use client'
 // image-loader.ts
-import { getClientSideURL } from '@/utilities/getURL'
+import { getClientSideURL, getServerSideURL } from '@/utilities/getURL'
 import type { ImageLoaderProps } from 'next/image'
 
 const normalizeSrc = (src: string) => {
@@ -20,11 +20,11 @@ export default function cloudflareLoader({ src, width, quality }: ImageLoaderPro
   const zone = 'gladwellprojects.com'
   const paramsString = params.join(',')
 
-  let source = `https://preview.gladwellprojects.com/`
+  let source = getServerSideURL()
 
-  if (getClientSideURL() === 'https://gladwellprojects.com/') {
+  if (source === 'https://gladwellprojects.com') {
     source = ''
   }
 
-  return `https://${zone}/cdn-cgi/image/${paramsString}/${source}${normalizeSrc(src)}`
+  return `https://${zone}/cdn-cgi/image/${paramsString}/${source}/${normalizeSrc(src)}`
 }
