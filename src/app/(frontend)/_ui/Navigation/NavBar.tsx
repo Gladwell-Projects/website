@@ -44,49 +44,51 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
   const isHome = pathname === '/'
 
   return (
-    <div
-      role="menu"
-      className={`grid h-auto grid-flow-row auto-rows-auto items-center md:auto-cols-fr md:grid-flow-col md:grid-rows-(--text-base--line-height) md:p-0 md:text-center ${className}`}
-    >
-      {data.map(({ link, label, theme: linkTheme }, i) => {
-        const { reference } = link
+    <>
+      <div
+        role="menu"
+        className={`flex h-auto flex-col justify-between leading-none md:flex-row md:items-center md:gap-0 md:p-0 md:text-center ${className}`}
+      >
+        {data.map(({ link, label, theme: linkTheme }, i) => {
+          const { reference } = link
 
-        let CMSTheme = linkTheme || 'default'
+          let CMSTheme = linkTheme || 'default'
 
-        if (reference && 'theme' in reference.value) {
-          CMSTheme = reference.value.theme
-        }
+          if (reference && 'theme' in reference.value) {
+            CMSTheme = reference.value.theme
+          }
 
-        if (link.url === '/events' || link.url === '/newsletter') {
-          CMSTheme = theme
-        }
+          if (link.url === '/events' || link.url === '/newsletter') {
+            CMSTheme = theme
+          }
 
-        return (
-          <CMSLink
-            className="text-(--theme-text) no-underline md:first:text-left md:last:text-right"
-            key={i}
-            {...link}
-            onMouseEnter={() => {
-              if (isHome) {
+          return (
+            <CMSLink
+              className={`basis-content block min-w-max py-2 text-(--theme-text) no-underline md:shrink-0 md:grow md:p-0 md:first:grow-[0.5] md:first:basis-0 md:first:text-left md:last:grow-[0.5] md:last:basis-0 md:last:text-right`}
+              key={i}
+              {...link}
+              onMouseEnter={() => {
+                if (isHome) {
+                  setTheme(CMSTheme)
+                }
+              }}
+              onMouseLeave={() => {
+                if (isHome) {
+                  setTheme('default')
+                }
+              }}
+              onNavigate={() => {
                 setTheme(CMSTheme)
-              }
-            }}
-            onMouseLeave={() => {
-              if (isHome) {
-                setTheme('default')
-              }
-            }}
-            onNavigate={() => {
-              setTheme(CMSTheme)
-            }}
-            customId={CMSTheme}
-            role="menuitem"
-          >
-            {label}
-          </CMSLink>
-        )
-      })}
-    </div>
+              }}
+              customId={CMSTheme}
+              role="menuitem"
+            >
+              {label}
+            </CMSLink>
+          )
+        })}
+      </div>
+    </>
   )
 }
 
