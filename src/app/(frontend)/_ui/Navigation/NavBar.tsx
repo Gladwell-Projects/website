@@ -47,7 +47,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
     <>
       <div
         role="menu"
-        className={`flex h-auto flex-col items-center justify-between md:flex-row md:p-0 md:text-center ${className}`}
+        className={`flex h-auto flex-col justify-between leading-none md:flex-row md:items-center md:gap-0 md:p-0 md:text-center ${className}`}
       >
         {data.map(({ link, label, theme: linkTheme }, i) => {
           const { reference } = link
@@ -64,7 +64,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
 
           return (
             <CMSLink
-              className={`basis-content block min-w-max text-(--theme-text) no-underline md:shrink-0 md:grow md:first:grow-[0.5] md:first:basis-0 md:first:text-left md:last:grow-[0.5] md:last:basis-0 md:last:text-right`}
+              className={`basis-content block min-w-max pt-4 text-(--theme-text) no-underline md:shrink-0 md:grow md:first:grow-[0.5] md:first:basis-0 md:first:text-left md:last:grow-[0.5] md:last:basis-0 md:last:text-right`}
               key={i}
               {...link}
               onMouseEnter={() => {
