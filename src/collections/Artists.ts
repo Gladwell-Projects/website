@@ -226,6 +226,19 @@ export const Artists: CollectionConfig = {
             },
           ],
         },
+        {
+          name: 'related',
+          fields: [
+            {
+              name: 'relatedPress',
+              type: 'join',
+              label: 'Press',
+              collection: 'press',
+              on: 'relatedArtists',
+              maxDepth: 3,
+            },
+          ],
+        },
       ],
     },
   ],

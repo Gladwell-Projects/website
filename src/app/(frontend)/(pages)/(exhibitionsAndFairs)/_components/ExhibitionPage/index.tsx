@@ -11,8 +11,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Headline from '@/app/(frontend)/_ui/Headline'
 
-const ExhibitionContent = (props: { page: Partial<Exhibition>; draft: boolean }) => {
-  const { page, draft } = props
+const ExhibitionContent = (props: {
+  page: Partial<Exhibition>
+  draft: boolean
+  children?: React.ReactNode
+}) => {
+  const { page, draft, children } = props
 
   const cover =
     page.featuredImg && typeof page.featuredImg === 'object'
@@ -126,6 +130,7 @@ const ExhibitionContent = (props: { page: Partial<Exhibition>; draft: boolean })
           </div>
         )}
         {page.content && <PageBlocks data={page.content} />}
+        {children}
       </Content>
     </SubGrid>
   )

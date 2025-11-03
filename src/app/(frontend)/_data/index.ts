@@ -384,9 +384,14 @@ export const fetchExhibition = async (slug: string) => {
 
   const data = await payload.find({
     collection: 'exhibitions',
-    depth: 2,
+    depth: 3,
     draft,
     limit: 1,
+    joins: {
+      'related.relatedPress': {
+        limit: 0,
+      },
+    },
     where: {
       and: [
         { slug: { equals: slug } },
@@ -407,6 +412,18 @@ export const fetchExhibition = async (slug: string) => {
 }
 
 export const fetchFair = (slug: string) => fetchExhibition(slug)
+
+export const fetchMedia = async (id: string | number) => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config })
+
+  const data = await payload.findByID({
+    collection: 'media',
+    id,
+  })
+
+  return data
+}
 
 export const fetchArtists = async (sort: string): Promise<Partial<Artist>[]> => {
   const { isEnabled: draft } = await draftMode()

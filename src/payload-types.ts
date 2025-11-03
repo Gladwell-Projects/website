@@ -91,7 +91,14 @@ export interface Config {
     'payload-migrations': PayloadMigration;
     'payload-query-presets': PayloadQueryPreset;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    artists: {
+      'related.relatedPress': 'press';
+    };
+    exhibitions: {
+      'related.relatedPress': 'press';
+    };
+  };
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
@@ -359,58 +366,13 @@ export interface Artist {
   };
   cvUpload?: (string | null) | Media;
   surveyArtworks?: (string | Media)[] | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
+  related?: {
+    relatedPress?: {
+      docs?: (string | Press)[];
+      hasNextPage?: boolean;
+      totalDocs?: number;
+    };
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exhibitions".
- */
-export interface Exhibition {
-  id: string;
-  startDate: string;
-  startDate_tz: SupportedTimezones;
-  endDate: string;
-  endDate_tz: SupportedTimezones;
-  location?: string | null;
-  type?: ('exhibition' | 'fair') | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  title: string;
-  /**
-   * PDF Please
-   */
-  pressRelease?: (string | null) | Media;
-  /**
-   * PDF Please
-   */
-  checklist?: (string | null) | Media;
-  /**
-   * PDF Please
-   */
-  previewPdf?: (string | null) | Media;
-  featuredArtists?: (string | Artist)[] | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
-  /**
-   * This is the image that is used as the background for the list on the frontend
-   */
-  coverImage?: (string | null) | Media;
-  /**
-   * This image is the image in the first section of the page, this will default to the cover image if it is not set.
-   */
-  featuredImg?: (string | null) | Media;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -497,6 +459,65 @@ export interface Press {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exhibitions".
+ */
+export interface Exhibition {
+  id: string;
+  startDate: string;
+  startDate_tz: SupportedTimezones;
+  endDate: string;
+  endDate_tz: SupportedTimezones;
+  location?: string | null;
+  type?: ('exhibition' | 'fair') | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  title: string;
+  /**
+   * PDF Please
+   */
+  pressRelease?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  checklist?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  previewPdf?: (string | null) | Media;
+  featuredArtists?: (string | Artist)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  /**
+   * This is the image that is used as the background for the list on the frontend
+   */
+  coverImage?: (string | null) | Media;
+  /**
+   * This image is the image in the first section of the page, this will default to the cover image if it is not set.
+   */
+  featuredImg?: (string | null) | Media;
+  related?: {
+    relatedPress?: {
+      docs?: (string | Press)[];
+      hasNextPage?: boolean;
+      totalDocs?: number;
+    };
+  };
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -882,6 +903,11 @@ export interface ArtistsSelect<T extends boolean = true> {
       };
   cvUpload?: T;
   surveyArtworks?: T;
+  related?:
+    | T
+    | {
+        relatedPress?: T;
+      };
   meta?:
     | T
     | {
@@ -914,6 +940,11 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   content?: T | {};
   coverImage?: T;
   featuredImg?: T;
+  related?:
+    | T
+    | {
+        relatedPress?: T;
+      };
   meta?:
     | T
     | {
