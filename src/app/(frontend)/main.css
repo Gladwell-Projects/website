@@ -442,9 +442,9 @@
 @layer components {
   .richtext-field {
     ul {
-      padding-left: --spacing(4);
+      padding-left: --spacing(2);
       li {
-        padding-left: --spacing(1);
+        padding-left: --spacing(2);
         list-style-type: "●";
       }
     }
