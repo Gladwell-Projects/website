@@ -98,10 +98,14 @@ const Navigation = (props: {
           id="navbars"
           className={`${isOpen ? 'max-h-(--nav-max-height)' : 'max-h-0'} col-span-full overflow-hidden text-left text-xl transition-all md:text-base`}
         >
-          {/* @ts-expect-error type number problem with database schema  */}
-          <NavBar data={nav['menu-items-top']} />
-          {/* @ts-expect-error type number problem with database schema  */}
-          <NavBar data={nav['menu-items-bot']} className="pb-6" />
+          <div
+            className={`wrapper max-h-[calc(100vh-var(--nav-height))] overflow-scroll`}
+          >
+            {/* @ts-expect-error type number problem with database schema  */}
+            <NavBar data={nav['menu-items-top']} />
+            {/* @ts-expect-error type number problem with database schema  */}
+            <NavBar data={nav['menu-items-bot']} className="pb-6" />
+          </div>
         </nav>
       )}
     </nav>

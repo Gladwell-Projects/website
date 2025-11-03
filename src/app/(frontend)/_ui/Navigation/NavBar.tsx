@@ -64,7 +64,7 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
 
           return (
             <CMSLink
-              className={`basis-content block min-w-max pt-4 text-(--theme-text) no-underline md:shrink-0 md:grow md:first:grow-[0.5] md:first:basis-0 md:first:text-left md:last:grow-[0.5] md:last:basis-0 md:last:text-right`}
+              className={`basis-content block min-w-max py-2 text-(--theme-text) no-underline md:shrink-0 md:grow md:p-0 md:first:grow-[0.5] md:first:basis-0 md:first:text-left md:last:grow-[0.5] md:last:basis-0 md:last:text-right`}
               key={i}
               {...link}
               onMouseEnter={() => {
