@@ -55,7 +55,7 @@ export const CMSImage = (props: {
   return (
     <figure
       data-size={size}
-      className={`${size === 'half' ? 'col-span-full place-self-start md:col-span-6 md:col-start-7' : `col-span-full`} grid grid-cols-subgrid [&+figure]:mt-0`}
+      className={`${size === 'half' ? 'col-span-full place-self-start md:col-span-6 md:col-start-auto' : `col-span-full`} grid grid-cols-subgrid [&+figure]:mt-0`}
     >
       <Image
         className={`${classes()} w-auto place-self-center ${blockSize === 'full' ? 'col-span-full' : blockSize === 'small' ? 'md:col-span-4 md:col-start-2' : blockSize === 'x-small' ? (showCaption && hasText(caption) ? 'md:col-span-3 md:col-start-1' : 'md:col-span-3 md:col-start-3') : ''} ${className}`}

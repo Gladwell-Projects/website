@@ -42,7 +42,7 @@ const PageBlocks = (props: { data: Content }) => {
                 />
               )
             case 'text':
-              return <RichText key={block.id} data={block.text} />
+              return <RichText key={block.id} data={block.text} col={block.col} />
             case 'halfImage':
               return (
                 <CMSImage
@@ -88,6 +88,18 @@ const PageBlocks = (props: { data: Content }) => {
                   rightImage={block.secondImage}
                   showCaption={block.showCaption}
                 />
+              )
+            case 'spacer':
+              return (
+                <div
+                  className={`hidden lg:block ${
+                    block.spaceWidth === 'half'
+                      ? 'col-span-6'
+                      : block.spaceWidth === 'full'
+                        ? 'col-span-full'
+                        : null
+                  }`}
+                ></div>
               )
             default:
               return null

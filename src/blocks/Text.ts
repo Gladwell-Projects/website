@@ -9,6 +9,16 @@ export const Text: Block = {
   },
   fields: [
     {
+      name: 'col',
+      label: 'Column',
+      type: 'select',
+      options: [
+        { label: 'Left', value: '1' },
+        { label: 'Right', value: '7' },
+      ],
+      defaultValue: '1',
+    },
+    {
       name: 'text',
       type: 'richText',
       editor: lexicalText,
