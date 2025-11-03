@@ -57,6 +57,7 @@ export const Pages: CollectionConfig = {
         'gallery',
         'twoImage',
         'halfImage',
+        'spacer',
       ],
       blocks: [],
     },
