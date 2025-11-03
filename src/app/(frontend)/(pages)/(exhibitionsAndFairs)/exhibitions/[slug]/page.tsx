@@ -3,13 +3,14 @@ import { fetchExhibition } from '../../../../_data'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
-import { Exhibition } from '@/payload-types'
+import { Exhibition, Press } from '@/payload-types'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { colors } from '@/fields/theme'
 import ExhibitionContent from '../../_components/ExhibitionPage'
+import PressJoin from '@/app/(frontend)/_ui/PressJoin'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -50,7 +51,11 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
     notFound()
   }
 
-  return <ExhibitionContent page={page} draft={draft}></ExhibitionContent>
+  return (
+    <ExhibitionContent page={page} draft={draft}>
+      <PressJoin data={page} />
+    </ExhibitionContent>
+  )
 }
 
 type Args = {
