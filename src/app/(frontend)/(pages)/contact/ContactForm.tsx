@@ -10,11 +10,10 @@ type Inputs = {
   message: string
 }
 
-const ContactForm: React.FC = (props) => {
+const ContactForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>()
 
@@ -65,6 +64,7 @@ const ContactForm: React.FC = (props) => {
       className={`form [&_.error]:text-brick ${isLoading ? 'opacity-50' : ''}`}
       onSubmit={handleSubmit(onSubmit)}
     >
+      {error && <span className="error">{error.message}</span>}
       <fieldset>
         <label htmlFor="name">Name</label>
         <input

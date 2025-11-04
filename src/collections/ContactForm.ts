@@ -3,6 +3,7 @@ import { adminsAndEditors } from './access/adminsAndEditors'
 import { admins } from './access/admins'
 import { anyone } from './access/anyone'
 import { getServerSideURL } from '@/utilities/getURL'
+import { dateToLong, timeOnly } from '@/utilities/convertCMSDate'
 
 export const ContactSubmissions: CollectionConfig = {
   slug: 'contact-submissions',
@@ -46,6 +47,28 @@ export const ContactSubmissions: CollectionConfig = {
             }
           }
           return
+        }
+        return
+      },
+      async ({ req: { payload }, doc, operation }) => {
+        if (operation === 'create') {
+          const email = await payload.sendEmail({
+            to: 'info@gladwellprojects.com',
+            replyTo: `${doc.email}`,
+            subject: `Message from: ${doc.name}`,
+            html: `<small style="color:gray">### This email comes from an unmonitored inbox. Replies will be sent to the form submitter at ${doc.email}</small>
+            <br />
+            Submitted on: ${dateToLong(doc.date)} at ${timeOnly(doc.date)}
+            <br />
+            <br />
+            <div style="white-space:pre-wrap;">
+            ${doc.message}
+            </div>
+            <br />
+            <br />
+            <small>This email was sent to you via ${process.env.NEXT_PUBLIC_SERVER_URL}</small>`,
+          })
+          return email
         }
         return
       },
