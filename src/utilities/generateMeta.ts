@@ -38,13 +38,13 @@ export const generateMeta = async (args: {
       images: ogImage
         ? [
             {
-              url: ogImage.url,
+              url: `https://gladwellprojects.com/cdn-cgi/image/width=1200,quality=80/${ogImage.url}`,
             },
           ]
         : defaultImage
           ? [
               {
-                url: defaultImage.url,
+                url: `https://gladwellprojects.com/cdn-cgi/image/width=1200,quality=80/${defaultImage.url}`,
               },
             ]
           : undefined,

@@ -53,7 +53,7 @@ export const ContactSubmissions: CollectionConfig = {
       async ({ req: { payload }, doc, operation }) => {
         if (operation === 'create') {
           const email = await payload.sendEmail({
-            to: 'info@gladwellprojects.com',
+            to: 'info@itsallwong.com',
             replyTo: `${doc.email}`,
             subject: `Message from: ${doc.name}`,
             html: `<small style="color:gray">### This email comes from an unmonitored inbox. Replies will be sent to the form submitter at ${doc.email}</small>
