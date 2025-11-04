@@ -461,6 +461,73 @@
       font-style: italic;
     }
   }
+
+  .form {
+    input,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="number"] {
+      border-bottom: 2px solid var(--theme-text);
+      background: transparent;
+      width: 100%;
+      height: var(--text-base--line-height);
+      font-size: var(--text-base);
+      line-height: var(--text-base--line-height);
+    }
+    label {
+      display: block;
+      width: 100%;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      vertical-align: middle;
+      appearance: none;
+      margin-right: --spacing(1);
+      border: 2px solid var(--theme-text);
+      border-radius: 1em;
+
+      background: transparent;
+      width: 1em;
+      height: 1em;
+
+      &:disabled {
+        background: var(--theme-highlight);
+      }
+
+      &:checked,
+      &:disabled:checked {
+        background-color: var(--theme-text);
+      }
+
+      & + label {
+        display: inline;
+        vertical-align: middle;
+        width: auto;
+      }
+    }
+
+    input[type="checkbox"] {
+      border-radius: 0;
+    }
+
+    textarea {
+      margin: --spacing(2) 0;
+      border-left: 2px solid var(--theme-text);
+      padding: 0 --spacing(2);
+      width: 100%;
+      max-width: 100%;
+      min-height: --spacing(16);
+    }
+    fieldset {
+      margin-bottom: --spacing(4);
+    }
+  }
+
   .modal-wrapper {
     position: fixed;
     top: 0;
