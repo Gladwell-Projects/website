@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@iframe-resizer/react": "^5.5.7",
-    "@opennextjs/cloudflare": "~1.6.5",
+    "@opennextjs/cloudflare": "^1.11.0",
     "@payloadcms/db-d1-sqlite": "~3.61.1",
     "@payloadcms/email-resend": "~3.61.1",
     "@payloadcms/live-preview": "~3.61.1",
