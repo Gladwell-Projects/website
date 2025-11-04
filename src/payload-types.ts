@@ -75,6 +75,7 @@ export interface Config {
     gallery: Gallery;
     twoImage: TwoImage;
     halfImage: HalfImage;
+    spacer: Spacer;
   };
   collections: {
     media: Media;
@@ -210,6 +211,7 @@ export interface Headline {
  * via the `definition` "text".
  */
 export interface Text {
+  col?: ('1' | '7') | null;
   text?: {
     root: {
       type: string;
@@ -340,6 +342,16 @@ export interface HalfImage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "spacer".
+ */
+export interface Spacer {
+  spaceWidth?: ('full' | 'half') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'spacer';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "artists".
  */
 export interface Artist {
@@ -360,7 +372,7 @@ export interface Artist {
   nationality?: string | null;
   birthYear?: number | null;
   deathYear?: number | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   socialLinks?: {
     website?: string | null;
     instagram?: string | null;
@@ -419,7 +431,7 @@ export interface Press {
     };
     [k: string]: unknown;
   };
-  contentBlocks?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  contentBlocks?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   featuredImage?: (string | null) | Media;
   relatedArtists?: (string | Artist)[] | null;
   relatedExhibitions?: (string | Exhibition)[] | null;
@@ -504,7 +516,7 @@ export interface Exhibition {
    */
   previewPdf?: (string | null) | Media;
   featuredArtists?: (string | Artist)[] | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   /**
    * This is the image that is used as the background for the list on the frontend
    */
@@ -546,7 +558,7 @@ export interface Page {
   slug: string;
   theme?: string | null;
   themeBG?: string | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -650,7 +662,7 @@ export interface ViewingRoom {
   theme?: string | null;
   themeBG?: string | null;
   cover?: (string | null) | Media;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */

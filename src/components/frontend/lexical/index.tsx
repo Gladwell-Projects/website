@@ -18,12 +18,13 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 
 export const GladwellRichtext: React.FC<{
   data: SerializedEditorState
+  col?: string
   className?: string
-}> = ({ data, className }) => {
+}> = ({ col, data, className }) => {
   return (
     <RichText
       converters={jsxConverters}
-      className={`richtext-field col-span-full col-start-1 ${className ? className : 'sm:col-span-8 sm:col-start-1 lg:col-span-6 lg:col-start-1'}`}
+      className={`richtext-field col-span-full col-start-1 [&_p:last-child]:mb-0 ${className ? className : `sm:col-span-8 sm:col-start-1 lg:col-span-6 ${col === '7' ? 'lg:col-start-7' : 'lg:col-start-1'}`}`}
       data={data}
     />
   )

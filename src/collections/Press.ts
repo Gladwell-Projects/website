@@ -86,6 +86,7 @@ export const Press: CollectionConfig = {
         'gallery',
         'twoImage',
         'halfImage',
+        'spacer',
       ],
       blocks: [],
     },
