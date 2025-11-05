@@ -414,7 +414,6 @@ export const fetchExhibition = async (slug: string) => {
 export const fetchFair = (slug: string) => fetchExhibition(slug)
 
 export const fetchMedia = async (id: string | number) => {
-  const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config })
 
   const data = await payload.findByID({

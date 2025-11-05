@@ -47,7 +47,7 @@ const Newsletter = () => {
   }
 
   return (
-    <ModalItem className="col-span-full col-start-1 w-max place-self-center lg:col-span-6 lg:col-start-4">
+    <ModalItem className="col-span-full col-start-1 m-auto w-full lg:col-span-6 lg:col-start-4 lg:w-max">
       <form
         onSubmit={submitNewsletterForm}
         className={`${status === 'success' ? 'hidden' : 'visible'} mb-2 grid h-auto w-full auto-rows-min grid-cols-1 gap-y-2 md:mt-0 md:min-h-full md:auto-rows-auto md:grid-cols-2 md:place-items-start md:gap-2 md:gap-y-2`}
