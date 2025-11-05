@@ -33,14 +33,21 @@ export const ContactSubmissions: CollectionConfig = {
               FNAME: doc.name,
             }
             try {
-              await fetch(`${getServerSideURL()}/api/subscribe`, {
+              const req = await fetch(`${getServerSideURL()}/api/subscribe`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
               })
-              return
+
+              const res = await req.json()
+
+              if (!req.ok) {
+                return
+              }
+
+              return res
             } catch (err) {
               console.warn(err)
               return
