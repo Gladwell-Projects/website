@@ -8,7 +8,7 @@ const PressPage: React.FC = () => {
   return (
     <Content>
       <ModalItem className="col-span-full md:col-span-6">
-        <h1>Contact Us</h1>
+        <div>Send a message</div>
         <ContactForm />
       </ModalItem>
     </Content>
