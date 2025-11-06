@@ -1,6 +1,7 @@
 import Newsletter from '../../_ui/Newsletter'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
+
 const PressPage: React.FC = () => {
   return <Newsletter />
 }
