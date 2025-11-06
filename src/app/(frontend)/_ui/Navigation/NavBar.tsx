@@ -58,7 +58,11 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
             CMSTheme = reference.value.theme
           }
 
-          if (link.url === '/events' || link.url === '/newsletter') {
+          if (
+            link.url === '/events' ||
+            link.url === '/newsletter' ||
+            link.url === '/contact'
+          ) {
             CMSTheme = theme
           }
 
