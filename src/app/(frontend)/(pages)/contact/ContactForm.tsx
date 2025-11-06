@@ -57,7 +57,7 @@ const ContactForm: React.FC = () => {
     }
   }
   if (submitted) {
-    return <p>Thank you, your message has been sent.</p>
+    return <div>Thank you, your message has been sent.</div>
   }
   return (
     <form

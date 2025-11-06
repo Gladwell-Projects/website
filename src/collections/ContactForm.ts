@@ -60,17 +60,19 @@ export const ContactSubmissions: CollectionConfig = {
       async ({ req: { payload }, doc, operation }) => {
         if (operation === 'create') {
           const email = await payload.sendEmail({
+            from: `${doc.name} <${payload.email.defaultFromAddress}>`,
             to: 'info@gladwellprojects.com',
             replyTo: `${doc.email}`,
             subject: `Message from: ${doc.name}`,
             html: `<small style="color:gray">### This email comes from an unmonitored inbox. Replies will be sent to the form submitter at ${doc.email}</small>
             <br />
+            <br />
             Submitted on: ${dateToLong(doc.date)} at ${timeOnly(doc.date)}
             <br />
+            From: ${doc.name}
             <br />
-            <div style="white-space:pre-wrap;">
-            ${doc.message}
-            </div>
+            <br />
+            <div style="white-space:pre-wrap;">${doc.message}</div>
             <br />
             <br />
             <small>This email was sent to you via ${process.env.NEXT_PUBLIC_SERVER_URL}</small>`,
