@@ -75,6 +75,7 @@ export interface Config {
     gallery: Gallery;
     twoImage: TwoImage;
     halfImage: HalfImage;
+    spacer: Spacer;
   };
   collections: {
     media: Media;
@@ -86,12 +87,20 @@ export interface Config {
     users: User;
     viewingRooms: ViewingRoom;
     clients: Client;
+    'contact-submissions': ContactSubmission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
     'payload-query-presets': PayloadQueryPreset;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    artists: {
+      'related.relatedPress': 'press';
+    };
+    exhibitions: {
+      'related.relatedPress': 'press';
+    };
+  };
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
@@ -102,6 +111,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     viewingRooms: ViewingRoomsSelect<false> | ViewingRoomsSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
+    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -201,6 +211,7 @@ export interface Headline {
  * via the `definition` "text".
  */
 export interface Text {
+  col?: ('1' | '7') | null;
   text?: {
     root: {
       type: string;
@@ -331,6 +342,16 @@ export interface HalfImage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "spacer".
+ */
+export interface Spacer {
+  spaceWidth?: ('full' | 'half') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'spacer';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "artists".
  */
 export interface Artist {
@@ -351,7 +372,7 @@ export interface Artist {
   nationality?: string | null;
   birthYear?: number | null;
   deathYear?: number | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   socialLinks?: {
     website?: string | null;
     instagram?: string | null;
@@ -359,58 +380,13 @@ export interface Artist {
   };
   cvUpload?: (string | null) | Media;
   surveyArtworks?: (string | Media)[] | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
+  related?: {
+    relatedPress?: {
+      docs?: (string | Press)[];
+      hasNextPage?: boolean;
+      totalDocs?: number;
+    };
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exhibitions".
- */
-export interface Exhibition {
-  id: string;
-  startDate: string;
-  startDate_tz: SupportedTimezones;
-  endDate: string;
-  endDate_tz: SupportedTimezones;
-  location?: string | null;
-  type?: ('exhibition' | 'fair') | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  title: string;
-  /**
-   * PDF Please
-   */
-  pressRelease?: (string | null) | Media;
-  /**
-   * PDF Please
-   */
-  checklist?: (string | null) | Media;
-  /**
-   * PDF Please
-   */
-  previewPdf?: (string | null) | Media;
-  featuredArtists?: (string | Artist)[] | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
-  /**
-   * This is the image that is used as the background for the list on the frontend
-   */
-  coverImage?: (string | null) | Media;
-  /**
-   * This image is the image in the first section of the page, this will default to the cover image if it is not set.
-   */
-  featuredImg?: (string | null) | Media;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -455,7 +431,7 @@ export interface Press {
     };
     [k: string]: unknown;
   };
-  contentBlocks?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  contentBlocks?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   featuredImage?: (string | null) | Media;
   relatedArtists?: (string | Artist)[] | null;
   relatedExhibitions?: (string | Exhibition)[] | null;
@@ -511,6 +487,65 @@ export interface Press {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exhibitions".
+ */
+export interface Exhibition {
+  id: string;
+  startDate: string;
+  startDate_tz: SupportedTimezones;
+  endDate: string;
+  endDate_tz: SupportedTimezones;
+  location?: string | null;
+  type?: ('exhibition' | 'fair') | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  title: string;
+  /**
+   * PDF Please
+   */
+  pressRelease?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  checklist?: (string | null) | Media;
+  /**
+   * PDF Please
+   */
+  previewPdf?: (string | null) | Media;
+  featuredArtists?: (string | Artist)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
+  /**
+   * This is the image that is used as the background for the list on the frontend
+   */
+  coverImage?: (string | null) | Media;
+  /**
+   * This image is the image in the first section of the page, this will default to the cover image if it is not set.
+   */
+  featuredImg?: (string | null) | Media;
+  related?: {
+    relatedPress?: {
+      docs?: (string | Press)[];
+      hasNextPage?: boolean;
+      totalDocs?: number;
+    };
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -523,7 +558,7 @@ export interface Page {
   slug: string;
   theme?: string | null;
   themeBG?: string | null;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -627,7 +662,7 @@ export interface ViewingRoom {
   theme?: string | null;
   themeBG?: string | null;
   cover?: (string | null) | Media;
-  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage)[] | null;
+  content?: (Headline | Text | LgImage | MdImage | SmImage | Gallery | TwoImage | HalfImage | Spacer)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -691,6 +726,20 @@ export interface Client {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions".
+ */
+export interface ContactSubmission {
+  id: string;
+  date?: string | null;
+  name?: string | null;
+  newsletter?: boolean | null;
+  email?: string | null;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -731,6 +780,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'clients';
         value: string | Client;
+      } | null)
+    | ({
+        relationTo: 'contact-submissions';
+        value: string | ContactSubmission;
       } | null);
   globalSlug?: string | null;
   user:
@@ -882,6 +935,11 @@ export interface ArtistsSelect<T extends boolean = true> {
       };
   cvUpload?: T;
   surveyArtworks?: T;
+  related?:
+    | T
+    | {
+        relatedPress?: T;
+      };
   meta?:
     | T
     | {
@@ -914,6 +972,11 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   content?: T | {};
   coverImage?: T;
   featuredImg?: T;
+  related?:
+    | T
+    | {
+        relatedPress?: T;
+      };
   meta?:
     | T
     | {
@@ -1092,6 +1155,19 @@ export interface ClientsSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
+  date?: T;
+  name?: T;
+  newsletter?: T;
+  email?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

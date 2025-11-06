@@ -4,6 +4,7 @@ import { Headline } from './Headline'
 import { LgImage } from './LargeImage'
 import { MdImage } from './MediumImage'
 import { SmImage } from './SmallImage'
+import { Spacer } from './Spacer'
 import { Text } from './Text'
 import { TwoImage } from './TwoUpImage'
 
@@ -17,4 +18,5 @@ export const blocks = [
   Gallery,
   TwoImage,
   HalfImage,
+  Spacer,
 ]

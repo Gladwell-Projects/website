@@ -61,3 +61,4 @@ prod-data.sql
 website.sql
 websitedata.sql
 .env.development
+webdata.sql

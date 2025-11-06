@@ -24,6 +24,7 @@ import lexicalDefault from './collections/lexical/defaultFeatures'
 
 import { blocks } from './blocks'
 import AnalyticsDash from './globals/Analytics'
+import { ContactSubmissions } from './collections/ContactForm'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -66,6 +67,7 @@ export default buildConfig({
         },
       ],
     },
+
     components: {
       graphics: {
         Logo: '@/components/payload/Logo',
@@ -90,6 +92,7 @@ export default buildConfig({
     Users,
     ViewingRooms,
     Clients,
+    ContactSubmissions,
   ],
   blocks,
   secret: process.env.PAYLOAD_SECRET || '',

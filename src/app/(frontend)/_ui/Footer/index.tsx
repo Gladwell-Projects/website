@@ -9,7 +9,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
 
   return (
     <div
-      className={`footer mt-4 grid grid-cols-12 justify-center gap-3 bg-gradient-to-b from-(--theme-bg) from-50% to-(--theme-accent) px-2 py-8 text-xs md:place-items-start`}
+      className={`footer mt-4 grid grid-cols-12 justify-center gap-3 bg-linear-to-b from-transparent from-50% to-(--theme-accent) px-2 py-8 text-xs transition-all md:place-items-start`}
     >
       <div className="col-span-full grid grid-cols-subgrid md:col-span-6">
         <GladwellProjects

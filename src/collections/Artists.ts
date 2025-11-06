@@ -53,7 +53,7 @@ export const Artists: CollectionConfig = {
           ({ data }) => {
             let title
             if (data) {
-              title = `${data.firstName ? data.firstName : ''}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? `, ${data.suffix}` : ''}`
+              title = `${data.firstName ? data.firstName : ''}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? ` ${data.suffix}` : ''}`
             } else {
               title = 'unknown'
             }
@@ -161,6 +161,7 @@ export const Artists: CollectionConfig = {
                 'gallery',
                 'twoImage',
                 'halfImage',
+                'spacer',
               ],
               blocks: [],
             },
@@ -223,6 +224,19 @@ export const Artists: CollectionConfig = {
                   isArt: { equals: true },
                 }
               },
+            },
+          ],
+        },
+        {
+          name: 'related',
+          fields: [
+            {
+              name: 'relatedPress',
+              type: 'join',
+              label: 'Press',
+              collection: 'press',
+              on: 'relatedArtists',
+              maxDepth: 3,
             },
           ],
         },

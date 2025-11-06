@@ -75,6 +75,7 @@ export const Exhibitions: CollectionConfig = {
         { label: 'Exhibition', value: 'exhibition' },
         { label: 'Art Fair', value: 'fair' },
       ],
+      defaultValue: 'exhibition',
       admin: {
         position: 'sidebar',
       },
@@ -161,6 +162,7 @@ export const Exhibitions: CollectionConfig = {
                 'gallery',
                 'twoImage',
                 'halfImage',
+                'spacer',
               ],
               blocks: [],
             },
@@ -189,6 +191,19 @@ export const Exhibitions: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
               displayPreview: true,
+            },
+          ],
+        },
+        {
+          name: 'related',
+          fields: [
+            {
+              name: 'relatedPress',
+              type: 'join',
+              label: 'Press',
+              collection: 'press',
+              on: 'relatedExhibitions',
+              maxDepth: 1,
             },
           ],
         },

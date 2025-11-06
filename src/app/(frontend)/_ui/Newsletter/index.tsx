@@ -1,116 +1,120 @@
 'use client'
 import { useState } from 'react'
 import { ModalItem } from '../Modal'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { getClientSideURL } from '@/utilities/getURL'
 
-type ResponseJson = {
-  message?: string
-  success?: boolean
-  error?: string
+type Inputs = {
+  FNAME: string
+  LNAME: string
+  EMAIL: string
 }
 
 const Newsletter = () => {
-  const [message, setMessage] = useState('')
-  const [status, setStatus] = useState('idle')
-  const [email, setEmail] = useState('')
-  const [first, setFirst] = useState('')
-  const [last, setLast] = useState('')
+  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
+  const [submitted, setSubmitted] = useState<boolean>()
+  const [isLoading, setIsLoading] = useState<boolean>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
 
-  const submitNewsletterForm: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-    setStatus('isLoading')
-
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setError(undefined)
+    setIsLoading(true)
 
     try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
+      const body = JSON.stringify(data)
+      const response = await fetch(`${getClientSideURL()}/api/subscribe`, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body,
+        method: 'POST',
       })
 
-      const messages = (await response.json()) as ResponseJson
-
-      if (response.ok) {
-        setMessage(messages.message)
-        setStatus('success')
-      } else {
-        setStatus('error')
-        setMessage(messages.error)
+      if (response.status >= 400) {
+        setIsLoading(false)
+        const json = await response.json()
+        setError({
+          //@ts-expect-error errors is undefined
+          message: json.error || 'Internal Server Error',
+          //@ts-expect-error status is undefined
+          status: response.status,
+        })
+        return
       }
+      setIsLoading(false)
+      setSubmitted(true)
     } catch (e) {
-      setStatus('error')
-      setMessage(e as string)
+      console.warn(e)
+      setIsLoading(false)
+      setError({
+        message: 'Something went wrong.',
+      })
     }
   }
 
+  if (submitted) {
+    return (
+      <ModalItem className="col-span-full col-start-1 row-start-2 m-auto w-full lg:col-span-6 lg:col-start-4 lg:w-full">
+        <div>Thanks! You&apos;ve been signed up for our mailing list.</div>
+      </ModalItem>
+    )
+  }
+
   return (
-    <ModalItem className="col-span-full col-start-1 w-max place-self-center lg:col-span-6 lg:col-start-4">
+    <ModalItem className="col-span-full col-start-1 row-start-2 m-auto w-full lg:col-span-6 lg:col-start-4 lg:w-full">
+      <p>Sign up for the mailing list</p>
       <form
-        onSubmit={submitNewsletterForm}
-        className={`${status === 'success' ? 'hidden' : 'visible'} mb-2 grid h-auto w-full auto-rows-min grid-cols-1 gap-y-2 md:mt-0 md:min-h-full md:auto-rows-auto md:grid-cols-2 md:place-items-start md:gap-2 md:gap-y-2`}
+        onSubmit={handleSubmit(onSubmit)}
+        className={`form [&_.error]:text-brick ${isLoading ? 'opacity-50' : ''}`}
       >
-        <label
-          className="-mb-2 block h-auto min-h-[1em] text-sm md:py-1"
-          htmlFor="mce-EMAIL"
-        >
-          Email
-        </label>
-        <input
-          className="block w-full border-b-2 py-1"
-          type="email"
-          name="EMAIL"
-          id="mce-EMAIL"
-          value={email}
-          onChange={(t) => setEmail(t.target.value)}
-          placeholder="Email Address"
-          required
-        />
-        <label
-          className="-mb-2 block h-auto min-h-[1em] text-sm md:py-1"
-          htmlFor="mce-FNAME"
-        >
-          First Name
-        </label>
-        <input
-          className="block w-full border-b-2 py-1"
-          type="text"
-          name="FNAME"
-          id="mce-FNAME"
-          value={first}
-          onChange={(t) => setFirst(t.target.value)}
-          placeholder="First Name"
-          required
-        />
-        <label
-          className="-mb-2 block h-auto min-h-[1em] text-sm md:py-1"
-          htmlFor="mce-LNAME"
-        >
-          Last Name
-        </label>
-        <input
-          className="block w-full border-b-2 py-1"
-          type="text"
-          name="LNAME"
-          id="mce-LNAME"
-          value={last}
-          onChange={(t) => setLast(t.target.value)}
-          placeholder="Last Name"
-          required
-        />
-        <div className="place-self-stretch text-center md:col-span-2">
-          <button className="w-full cursor-pointer rounded-full border-2 p-1 hover:border-transparent hover:bg-(--theme-text) hover:text-(--theme-bg)">
-            Submit
-          </button>
-        </div>
+        {error && error.message && <span className="error">{error.message}</span>}
+        <fieldset>
+          <label htmlFor="mce-EMAIL">Email</label>
+          <input
+            type="email"
+            name="EMAIL"
+            id="mce-EMAIL"
+            aria-invalid={errors.EMAIL ? 'true' : 'false'}
+            {...register('EMAIL', {
+              required: true,
+              pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            })}
+            placeholder="Email Address"
+          />
+          {errors.EMAIL && <span className="error">Not a valid email</span>}
+        </fieldset>
+        <fieldset>
+          <label htmlFor="mce-FNAME">First Name</label>
+          <input
+            type="text"
+            name="FNAME"
+            id="mce-FNAME"
+            aria-invalid={errors.FNAME ? 'true' : 'false'}
+            {...register('FNAME', { required: true })}
+            placeholder="First Name"
+          />
+          {errors.FNAME && <span className="error">This field is required.</span>}
+        </fieldset>
+        <fieldset>
+          <label htmlFor="mce-LNAME">Last Name</label>
+          <input
+            type="text"
+            name="LNAME"
+            id="mce-LNAME"
+            aria-invalid={errors.LNAME ? 'true' : 'false'}
+            {...register('LNAME', { required: true })}
+            placeholder="Last Name"
+          />
+          {errors.LNAME && <span className="error">This field is required.</span>}
+        </fieldset>
+        <button className="w-full cursor-pointer rounded-full border-2 p-1 hover:border-transparent hover:bg-(--theme-text) hover:text-(--theme-bg)">
+          Submit
+        </button>
       </form>
-      <div
-        className={`py-4 text-center ${message ? 'visible' : 'hidden'} ${status === 'error' ? 'text-(--theme-error)' : status === 'success' ? 'text-(--theme-success)' : 'text-(--theme-text)'} `}
-      >
-        {message}
-      </div>
     </ModalItem>
   )
 }

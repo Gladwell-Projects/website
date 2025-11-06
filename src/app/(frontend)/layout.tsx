@@ -55,8 +55,9 @@ export default function RootLayout(props: {
   children: React.ReactNode
   events: React.ReactNode
   newsletter: React.ReactNode
+  contact: React.ReactNode
 }) {
-  const { children, events, newsletter } = props
+  const { children, events, newsletter, contact } = props
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
@@ -66,6 +67,7 @@ export default function RootLayout(props: {
         {children}
         {events}
         {newsletter}
+        {contact}
       </body>
     </ThemeProvider>
   )
