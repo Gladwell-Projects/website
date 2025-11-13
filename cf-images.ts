@@ -13,7 +13,7 @@ export default function cloudflareLoader({ src, width, quality }: ImageLoaderPro
     return src
   }
 
-  const params = [`width=${width}`]
+  const params = [`width=${width}`, 'format=auto', 'onerror=redirect']
   if (quality) {
     params.push(`quality=${quality || 80}`)
   }

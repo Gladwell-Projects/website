@@ -90,7 +90,7 @@ export const Media: CollectionConfig = {
       if (process.env.NEXTJS_ENV === 'development') {
         return `/api/media/file/${doc.filename}`
       }
-      return `https://gladwellprojects.com/cdn-cgi/image/height=300,width=300,quality=80,fit=cover${process.env.NEXT_PUBLIC_SERVER_URL === 'https://gladwellprojects.com' ? '/' : `/${process.env.NEXT_PUBLIC_SERVER_URL}/`}api/media/file/${doc.filename}`
+      return `https://gladwellprojects.com/cdn-cgi/image/height=300,width=300,quality=80,format=auto${process.env.NEXT_PUBLIC_SERVER_URL === 'https://gladwellprojects.com' ? '/' : `/${process.env.NEXT_PUBLIC_SERVER_URL}/`}api/media/file/${doc.filename}`
     },
   },
 }
