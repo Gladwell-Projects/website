@@ -15,6 +15,7 @@ export const ContactSubmissions: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+    group: 'Site Utilities',
   },
   hooks: {
     beforeValidate: [
