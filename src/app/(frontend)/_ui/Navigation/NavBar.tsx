@@ -81,9 +81,6 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
                   setTheme('default')
                 }
               }}
-              onNavigate={() => {
-                setTheme(CMSTheme)
-              }}
               customId={CMSTheme}
               role="menuitem"
             >

@@ -1,6 +1,6 @@
 'use client'
 // image-loader.ts
-import { getClientSideURL, getServerSideURL } from '@/utilities/getURL'
+import { getServerSideURL } from '@/utilities/getURL'
 import type { ImageLoaderProps } from 'next/image'
 
 const normalizeSrc = (src: string) => {
