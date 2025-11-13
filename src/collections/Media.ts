@@ -84,6 +84,13 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     displayPreview: true,
-    adminThumbnail: 'small',
+    crop: false,
+    focalPoint: false,
+    adminThumbnail: ({ doc }) => {
+      if (process.env.NEXTJS_ENV === 'development') {
+        return `/api/media/file/${doc.filename}`
+      }
+      return `https://gladwellprojects.com/cdn-cgi/image/height=300,width=300,quality=80,fit=cover${process.env.NEXT_PUBLIC_SERVER_URL === 'https://gladwellprojects.com' ? '/' : `/${process.env.NEXT_PUBLIC_SERVER_URL}/`}api/media/file/${doc.filename}`
+    },
   },
 }

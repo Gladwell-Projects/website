@@ -17,6 +17,7 @@ const ImagePreview: TextFieldServerComponent = async ({ data, payload }) => {
           <p>
             <Image
               src={media.url!}
+              sizes="(max-width: 1024px) 100vw, 15vw"
               alt={media.alt}
               width={media.width}
               height={media.height}

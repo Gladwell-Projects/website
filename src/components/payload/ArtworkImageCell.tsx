@@ -28,6 +28,7 @@ const artworkCell = async ({ cellData, payload }: DefaultServerCellComponentProp
           alt={media.alt}
           width={media.width}
           height={media.height}
+          sizes="200px"
           style={{
             width: '100%',
             height: '100%',
