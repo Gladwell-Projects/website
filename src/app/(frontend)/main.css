@@ -309,7 +309,7 @@
     --theme-link-visited: var(--color-web3-100);
     --theme-highlight: var(--color-web3-300);
     --theme-shadow: var(--color-web3-700);
-    --theme-accent: var(--color-web3-200);
+    --theme-accent: var(--color-web3-600);
   }
   .theme-glow {
     --theme-text: var(--color-blue);
@@ -347,7 +347,7 @@
     --theme-link-visited: var(--color-hi-vis-200);
     --theme-highlight: var(--color-hi-vis-400);
     --theme-shadow: var(--color-hi-vis-900);
-    --theme-accent: var(--color-hi-vis-300);
+    --theme-accent: var(--color-hi-vis-700);
   }
   .theme-taxi {
     --theme-text: var(--color-black);

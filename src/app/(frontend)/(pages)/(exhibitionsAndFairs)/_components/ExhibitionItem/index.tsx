@@ -19,10 +19,10 @@ const ExhibitionItem = ({
   const end = dateToLong(exhibition.endDate, exhibition.endDate_tz)
 
   return (
-    <li className="group relative col-span-full -mx-2 grid grid-cols-subgrid overflow-hidden px-2 py-6">
+    <li className="relative col-span-full -mx-2 grid grid-cols-subgrid overflow-hidden px-2 py-6 focus-within:outline-3 focus-within:outline-(--theme-text)">
       <Link
         href={{ pathname: `/${slug}/${exhibition.slug}` }}
-        className="col-span-full grid w-full grid-cols-subgrid text-(--theme-text) no-underline visited:text-(--theme-text)"
+        className="group col-span-full grid w-full grid-cols-subgrid text-(--theme-text) no-underline visited:text-(--theme-text)"
       >
         {cover && (
           <Image
@@ -34,7 +34,7 @@ const ExhibitionItem = ({
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
-        <div className="absolute -inset-5 z-0 origin-left scale-x-100 bg-linear-to-r from-(--theme-bg) from-50% to-transparent transition-transform group-hover:scale-x-70 group-hover:transition-transform md:scale-x-200 group-hover:md:scale-x-50"></div>
+        <div className="absolute -inset-5 z-0 origin-left scale-x-100 bg-linear-to-r from-(--theme-bg) from-50% to-transparent transition-transform group-hover:scale-x-70 group-hover:transition-transform group-focus:scale-x-70 group-focus:transition-transform md:scale-x-200 group-hover:md:scale-x-50 group-focus:md:scale-x-50"></div>
         <div className="z-1 col-span-full grid w-full grid-cols-subgrid place-items-start text-shadow-[1px_2px_6px_var(--theme-bg)]">
           <div className="col-span-full grid auto-rows-auto grid-cols-subgrid place-items-start md:-col-end-2">
             <h2 className="col-span-full">{exhibition.title}</h2>

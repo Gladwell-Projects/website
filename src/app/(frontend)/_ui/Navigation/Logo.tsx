@@ -18,8 +18,14 @@ const Logo = ({ className, variant }: { className: string; variant?: string }) =
         )}
         {variant !== 'stacked' && (
           <>
-            <Gladwell className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)" />
-            <Projects className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)" />
+            <Gladwell
+              aria-label="Gladwell"
+              className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)"
+            />
+            <Projects
+              aria-label="Projects"
+              className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)"
+            />
           </>
         )}
       </Link>

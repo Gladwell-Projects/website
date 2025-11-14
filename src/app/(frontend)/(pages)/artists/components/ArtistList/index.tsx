@@ -22,7 +22,7 @@ const ArtistList = (props: { data: Partial<Artist>[] }) => {
                 href={{ pathname: `/artists/${artist.slug}` }}
                 onMouseEnter={() => setCurrentArtist(artist.id)}
                 onMouseLeave={() => setCurrentArtist(null)}
-                className="text-shadow-[1px_2px_6px_var(--theme-bg)] visited:text-(--theme-link)"
+                className="text-(--theme-text) text-shadow-[1px_2px_6px_var(--theme-bg)] visited:text-(--theme-text)"
               >
                 {artist.title}
               </Link>
