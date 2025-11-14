@@ -21,27 +21,6 @@ const Exhibitions = async () => {
 
   const pageTheme = await currentThemeFromNav(slug)
 
-  const today = new Date()
-
-  const current = exhibitions.filter((e) => {
-    const start = new Date(e.startDate)
-    const end = new Date(e.endDate)
-
-    return start <= today && end >= today ? true : false
-  })
-  const past = exhibitions.filter((e) => {
-    const start = new Date(e.startDate)
-    const end = new Date(e.endDate)
-
-    return start < today && end < today ? true : false
-  })
-
-  const upcoming = exhibitions.filter((e) => {
-    const start = new Date(e.startDate)
-
-    return start > today ? true : false
-  })
-
   if (exhibitions.length < 1) {
     return (
       <div className="col-span-full grid grid-cols-subgrid">
@@ -56,26 +35,9 @@ const Exhibitions = async () => {
     <div className="col-span-full grid grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Fairs" />
-      {current.length > 0 && (
-        <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2 className="col-span-full text-lg tracking-widest uppercase">Current</h2>
-          <ExhibitionsList exhibitions={current} slug={slug} />
-        </div>
-      )}
-
-      {upcoming.length > 0 && (
-        <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2 className="col-span-full text-lg tracking-widest uppercase">Upcoming</h2>
-          <ExhibitionsList exhibitions={upcoming} slug={slug} />
-        </div>
-      )}
-
-      {past.length > 0 && (
-        <div className="exhibition-list col-span-full grid grid-cols-subgrid">
-          <h2 className="col-span-full text-base tracking-widest uppercase">Past</h2>
-          <ExhibitionsList exhibitions={past} slug={slug} />
-        </div>
-      )}
+      <div className="exhibition-list col-span-full grid grid-cols-subgrid">
+        <ExhibitionsList exhibitions={exhibitions} slug={slug} />
+      </div>
     </div>
   )
 }
