@@ -75,6 +75,18 @@ export default buildConfig({
       },
     },
   },
+  cors: {
+    origins: [
+      process.env.NEXT_PUBLIC_SERVER_URL,
+      'https://docs.gladwellprojects.com',
+      process.env.NEXTJS_ENV === 'development' ? 'http://localhost' : '',
+    ],
+  },
+  csrf: [
+    process.env.NEXT_PUBLIC_SERVER_URL,
+    'https://docs.gladwellprojects.com',
+    process.env.NEXTJS_ENV === 'development' ? 'http://localhost' : '',
+  ],
   editor: lexicalDefault,
   email: resendAdapter({
     defaultFromAddress: 'noreply@notifs.gladwellprojects.com',
