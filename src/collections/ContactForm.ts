@@ -16,6 +16,7 @@ export const ContactSubmissions: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Site Utilities',
+    defaultColumns: ['name', 'subject', 'date', 'message'],
   },
   hooks: {
     beforeValidate: [
@@ -64,13 +65,13 @@ export const ContactSubmissions: CollectionConfig = {
             from: `${doc.name} <${payload.email.defaultFromAddress}>`,
             to: 'info@gladwellprojects.com',
             replyTo: `${doc.email}`,
-            subject: `Message from: ${doc.name}`,
-            html: `<small style="color:gray">### This email comes from an unmonitored inbox. Replies will be sent to the form submitter at ${doc.email}</small>
+            subject: `${doc.subject}`,
+            html: `<small style="color:gray">### This email comes from an unmonitored inbox. Replies will be sent to the form submitter.</small>
             <br />
             <br />
-            Submitted on: ${dateToLong(doc.date)} at ${timeOnly(doc.date)}
+            Submitted form on: ${dateToLong(doc.date)} at ${timeOnly(doc.date)}
             <br />
-            From: ${doc.name}
+            From: ${doc.name} <${doc.email}>
             <br />
             <br />
             <div style="white-space:pre-wrap;">${doc.message}</div>
@@ -91,6 +92,10 @@ export const ContactSubmissions: CollectionConfig = {
     },
     {
       name: 'name',
+      type: 'text',
+    },
+    {
+      name: 'subject',
       type: 'text',
     },
     {

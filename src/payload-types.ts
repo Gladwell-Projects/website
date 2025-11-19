@@ -730,6 +730,7 @@ export interface ContactSubmission {
   id: string;
   date?: string | null;
   name?: string | null;
+  subject?: string | null;
   newsletter?: boolean | null;
   email?: string | null;
   message?: string | null;
@@ -1159,6 +1160,7 @@ export interface ClientsSelect<T extends boolean = true> {
 export interface ContactSubmissionsSelect<T extends boolean = true> {
   date?: T;
   name?: T;
+  subject?: T;
   newsletter?: T;
   email?: T;
   message?: T;
