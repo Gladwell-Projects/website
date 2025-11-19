@@ -122,6 +122,11 @@ const ContactForm: React.FC = () => {
           id="subject"
           {...register('subject', { required: true })}
         />
+        {errors.subject && (
+          <span className="error" role="alert">
+            Please include a subject.
+          </span>
+        )}
         <label htmlFor="message">Message</label>
         <textarea
           id="message"
