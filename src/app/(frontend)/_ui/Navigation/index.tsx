@@ -70,8 +70,8 @@ const Navigation = (props: {
   }, [])
 
   return (
-    // Navigation, pull request
     <nav
+      aria-label="main navigation"
       className={`page-nav ${!isVisible && 'nav-not-visible'} fixed top-0 left-0 z-99 m-0 grid w-dvw gap-2 text-center transition-all md:grid-cols-1 md:gap-0.5 ${navTemplate === 'spread' && 'min-h-[calc(100dvh - --spacing(2)] relative col-span-full w-full grid-rows-[1fr_--spacing(28)_1fr] p-0 md:grid-rows-[var(--text-base--line-height)_1fr_var(--text-base--line-height)]'} ${navTemplate === 'condensed' && `${!screenMd && 'grid-cols-2'} auto-rows-min bg-linear-to-b from-(--theme-bg) from-90% to-transparent p-2 pb-0 md:auto-rows-fr md:pb-2`}`}
     >
       <style>{`:root{--nav-max-height: ${navMaxHeight}px}`}</style>
@@ -95,6 +95,7 @@ const Navigation = (props: {
         </>
       ) : (
         <nav
+          aria-label="navigation drop down"
           id="navbars"
           className={`${isOpen ? 'max-h-(--nav-max-height)' : 'max-h-0'} col-span-full overflow-hidden text-left text-xl transition-all md:text-base`}
         >

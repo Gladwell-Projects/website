@@ -14,8 +14,8 @@ const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
 
   const exhibitions: Partial<Exhibition>[] = draft
-    ? await fetchExhibitions('startDate')
-    : await unstable_cache(fetchExhibitions)('startDate')
+    ? await fetchExhibitions('-startDate')
+    : await unstable_cache(fetchExhibitions)('-startDate')
 
   const slug = 'exhibitions'
 
