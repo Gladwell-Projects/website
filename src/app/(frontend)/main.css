@@ -343,8 +343,8 @@
   .theme-hi-vis {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-hi-vis);
-    --theme-link: var(--color-hi-vis-100);
-    --theme-link-visited: var(--color-hi-vis-200);
+    --theme-link: var(--color-white);
+    --theme-link-visited: var(--color-white);
     --theme-highlight: var(--color-hi-vis-400);
     --theme-shadow: var(--color-hi-vis-900);
     --theme-accent: var(--color-hi-vis-700);
