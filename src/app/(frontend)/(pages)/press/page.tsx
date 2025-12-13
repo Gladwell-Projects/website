@@ -1,7 +1,8 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media } from '@/payload-types'
-import { currentThemeFromNav, fetchPress } from '../../_data'
+import { fetchPress } from '../../_data'
+import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
 import Headline from '../../_ui/Headline'
 import { CMSLink } from '../../_ui/CMSLinks'
@@ -38,7 +39,7 @@ const PressPage: React.FC = async () => {
       <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Press" className="md:col-span-full" />
       <ul className="col-span-full grid grid-cols-subgrid gap-y-8">
-        {page.map((press) => {
+        {page.map((press, i) => {
           const relatedExhibitions = press.relatedExhibitions as Partial<Exhibition>[]
           const relatedArtists = press.relatedArtists as Partial<Artist>[]
           const links = press.links
@@ -119,7 +120,9 @@ const PressPage: React.FC = async () => {
                     </ul>
                   )}
                   <div className="font-bold not-italic">
-                    <Link href={`/press/${press.slug}`}>Continue Reading</Link>
+                    <Link href={`/press/${press.slug}`} aria-label={press.title}>
+                      Continue Reading
+                    </Link>
                     {links.map((link) => {
                       return (
                         <span key={link.id}>

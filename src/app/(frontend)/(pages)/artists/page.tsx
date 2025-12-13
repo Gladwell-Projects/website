@@ -1,5 +1,6 @@
 import React from 'react'
-import { currentThemeFromNav, fetchArtists } from '../../_data'
+import { fetchArtists } from '../../_data'
+import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import Headline from '../../_ui/Headline'
 import SubGrid from '../../_ui/pageGrid'

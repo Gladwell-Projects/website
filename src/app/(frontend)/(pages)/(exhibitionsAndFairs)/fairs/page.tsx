@@ -1,5 +1,6 @@
 import React from 'react'
-import { currentThemeFromNav, fetchFairs } from '../../../_data'
+import { fetchFairs } from '../../../_data'
+import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'

@@ -3,7 +3,7 @@ import CalendarPopup from '../../_ui/CalendarPopUp'
 import Headline from '../../_ui/Headline'
 import { generateMeta } from '@/utilities/generateMeta'
 import React from 'react'
-import { currentThemeFromNav } from '../../_data'
+import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 
 const EventsPage = async () => {
