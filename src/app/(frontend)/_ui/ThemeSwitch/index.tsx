@@ -9,7 +9,16 @@ const ThemeSwitch = (props: { templateTheme?: string }) => {
   const { templateTheme } = props
 
   useEffect(() => {
-    setTheme(templateTheme)
+    const a18y = localStorage.getItem('gladwell-a18y')
+    if (a18y) {
+      const a18yOptions = JSON.parse(a18y)
+
+      setTheme(
+        a18yOptions.dark ? 'dark' : a18yOptions.contrast ? 'contrast' : templateTheme
+      )
+    } else {
+      setTheme(templateTheme)
+    }
     // only want the effect to run once.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

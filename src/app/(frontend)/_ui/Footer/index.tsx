@@ -1,6 +1,7 @@
 import GladwellProjects from 'public/images/Gladwell-Projects.svg'
 import { fetchGlobals } from '../../_data'
 import { CMSLink } from '../CMSLinks'
+import A18y from '../A18yPopup'
 
 const Footer = async (props: { children?: React.ReactNode }) => {
   const { children } = props
@@ -64,6 +65,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
           })}
         </div>
       </div>
+      <A18y />
     </footer>
   )
 }
