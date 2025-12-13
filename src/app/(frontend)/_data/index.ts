@@ -43,6 +43,14 @@ export const fetchGlobals = async (): Promise<{
   }
 }
 
+export const fetchMainMenuArray = async () => {
+  const menu = (await fetchGlobals()).mainMenu
+  const top = menu['menu-items-top']
+  const bottom = menu['menu-items-bot']
+
+  return [...top, ...bottom]
+}
+
 export const fetchPress = async () => {
   const { isEnabled: draft } = await draftMode()
 
