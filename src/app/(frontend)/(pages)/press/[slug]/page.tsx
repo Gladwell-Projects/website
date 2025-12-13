@@ -78,7 +78,13 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {hasText(cover.caption) && <Caption caption={cover.caption}></Caption>}
         </>
       )}
-      <Headline title={page.title} className="**:col-span-full!">
+      <Headline title={null} className="**:col-span-full!">
+        <h1>
+          {page.strapline && (
+            <span className="m-0 inline-block w-full text-xl">{page.strapline}</span>
+          )}
+          {page.title}
+        </h1>
         <aside className="col-span-full md:col-span-6 [&_li]:inline">
           <time
             className="align-top text-sm font-bold tracking-widest uppercase"

@@ -47,9 +47,7 @@ const PressPage: React.FC = async () => {
             <li key={press.id} className="md:col-span-full md:grid md:grid-cols-subgrid">
               <div className="md:col-span-6">
                 {press.strapline && (
-                  <strong className="text-base tracking-widest uppercase">
-                    {press.strapline}
-                  </strong>
+                  <strong className="text-base">{press.strapline}</strong>
                 )}
                 <h2 className="text-2xl">{press.title}</h2>
                 <time
@@ -120,20 +118,18 @@ const PressPage: React.FC = async () => {
                       })}
                     </ul>
                   )}
-                  <ul className="font-bold not-italic">
-                    <li>
-                      <Link href={`/press/${press.slug}`}>Continue Reading</Link>
-                    </li>
+                  <div className="font-bold not-italic">
+                    <Link href={`/press/${press.slug}`}>Continue Reading</Link>
                     {links.map((link) => {
                       return (
-                        <li key={link.id}>
+                        <span key={link.id}>
                           <span className="px-1 font-bold"> &bull; </span>
                           {/* @ts-expect-error cms links number error... */}
                           <CMSLink {...link.link}> ↗</CMSLink>
-                        </li>
+                        </span>
                       )
                     })}
-                  </ul>
+                  </div>
                 </footer>
               </div>
             </li>
