@@ -27,16 +27,6 @@ const sans = localFont({
       style: 'italic',
     },
     {
-      path: '../../../public/fonts/ABCOracle-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/ABCOracle-MediumItalic.woff2',
-      weight: '500',
-      style: 'italic',
-    },
-    {
       path: '../../../public/fonts/ABCOracle-Regular.woff2',
       weight: '400',
       style: 'normal',
