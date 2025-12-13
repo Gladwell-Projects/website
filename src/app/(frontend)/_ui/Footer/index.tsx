@@ -15,6 +15,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
       <div className="col-span-full grid grid-cols-subgrid md:col-span-6">
         <GladwellProjects
           aria-label="Gladwell Projects Logo"
+          alt="Gladwell Projects logo"
           title="Gladwell Projects Logo"
           className="col-span-full mb-2 h-8 w-auto fill-(--theme-text) md:col-span-2 md:h-6"
         />

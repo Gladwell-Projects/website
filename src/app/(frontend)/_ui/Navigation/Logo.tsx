@@ -20,10 +20,12 @@ const Logo = ({ className, variant }: { className: string; variant?: string }) =
           <>
             <Gladwell
               aria-label="Gladwell"
+              alt="first half of Gladwell Projects logo"
               className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)"
             />
             <Projects
               aria-label="Projects"
+              alt="second half of Gladwell Projects logo"
               className="h-(--text-base) overflow-visible fill-(--theme-text) transition-(--theme-transition)"
             />
           </>
