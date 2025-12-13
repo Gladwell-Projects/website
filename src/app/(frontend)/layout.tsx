@@ -62,6 +62,12 @@ export default function RootLayout(props: {
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
       <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+        <a
+          href="#main-content"
+          className="fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] rounded bg-(--theme-bg) px-3 py-2 shadow-md focus:top-15"
+        >
+          Skip to main content
+        </a>
         <FathomAnalytics />
         <CursorSpotlight />
         {children}

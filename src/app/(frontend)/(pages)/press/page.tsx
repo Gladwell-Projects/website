@@ -122,7 +122,7 @@ const PressPage: React.FC = async () => {
                   )}
                   <ul className="font-bold not-italic">
                     <li>
-                      <Link href={`/press/${press.slug}`}>Read More</Link>
+                      <Link href={`/press/${press.slug}`}>Continue Reading</Link>
                     </li>
                     {links.map((link) => {
                       return (
