@@ -491,6 +491,7 @@
     label {
       display: block;
       width: 100%;
+      font-size: var(--text-sm);
     }
 
     input[type="radio"],
