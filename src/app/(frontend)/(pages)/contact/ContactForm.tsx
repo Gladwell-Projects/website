@@ -68,9 +68,7 @@ const ContactForm: React.FC = () => {
     >
       {error && <span className="error">{error.message}</span>}
       <div>
-        <label htmlFor="name">
-          Name <span className="text-brick">*</span>
-        </label>
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
@@ -86,9 +84,7 @@ const ContactForm: React.FC = () => {
         )}
       </div>
       <div>
-        <label htmlFor="email">
-          Email <span className="text-brick">*</span>
-        </label>
+        <label htmlFor="email">Email</label>
         <input
           type="text"
           id="email"
@@ -116,9 +112,7 @@ const ContactForm: React.FC = () => {
         <label htmlFor="newsletter">Add me to the mailing list</label>
       </div>
       <div>
-        <label htmlFor="subject">
-          Subject <span className="text-brick">*</span>
-        </label>
+        <label htmlFor="subject">Subject</label>
         <input
           type="text"
           disabled={isLoading}
@@ -134,9 +128,7 @@ const ContactForm: React.FC = () => {
             Please include a subject.
           </span>
         )}
-        <label htmlFor="message">
-          Message <span className="text-brick">*</span>
-        </label>
+        <label htmlFor="message">Message</label>
         <textarea
           id="message"
           readOnly={isLoading}
@@ -159,8 +151,7 @@ const ContactForm: React.FC = () => {
           {...register('consent', { required: true })}
         />
         <label htmlFor="consent">
-          I consent to Gladwell Projects contacting me via e-mail.{' '}
-          <span className="text-brick">*</span>
+          I consent to Gladwell Projects contacting me via e-mail.
         </label>
         {errors.consent && (
           <span className="error" role="alert">

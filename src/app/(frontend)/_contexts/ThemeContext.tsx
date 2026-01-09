@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useState } from 'react'
 
 export const ThemeContext = createContext(undefined)
@@ -11,14 +11,14 @@ export const ThemeProvider = ({
   children: React.ReactNode
   className: string
 }) => {
-  const [theme, setTheme] = useState('default')
+  const [theme, setTheme] = useState({ default: 'default', current: 'default' })
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
       <html
         lang="en"
         data-scroll-behavior="smooth"
-        className={`theme-${theme} ${className}`}
+        className={`theme-${theme.current} ${className}`}
       >
         {children}
       </html>

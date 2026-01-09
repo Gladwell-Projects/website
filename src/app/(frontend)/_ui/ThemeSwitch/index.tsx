@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useEffect } from 'react'
+import { useContext, useLayoutEffect } from 'react'
 import ThemeContext from '../../_contexts/ThemeContext'
 
 const ThemeSwitch = (props: { templateTheme?: string }) => {
@@ -8,17 +8,11 @@ const ThemeSwitch = (props: { templateTheme?: string }) => {
 
   const { templateTheme } = props
 
-  useEffect(() => {
-    const a18y = localStorage.getItem('gladwell-a18y')
-    if (a18y) {
-      const a18yOptions = JSON.parse(a18y)
-
-      setTheme(
-        a18yOptions.dark ? 'dark' : a18yOptions.contrast ? 'contrast' : templateTheme
-      )
-    } else {
-      setTheme(templateTheme)
-    }
+  useLayoutEffect(() => {
+    setTheme({
+      default: templateTheme ? templateTheme : theme.default,
+      current: templateTheme ? templateTheme : theme.current,
+    })
     // only want the effect to run once.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

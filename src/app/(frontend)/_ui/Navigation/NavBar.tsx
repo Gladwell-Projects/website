@@ -73,12 +73,12 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
               {...link}
               onMouseEnter={() => {
                 if (isHome) {
-                  setTheme(CMSTheme)
+                  setTheme({ ...theme, current: CMSTheme })
                 }
               }}
               onMouseLeave={() => {
                 if (isHome) {
-                  setTheme('default')
+                  setTheme({ ...theme, current: 'default' })
                 }
               }}
               customId={CMSTheme}

@@ -734,6 +734,7 @@ export interface ContactSubmission {
   newsletter?: boolean | null;
   email?: string | null;
   message?: string | null;
+  consent?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1164,6 +1165,7 @@ export interface ContactSubmissionsSelect<T extends boolean = true> {
   newsletter?: T;
   email?: T;
   message?: T;
+  consent?: T;
   updatedAt?: T;
   createdAt?: T;
 }

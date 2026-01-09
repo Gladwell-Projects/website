@@ -6,7 +6,8 @@ import { IBM_Plex_Mono } from 'next/font/google'
 import './main.css'
 import CursorSpotlight from './_ui/CursorSpotlight'
 import { FathomAnalytics } from '../fathom'
-import A18y from './_ui/A18yPopup'
+import A18y from './_ui/A11yPopup'
+import { A11yProvider } from './_contexts/A11yContext'
 
 const mono = IBM_Plex_Mono({
   subsets: ['latin'],
@@ -52,17 +53,21 @@ export default function RootLayout(props: {
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
-      <body className={`flex min-h-dvh flex-col flex-nowrap`}>
-        <div className="fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] rounded bg-(--theme-bg) px-3 py-2 text-center shadow-md focus-within:top-10">
-          <a href="#main-content">Skip to main content</a>
-        </div>
-        <FathomAnalytics />
-        <CursorSpotlight />
-        {children}
-        {events}
-        {newsletter}
-        {contact}
-      </body>
+      <A11yProvider>
+        <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+          <div className="fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] rounded bg-(--theme-bg) px-3 py-2 text-center shadow-md focus-within:top-10">
+            <a href="#main-content" tabIndex={1}>
+              Skip to main content
+            </a>
+          </div>
+          <FathomAnalytics />
+          <CursorSpotlight />
+          {children}
+          {events}
+          {newsletter}
+          {contact}
+        </body>
+      </A11yProvider>
     </ThemeProvider>
   )
 }
