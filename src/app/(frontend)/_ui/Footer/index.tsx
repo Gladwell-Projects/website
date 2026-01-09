@@ -11,7 +11,7 @@ const Footer = async (props: { children?: React.ReactNode }) => {
   return (
     <footer
       aria-label="site footer"
-      className={`footer mt-4 grid grid-cols-12 justify-center gap-3 bg-linear-to-b from-transparent from-50% to-(--theme-accent) px-2 py-8 text-sm transition-all md:place-items-start lg:text-xs`}
+      className={`footer relative mt-4 grid grid-cols-12 justify-center gap-3 bg-linear-to-b from-transparent from-50% to-(--theme-accent) px-2 py-8 text-sm transition-all md:place-items-start lg:text-xs`}
     >
       <div className="col-span-full grid grid-cols-subgrid md:col-span-6">
         <GladwellProjects
