@@ -112,7 +112,7 @@ const Newsletter = () => {
           {errors.LNAME && <span className="error">This field is required.</span>}
         </fieldset>
         <button className="w-full cursor-pointer rounded-full border-2 p-1 hover:border-transparent hover:bg-(--theme-text) hover:text-(--theme-bg)">
-          Submit
+          Subscribe to Email Newsletters
         </button>
       </form>
     </ModalItem>

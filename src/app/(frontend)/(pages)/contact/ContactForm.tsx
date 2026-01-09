@@ -109,7 +109,7 @@ const ContactForm: React.FC = () => {
           id="newsletter"
           {...register('newsletter', { required: false })}
         />
-        <label htmlFor="newsletter">Add me to the mailing list</label>
+        <label htmlFor="newsletter">Opt-in to receive email newsletters</label>
       </div>
       <div>
         <label htmlFor="subject">Subject</label>

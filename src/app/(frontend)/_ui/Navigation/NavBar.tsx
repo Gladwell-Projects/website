@@ -12,6 +12,7 @@ import {
   Event,
 } from '@/payload-types'
 import { usePathname } from 'next/navigation'
+import A11yContext from '../../_contexts/A11yContext'
 
 type MenuType = {
   label: string
