@@ -39,7 +39,7 @@ const PressPage: React.FC = async () => {
       <ThemeSwitch templateTheme={pageTheme} />
       <Headline title="Press" className="md:col-span-full" />
       <ul className="col-span-full grid grid-cols-subgrid gap-y-8">
-        {page.map((press, i) => {
+        {page.map((press) => {
           const relatedExhibitions = press.relatedExhibitions as Partial<Exhibition>[]
           const relatedArtists = press.relatedArtists as Partial<Artist>[]
           const links = press.links
@@ -120,7 +120,10 @@ const PressPage: React.FC = async () => {
                     </ul>
                   )}
                   <div className="font-bold not-italic">
-                    <Link href={`/press/${press.slug}`} aria-label={press.title}>
+                    <Link
+                      href={`/press/${press.slug}`}
+                      aria-label={`Continue Reading ${press.title}`}
+                    >
                       Continue Reading
                     </Link>
                     {links.map((link) => {

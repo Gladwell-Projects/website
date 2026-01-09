@@ -111,5 +111,9 @@ export const ContactSubmissions: CollectionConfig = {
       name: 'message',
       type: 'textarea',
     },
+    {
+      name: 'consent',
+      type: 'checkbox',
+    },
   ],
 }

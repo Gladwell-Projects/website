@@ -9,6 +9,7 @@ type Inputs = {
   newsletter: boolean
   message: string
   subject: string
+  consent: boolean
 }
 
 const ContactForm: React.FC = () => {
@@ -108,7 +109,7 @@ const ContactForm: React.FC = () => {
           id="newsletter"
           {...register('newsletter', { required: false })}
         />
-        <label htmlFor="newsletter">Add me to the mailing list</label>
+        <label htmlFor="newsletter">I would like to receive email newsletters</label>
       </div>
       <div>
         <label htmlFor="subject">Subject</label>
@@ -138,6 +139,24 @@ const ContactForm: React.FC = () => {
         {errors.message && (
           <span className="error" role="alert">
             Please write a message.
+          </span>
+        )}
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          disabled={isLoading}
+          id="consent"
+          aria-invalid={errors.consent ? 'true' : 'false'}
+          {...register('consent', { required: true })}
+        />
+        <label htmlFor="consent">
+          I consent to Gladwell Projects contacting me via e-mail.
+        </label>
+        {errors.consent && (
+          <span className="error" role="alert">
+            <br />
+            Please consent to contact by email in order to submit this form.
           </span>
         )}
       </div>

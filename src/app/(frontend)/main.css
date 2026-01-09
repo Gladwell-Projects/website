@@ -378,6 +378,16 @@
     --theme-accent: var(--color-timber-300);
   }
 
+  .theme-dark {
+    --theme-text: var(--color-white);
+    --theme-bg: var(--color-midnight);
+    --theme-link: var(--color-white);
+    --theme-link-visited: var(--color-white);
+    --theme-highlight: var(--color-midnight-600);
+    --theme-shadow: var(--color-midnight-900);
+    --theme-accent: var(--color-midnight-800);
+  }
+
   h1,
   h2,
   h3,
@@ -481,6 +491,7 @@
     label {
       display: block;
       width: 100%;
+      font-size: var(--text-sm);
     }
 
     input[type="radio"],
