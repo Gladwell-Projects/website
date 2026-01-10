@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } fro
 import ThemeContext from '../../_contexts/ThemeContext'
 import A11yIcon from './Accessibility.svg'
 import A11yContext from '../../_contexts/A11yContext'
+import { usePathname } from 'next/navigation'
 
 const A11y = () => {
   const [openA11y, setOpenA11y] = useState<boolean>(false)
@@ -11,6 +12,9 @@ const A11y = () => {
   const [a11y, setA11y] = useContext(A11yContext)
 
   const [hidden, setHidden] = useState<boolean>(false)
+
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
 
   useEffect(() => {
     const hiddenStored = localStorage.getItem('gladwell-a11y-hidden')
@@ -26,17 +30,21 @@ const A11y = () => {
   }
 
   return (
-    <div className={`col-span-full w-full`}>
-      <A11yButton onClick={clickButton} status={openA11y} hidden={hidden} />
-      <A11yModal
-        hidden={hidden}
-        setHidden={setHidden}
-        a11y={a11y}
-        setA11y={setA11y}
-        onClick={clickButton}
-        status={openA11y}
-      />
-    </div>
+    <>
+      {!isHomePage && (
+        <div className={`col-span-full w-full`}>
+          <A11yButton onClick={clickButton} status={openA11y} hidden={hidden} />
+          <A11yModal
+            hidden={hidden}
+            setHidden={setHidden}
+            a11y={a11y}
+            setA11y={setA11y}
+            onClick={clickButton}
+            status={openA11y}
+          />
+        </div>
+      )}
+    </>
   )
 }
 
@@ -168,7 +176,7 @@ const A11yButton = (props: {
 
   return (
     <button
-      className={`${hidden ? 'absolute' : `fixed`} right-2 bottom-2 cursor-pointer text-left text-sm transition-all ${status ? 'right-6 bottom-6' : ''}`}
+      className={`${hidden ? 'absolute' : `fixed`} right-2 bottom-2 z-999 cursor-pointer text-left text-sm transition-all ${status ? 'right-6 bottom-6' : ''}`}
       onClick={onClick}
       tabIndex={0}
       aria-label={`${status ? 'Close' : 'Open'} the Accessibility Options Panel`}

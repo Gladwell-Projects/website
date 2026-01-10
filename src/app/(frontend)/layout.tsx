@@ -6,7 +6,7 @@ import { IBM_Plex_Mono } from 'next/font/google'
 import './main.css'
 import CursorSpotlight from './_ui/CursorSpotlight'
 import { FathomAnalytics } from '../fathom'
-import A18y from './_ui/A11yPopup'
+import A11y from './_ui/A11yPopup'
 import { A11yProvider } from './_contexts/A11yContext'
 
 const mono = IBM_Plex_Mono({
@@ -53,13 +53,14 @@ export default function RootLayout(props: {
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
-      <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+      <body className={`relative flex min-h-dvh flex-col flex-nowrap`}>
         <A11yProvider>
           <div className="modal--item fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] bg-(--theme-bg) px-3 py-2 text-center focus-within:top-[50%]">
             <a href="#main-content" tabIndex={1}>
               Skip to main content
             </a>
           </div>
+          <A11y />
           <FathomAnalytics />
           <CursorSpotlight />
           {children}
