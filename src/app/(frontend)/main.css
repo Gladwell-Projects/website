@@ -2,7 +2,7 @@
 
 @theme {
   --color-*: initial;
-  --color-black: #000;
+  --color-black: var(--theme-bg);
   --color-white: #fff;
 
   --color-blue: hsla(241, 84%, 41%, 1);
@@ -194,6 +194,10 @@
   --default-transition-timing-function: ease-out;
   --default-transition-duration: 300ms;
   --nav-height: --spacing(12);
+
+  --text-outline:
+    1px 1px 0px var(--theme-bg), -1px -1px 0px var(--theme-bg),
+    1px -1px 0px var(--theme-bg), -1px 1px 0px var(--theme-bg);
 }
 
 .baseline {
