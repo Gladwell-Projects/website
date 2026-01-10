@@ -43,8 +43,8 @@ const A11y = () => {
 const A11yModal = (props: {
   onClick: React.ReactEventHandler
   status: boolean
-  a11y: string
-  setA11y: Dispatch<SetStateAction<string>>
+  a11y: any
+  setA11y: Dispatch<SetStateAction<any>>
   hidden: boolean
   setHidden: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -65,7 +65,7 @@ const A11yModal = (props: {
       localStorage.removeItem('gladwell-a11y')
       return
     }
-    localStorage.setItem('gladwell-a11y', a11y)
+    localStorage.setItem('gladwell-a11y', JSON.stringify(a11y))
   }, [a11y])
 
   useEffect(() => {
@@ -77,15 +77,17 @@ const A11yModal = (props: {
   }, [hidden])
 
   // @ts-expect-error name doesn't exist
-  const handleToggle: React.ReactEventHandler = ({ target: { name } }) => {
-    setA11y(name === a11y ? null : name)
-
-    if (name === a11y) {
-      setTheme({ ...theme, current: theme.default })
-      return
+  const handleToggle: React.ReactEventHandler = ({ target: { name, id } }) => {
+    if (a11y[name] === id) {
+      setA11y({ ...a11y, [name]: null })
+    } else {
+      setA11y({ ...a11y, [name]: id })
     }
-
-    setTheme({ ...theme, current: name })
+    if (name === 'theme' && id === a11y.theme) {
+      setTheme({ ...theme, current: theme.default })
+    } else if (name === 'theme') {
+      setTheme({ ...theme, current: id })
+    }
   }
 
   const handleHide = () => {
@@ -94,47 +96,63 @@ const A11yModal = (props: {
 
   return (
     <div
-      className={`fixed right-4 bottom-4 left-4 z-999 origin-bottom-right transition-all duration-200 md:left-auto md:w-[50%] lg:w-[33%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
+      aria-hidden={!status}
+      className={`fixed right-4 bottom-4 left-4 z-999 origin-bottom-right transition-all duration-200 md:left-[50%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
     >
-      <div className="modal--item form p-2 text-base">
+      <div className="modal--item accessibilityModal form p-2 text-xl [&_label]:text-lg">
         <button
           aria-label="close accessibility a11ys modal"
           className="absolute top-2 right-2 cursor-pointer text-sm"
           onClick={onClick}
         >
-          close
+          CLOSE
         </button>
         <h2 className="text-base">Accessibility Options</h2>
-        <div>
-          <h3 className="text-base">Color</h3>
-          <input
-            type="checkbox"
-            id="contrast"
-            checked={a11y === 'contrast'}
-            name="contrast"
-            onChange={handleToggle}
-          />
-          <label htmlFor="contrast">High Contrast Mode</label>
-          <br />
-          <input
-            type="checkbox"
-            id="dark"
-            name="dark"
-            checked={a11y === 'dark'}
-            onChange={handleToggle}
-          />
-          <label htmlFor="dark">Dark Mode</label>
+        <div className="pb-1">
+          <div>
+            <input
+              type="checkbox"
+              id="contrast"
+              checked={a11y.theme === 'contrast'}
+              name="theme"
+              onChange={handleToggle}
+            />
+            <label htmlFor="contrast">Increase Contrast</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="dark"
+              name="theme"
+              checked={a11y.theme === 'dark'}
+              onChange={handleToggle}
+            />
+            <label htmlFor="dark">Dark Background</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="textLarge"
+              name="text"
+              checked={a11y.text === 'textLarge'}
+              onChange={handleToggle}
+            />
+            <label htmlFor="textLarge">Bigger Text</label>
+          </div>
         </div>
         <div>
-          <h3 className="text-base">Options</h3>
+          <h3 className="text-base">Other Options</h3>
           <input
+            className="text-base"
             type="checkbox"
             id="hide"
             name="hide"
             checked={hidden}
             onChange={handleHide}
           />
-          <label htmlFor="hide">Pin accessibility options to the site footer</label>
+          <label htmlFor="hide" className="text-base!">
+            Pin accessibility options to the site footer
+          </label>
         </div>
       </div>
     </div>

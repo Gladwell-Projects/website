@@ -11,8 +11,11 @@ const ThemeSwitch = (props: { templateTheme?: string }) => {
   const { templateTheme } = props
 
   useLayoutEffect(() => {
-    if (a11y) {
-      setTheme({ default: templateTheme ? templateTheme : theme.default, current: a11y })
+    if (a11y.theme) {
+      setTheme({
+        default: templateTheme ? templateTheme : theme.default,
+        current: a11y.theme,
+      })
       return
     }
     setTheme({
