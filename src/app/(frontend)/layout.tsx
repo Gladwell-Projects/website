@@ -56,7 +56,7 @@ export default function RootLayout(props: {
       <body className={`relative flex min-h-dvh flex-col flex-nowrap`}>
         <A11yProvider>
           <div className="modal--item fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] bg-(--theme-bg) px-3 py-2 text-center focus-within:top-[50%]">
-            <a href="#main-content" tabIndex={1}>
+            <a href="#main-content" tabIndex={0}>
               Skip to main content
             </a>
           </div>
