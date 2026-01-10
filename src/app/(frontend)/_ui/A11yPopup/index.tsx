@@ -93,51 +93,51 @@ const A11yModal = (props: {
   }
 
   return (
-    <>
-      {status && (
-        <div className="form fixed right-4 bottom-4 left-4 z-999 border-2 border-(--theme-text) bg-(--theme-bg) p-2 text-base shadow-md md:left-auto md:w-[50%] lg:w-[33%]">
-          <button
-            aria-label="close accessibility a11ys modal"
-            className="absolute top-2 right-2 cursor-pointer text-sm"
-            onClick={onClick}
-          >
-            close
-          </button>
-          <h2 className="text-base">Accessibility Options</h2>
-          <div>
-            <h3 className="text-base">Color</h3>
-            <input
-              type="checkbox"
-              id="contrast"
-              checked={a11y === 'contrast'}
-              name="contrast"
-              onChange={handleToggle}
-            />
-            <label htmlFor="contrast">High Contrast Mode</label>
-            <br />
-            <input
-              type="checkbox"
-              id="dark"
-              name="dark"
-              checked={a11y === 'dark'}
-              onChange={handleToggle}
-            />
-            <label htmlFor="dark">Dark Mode</label>
-          </div>
-          <div>
-            <h3 className="text-base">Options</h3>
-            <input
-              type="checkbox"
-              id="hide"
-              name="hide"
-              checked={hidden}
-              onChange={handleHide}
-            />
-            <label htmlFor="hide">Pin accessibility options to the site footer</label>
-          </div>
+    <div
+      className={`fixed right-4 bottom-4 left-4 z-999 origin-bottom-right transition-all duration-200 md:left-auto md:w-[50%] lg:w-[33%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
+    >
+      <div className="modal--item form p-2 text-base">
+        <button
+          aria-label="close accessibility a11ys modal"
+          className="absolute top-2 right-2 cursor-pointer text-sm"
+          onClick={onClick}
+        >
+          close
+        </button>
+        <h2 className="text-base">Accessibility Options</h2>
+        <div>
+          <h3 className="text-base">Color</h3>
+          <input
+            type="checkbox"
+            id="contrast"
+            checked={a11y === 'contrast'}
+            name="contrast"
+            onChange={handleToggle}
+          />
+          <label htmlFor="contrast">High Contrast Mode</label>
+          <br />
+          <input
+            type="checkbox"
+            id="dark"
+            name="dark"
+            checked={a11y === 'dark'}
+            onChange={handleToggle}
+          />
+          <label htmlFor="dark">Dark Mode</label>
         </div>
-      )}
-    </>
+        <div>
+          <h3 className="text-base">Options</h3>
+          <input
+            type="checkbox"
+            id="hide"
+            name="hide"
+            checked={hidden}
+            onChange={handleHide}
+          />
+          <label htmlFor="hide">Pin accessibility options to the site footer</label>
+        </div>
+      </div>
+    </div>
   )
 }
 
