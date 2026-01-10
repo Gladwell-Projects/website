@@ -6,7 +6,7 @@ import {
   fetchMainMenuArray,
   fetchPages,
   fetchPress,
-  fetchViewingRooms,
+  // fetchViewingRooms,
   fetchFairs,
   fetchEventsByMonth,
 } from './(frontend)/_data'
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   //press
   const press = await fetchPress()
   //viewing-rooms
-  const viewingRooms = await fetchViewingRooms()
+  // const viewingRooms = await fetchViewingRooms()
   //fairs
   const fairs = await fetchFairs('-startDate')
   // events

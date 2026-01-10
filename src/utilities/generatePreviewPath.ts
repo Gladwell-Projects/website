@@ -16,7 +16,7 @@ type Props = {
   req: PayloadRequest
 }
 
-export const generatePreviewPath = ({ collection, slug, req }: Props) => {
+export const generatePreviewPath = ({ collection, slug }: Props) => {
   // Allow empty strings, e.g. for the homepage
   if (slug === undefined || slug === null) {
     return null
