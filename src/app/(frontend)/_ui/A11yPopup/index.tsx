@@ -170,7 +170,7 @@ const A11yButton = (props: {
     <button
       className={`${hidden ? 'absolute' : `fixed`} right-2 bottom-2 cursor-pointer text-left text-sm transition-all ${status ? 'right-6 bottom-6' : ''}`}
       onClick={onClick}
-      tabIndex={1}
+      tabIndex={0}
       aria-label={`${status ? 'Close' : 'Open'} the Accessibility Options Panel`}
     >
       <A11yIcon
