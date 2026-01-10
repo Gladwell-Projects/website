@@ -7,13 +7,17 @@ const A11yContext = createContext(undefined)
 
 export const A11yProvider = ({ children }: { children: React.ReactNode }) => {
   const [a11y, setA11y] = useState({ theme: null, text: null })
+
   const [theme, setTheme] = useContext(ThemeContext)
 
   useEffect(() => {
     try {
       const a11yData = localStorage.getItem('gladwell-a11y')
       const a11yJson = JSON.parse(a11yData)
-      setA11y(a11yJson)
+      if (a11yJson) {
+        setA11y(a11yJson)
+        return
+      }
     } catch (error) {
       console.log(error)
       localStorage.removeItem('gladwell-a11y')
