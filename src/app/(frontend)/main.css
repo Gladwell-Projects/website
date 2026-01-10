@@ -2,7 +2,7 @@
 
 @theme {
   --color-*: initial;
-  --color-black: var(--theme-bg);
+  --color-black: #000;
   --color-white: #fff;
 
   --color-blue: hsla(241, 84%, 41%, 1);
@@ -581,8 +581,8 @@
   }
 
   .accessibilityModal {
-    --theme-text: var(--color-black);
-    --theme-bg: var(--color-white);
+    --theme-text: var(--color-black) !important;
+    --theme-bg: var(--color-white) !important;
   }
 
   .no-link-underline {
