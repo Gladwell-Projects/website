@@ -176,8 +176,9 @@ const A11yButton = (props: {
       <A11yIcon
         className="overflow-visible fill-(--theme-text) stroke-(--theme-bg) stroke-6 [paint-order:stroke]"
         width="50"
-        alt="accessibility a11ys button"
+        alt="accessibility button icon"
         height="50"
+        aria-label="Accessibility Icon"
       />
     </button>
   )
