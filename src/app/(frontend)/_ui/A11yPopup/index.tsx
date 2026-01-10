@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react'

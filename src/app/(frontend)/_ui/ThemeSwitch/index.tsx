@@ -6,7 +6,7 @@ import A11yContext from '../../_contexts/A11yContext'
 
 const ThemeSwitch = (props: { templateTheme?: string }) => {
   const [theme, setTheme] = useContext(ThemeContext)
-  const [a11y, setA11y] = useContext(A11yContext)
+  const [a11y] = useContext(A11yContext)
 
   const { templateTheme } = props
 
