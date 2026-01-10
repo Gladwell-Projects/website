@@ -83,12 +83,11 @@ const A11yModal = (props: {
     } else {
       setA11y({ ...a11y, [name]: id })
     }
-
-    if (id === a11y.theme) {
+    if (name === 'theme' && id === a11y.theme) {
       setTheme({ ...theme, current: theme.default })
-      return
+    } else if (name === 'theme') {
+      setTheme({ ...theme, current: id })
     }
-    setTheme({ ...theme, current: name })
   }
 
   const handleHide = () => {
@@ -98,19 +97,18 @@ const A11yModal = (props: {
   return (
     <div
       aria-hidden={!status}
-      className={`fixed right-4 bottom-4 left-4 z-999 origin-bottom-right transition-all duration-200 md:left-auto md:w-[45%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
+      className={`fixed right-4 bottom-4 left-4 z-999 origin-bottom-right transition-all duration-200 md:left-[50%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
     >
-      <div className="modal--item accessibilityModal form p-2 text-base [&_label]:text-base">
+      <div className="modal--item accessibilityModal form p-2 text-xl [&_label]:text-lg">
         <button
           aria-label="close accessibility a11ys modal"
           className="absolute top-2 right-2 cursor-pointer text-sm"
           onClick={onClick}
         >
-          close
+          CLOSE
         </button>
         <h2 className="text-base">Accessibility Options</h2>
-        <div className="columns-2 pb-1">
-          <h3 className="text-base [column-span:all]">Vision</h3>
+        <div className="pb-1">
           <div>
             <input
               type="checkbox"
@@ -145,13 +143,16 @@ const A11yModal = (props: {
         <div>
           <h3 className="text-base">Other Options</h3>
           <input
+            className="text-base"
             type="checkbox"
             id="hide"
             name="hide"
             checked={hidden}
             onChange={handleHide}
           />
-          <label htmlFor="hide">Pin accessibility options to the site footer</label>
+          <label htmlFor="hide" className="text-base!">
+            Pin accessibility options to the site footer
+          </label>
         </div>
       </div>
     </div>
