@@ -113,6 +113,7 @@ const A11yModal = (props: {
           aria-label="close accessibility a11ys modal"
           className="absolute top-2 right-2 cursor-pointer text-sm"
           onClick={onClick}
+          tabIndex={status ? 0 : -1}
         >
           CLOSE
         </button>
@@ -125,6 +126,7 @@ const A11yModal = (props: {
               checked={a11y.theme === 'contrast'}
               name="theme"
               onChange={handleToggle}
+              tabIndex={status ? 0 : -1}
             />
             <label htmlFor="contrast">Increase Contrast</label>
           </div>
@@ -135,6 +137,7 @@ const A11yModal = (props: {
               name="theme"
               checked={a11y.theme === 'dark'}
               onChange={handleToggle}
+              tabIndex={status ? 0 : -1}
             />
             <label htmlFor="dark">Dark Background</label>
           </div>
@@ -145,6 +148,7 @@ const A11yModal = (props: {
               name="text"
               checked={a11y.text === 'textLarge'}
               onChange={handleToggle}
+              tabIndex={status ? 0 : -1}
             />
             <label htmlFor="textLarge">Bigger Text</label>
           </div>
@@ -158,6 +162,7 @@ const A11yModal = (props: {
             name="hide"
             checked={hidden}
             onChange={handleHide}
+            tabIndex={status ? 0 : -1}
           />
           <label htmlFor="hide" className="text-base!">
             Pin accessibility options to the site footer
