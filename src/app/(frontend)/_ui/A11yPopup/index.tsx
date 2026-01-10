@@ -133,7 +133,7 @@ const A11yModal = (props: {
               checked={hidden}
               onChange={handleHide}
             />
-            <label htmlFor="hide">Keep accessibility options in the site footer.</label>
+            <label htmlFor="hide">Pin accessibility options to the site footer</label>
           </div>
         </div>
       )}
