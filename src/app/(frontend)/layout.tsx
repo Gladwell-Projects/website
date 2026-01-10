@@ -53,9 +53,9 @@ export default function RootLayout(props: {
 
   return (
     <ThemeProvider className={`${sans.variable} ${mono.variable}`}>
-      <A11yProvider>
-        <body className={`flex min-h-dvh flex-col flex-nowrap`}>
-          <div className="fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] rounded bg-(--theme-bg) px-3 py-2 text-center shadow-md focus-within:top-10">
+      <body className={`flex min-h-dvh flex-col flex-nowrap`}>
+        <A11yProvider>
+          <div className="modal--item fixed -top-full left-[50%] z-9999 m-auto w-auto translate-[-50%] bg-(--theme-bg) px-3 py-2 text-center focus-within:top-[50%]">
             <a href="#main-content" tabIndex={1}>
               Skip to main content
             </a>
@@ -66,8 +66,8 @@ export default function RootLayout(props: {
           {events}
           {newsletter}
           {contact}
-        </body>
-      </A11yProvider>
+        </A11yProvider>
+      </body>
     </ThemeProvider>
   )
 }
