@@ -110,6 +110,9 @@ export const ContactSubmissions: CollectionConfig = {
     {
       name: 'message',
       type: 'textarea',
+      admin: {
+        rows: 20,
+      },
     },
     {
       name: 'consent',
