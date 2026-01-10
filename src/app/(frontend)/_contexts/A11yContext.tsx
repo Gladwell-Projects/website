@@ -22,10 +22,10 @@ export const A11yProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    if (a11y && a11y.theme) {
+    if (a11y?.theme) {
       setTheme({ ...theme, current: a11y.theme })
     }
-    if (a11y && a11y.text === 'textLarge') {
+    if (a11y?.text === 'textLarge') {
       document.documentElement.style.setProperty('--font-size-base-px', '25px')
     } else {
       document.documentElement.style.removeProperty('--font-size-base-px')

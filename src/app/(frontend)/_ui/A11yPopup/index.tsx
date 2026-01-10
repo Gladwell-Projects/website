@@ -92,7 +92,7 @@ const A11yModal = (props: {
     } else {
       setA11y({ ...a11y, [name]: id })
     }
-    if (name === 'theme' && id === a11y.theme) {
+    if (name === 'theme' && id === a11y?.theme) {
       setTheme({ ...theme, current: theme.default })
     } else if (name === 'theme') {
       setTheme({ ...theme, current: id })
@@ -122,7 +122,7 @@ const A11yModal = (props: {
             <input
               type="checkbox"
               id="contrast"
-              checked={a11y.theme === 'contrast'}
+              checked={a11y?.theme === 'contrast'}
               name="theme"
               onChange={handleToggle}
             />
@@ -133,7 +133,7 @@ const A11yModal = (props: {
               type="checkbox"
               id="dark"
               name="theme"
-              checked={a11y.theme === 'dark'}
+              checked={a11y?.theme === 'dark'}
               onChange={handleToggle}
             />
             <label htmlFor="dark">Dark Background</label>
@@ -143,7 +143,7 @@ const A11yModal = (props: {
               type="checkbox"
               id="textLarge"
               name="text"
-              checked={a11y.text === 'textLarge'}
+              checked={a11y?.text === 'textLarge'}
               onChange={handleToggle}
             />
             <label htmlFor="textLarge">Bigger Text</label>
