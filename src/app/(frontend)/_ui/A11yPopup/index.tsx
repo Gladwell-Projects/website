@@ -106,7 +106,7 @@ const A11yModal = (props: {
   return (
     <div
       aria-hidden={!status}
-      className={`theme-default fixed right-4 bottom-4 left-4 z-99999 origin-bottom-right transition-all duration-200 md:left-[50%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
+      className={`fixed right-4 bottom-4 left-4 z-99999 origin-bottom-right transition-all duration-200 md:left-[50%] ${status ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
     >
       <div className="modal--item accessibilityModal form p-2 text-xl [&_label]:text-lg">
         <button
