@@ -34,7 +34,7 @@ const Gallery = (props: {
             <button
               aria-label="switch gallery to grid view"
               onClick={gridView}
-              className={`cursor-pointer border-2 border-(--theme-bg) bg-(--theme-bg) ${view === 'Grid' ? 'outline-4 outline-(--theme-highlight) [&>span>span]:border-(--theme-bg) [&>span>span]:bg-(--theme-text)' : '[&>span>span]:border-2'}`}
+              className={`cursor-pointer border-2 border-(--theme-bg) bg-(--theme-bg) ${view === 'Grid' ? 'shadow-[0_0_0_4px_var(--theme-highlight)] [&>span>span]:border-(--theme-bg) [&>span>span]:bg-(--theme-text)' : '[&>span>span]:border-2'}`}
             >
               <span className="m-0 grid h-2.5 w-2.5 grid-cols-2 grid-rows-2 gap-[2px] overflow-hidden p-0">
                 <span></span>
@@ -47,7 +47,7 @@ const Gallery = (props: {
             <button
               aria-label="switch gallery to slides view"
               onClick={slideView}
-              className={`row-start-1 cursor-pointer border-2 border-(--theme-bg) ${view === 'Slides' ? 'outline-4 outline-(--theme-highlight) [&_span]:bg-(--theme-text)' : '[&_span]:border-2'}`}
+              className={`row-start-1 cursor-pointer border-2 border-(--theme-bg) ${view === 'Slides' ? 'shadow-[0_0_0_4px_var(--theme-highlight)] [&_span]:bg-(--theme-text)' : '[&_span]:border-2'}`}
             >
               <span className="block h-2.5 w-2.5"></span>
               {/* slides */}
