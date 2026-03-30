@@ -5,15 +5,18 @@ import { generateMeta } from '@/utilities/generateMeta'
 import React from 'react'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
+import { fetchTopLevelTitle } from '../../_data'
 
 const EventsPage = async () => {
   const slug = 'events'
+
+  const title = await fetchTopLevelTitle(slug)
   const pageTheme = await currentThemeFromNav(slug)
 
   return (
     <div className="col-span-full grid w-full grid-cols-subgrid gap-3">
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Events" className="col-span-full row-start-1 w-full" />
+      <Headline title={title} className="col-span-full row-start-1 w-full" />
       <CalendarPopup hasClose={false} />
     </div>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchArtists } from '../../_data'
+import { fetchArtists, fetchTopLevelTitle } from '../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import Headline from '../../_ui/Headline'
@@ -20,10 +20,12 @@ const ArtistsPage: React.FC = async () => {
 
   const pageTheme = await currentThemeFromNav(slug)
 
+  const title = await fetchTopLevelTitle(slug)
+
   return (
     <SubGrid>
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Aritsts" />
+      <Headline title={title} />
       <ArtistList data={artistList} />
     </SubGrid>
   )

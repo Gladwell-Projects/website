@@ -1,7 +1,7 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import React from 'react'
-import { fetchViewingRooms } from '../../_data'
+import { fetchTopLevelTitle, fetchViewingRooms } from '../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import Headline from '../../_ui/Headline'
@@ -17,7 +17,9 @@ const ViewingRoomsPage: React.FC = async () => {
     ? await fetchViewingRooms()
     : await unstable_cache(fetchViewingRooms, ['viewingRooms'])()
 
-  const slug = 'viewing-rooms'
+  const slug = '/viewing-rooms'
+
+  const title = await fetchTopLevelTitle(slug)
 
   const pageTheme = await currentThemeFromNav(slug)
 
@@ -25,7 +27,7 @@ const ViewingRoomsPage: React.FC = async () => {
     return (
       <SubGrid>
         <ThemeSwitch templateTheme={pageTheme} />
-        <Headline title="Viewing Rooms" />
+        <Headline title={title} />
         <h6 className="col-span-full">There aren&rsquo;t any viewing rooms yet.</h6>
       </SubGrid>
     )
@@ -33,7 +35,7 @@ const ViewingRoomsPage: React.FC = async () => {
   return (
     <SubGrid>
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Viewing Rooms" />
+      <Headline title={title} />
       <div className="col-span-full grid grid-cols-subgrid gap-x-3 gap-y-4">
         {viewingRooms.map((room) => {
           return <ViewingRoomTile key={room.id} room={room} />
@@ -51,7 +53,7 @@ type Args = {
 
 export async function generateMetadata({}: Args): Promise<Metadata> {
   const page = {
-    slug: '/viewing-rooms',
+    slug: 'viewing-rooms',
     meta: {
       title: 'Viewing Rooms | Gladwell Projects',
       description: 'Gladwell Projects Viewing Rooms',
@@ -62,7 +64,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 }
 
 export const generateViewport = async (): Promise<Viewport> => {
-  const slug = 'viewing-rooms'
+  const slug = '/viewing-rooms'
   const pageTheme = await currentThemeFromNav(slug)
   const themeColor = colors.find((a) => a.theme === pageTheme).code
 

@@ -1,7 +1,7 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Artist, Exhibition, Media } from '@/payload-types'
-import { fetchPress } from '../../_data'
+import { fetchPress, fetchTopLevelTitle } from '../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
 import Headline from '../../_ui/Headline'
@@ -22,13 +22,15 @@ const PressPage: React.FC = async () => {
 
   const slug = '/press'
 
+  const title = await fetchTopLevelTitle(slug)
+
   const pageTheme = await currentThemeFromNav(slug)
 
   if (page.length < 1) {
     return (
       <div className="col-span-full">
         <ThemeSwitch templateTheme={pageTheme} />
-        <Headline title="Press" />
+        <Headline title={title} />
         <h6>Nothing to see here yet...</h6>
       </div>
     )
@@ -37,7 +39,7 @@ const PressPage: React.FC = async () => {
   return (
     <div className="col-span-full md:grid md:grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Press" className="md:col-span-full" />
+      <Headline title={title} className="md:col-span-full" />
       <ul className="col-span-full grid grid-cols-subgrid gap-y-8">
         {page.map((press) => {
           const relatedExhibitions = press.relatedExhibitions as Partial<Exhibition>[]

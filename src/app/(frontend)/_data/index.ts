@@ -13,6 +13,7 @@ import {
   Footer,
   ViewingRoom,
 } from '@/payload-types'
+import toTitleCase from '@/utilities/toTitleCase'
 
 export const payloadConfig = await config
 
@@ -49,6 +50,25 @@ export const fetchMainMenuArray = async () => {
   const bottom = menu['menu-items-bot']
 
   return [...top, ...bottom]
+}
+
+// TODO: In the future, we should refactor to use stub pages for top-level navigation pages.
+// titles will then take the page's title
+
+export const fetchTopLevelTitle = async (slug: string) => {
+  const menu = await fetchMainMenuArray()
+
+  const item = menu.filter((item) => item.link.url && item.link.url === slug)[0]
+
+  if (!slug) return null
+
+  if (!item) {
+    const page = await fetchPage(slug)
+    if (!page) return toTitleCase(slug.split(/\/|\-/).join(' '))
+    return page.title
+  }
+
+  return item.label
 }
 
 export const fetchPress = async () => {

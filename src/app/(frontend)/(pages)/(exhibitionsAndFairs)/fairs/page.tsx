@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchFairs } from '../../../_data'
+import { fetchFairs, fetchTopLevelTitle } from '../../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
@@ -18,7 +18,9 @@ const Exhibitions = async () => {
     ? await fetchFairs('startDate')
     : await unstable_cache(fetchFairs)('startDate')
 
-  const slug = 'fairs'
+  const slug = '/fairs'
+
+  const title = await fetchTopLevelTitle(slug)
 
   const pageTheme = await currentThemeFromNav(slug)
 
@@ -26,7 +28,7 @@ const Exhibitions = async () => {
     return (
       <div className="col-span-full grid grid-cols-subgrid">
         <ThemeSwitch templateTheme={pageTheme} />
-        <Headline title="Fairs" />
+        <Headline title={title} />
         <h6 className="col-span-12">Nothing here yet...</h6>
       </div>
     )
@@ -35,7 +37,7 @@ const Exhibitions = async () => {
   return (
     <div className="col-span-full grid grid-cols-subgrid">
       <ThemeSwitch templateTheme={pageTheme} />
-      <Headline title="Fairs" />
+      <Headline title={title} />
       <div className="exhibition-list col-span-full grid grid-cols-subgrid">
         <ExhibitionsList exhibitions={exhibitions} slug={slug} />
       </div>
