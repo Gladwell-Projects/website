@@ -167,7 +167,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 }
 
 export const generateViewport = async (): Promise<Viewport> => {
-  const slug = 'press'
+  const slug = '/press'
   const pageTheme = await currentThemeFromNav(slug)
   const themeColor = colors.find((a) => a.theme === pageTheme).code
 

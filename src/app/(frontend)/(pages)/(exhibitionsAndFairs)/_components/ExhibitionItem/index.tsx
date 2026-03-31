@@ -21,7 +21,7 @@ const ExhibitionItem = ({
   return (
     <li className="relative col-span-full -mx-2 grid grid-cols-subgrid overflow-hidden px-2 py-6 focus-within:outline-3 focus-within:outline-(--theme-text) hover:text-shadow-(--text-outline)">
       <Link
-        href={{ pathname: `/${slug}/${exhibition.slug}` }}
+        href={{ pathname: `${slug}/${exhibition.slug}` }}
         className="group col-span-full grid w-full grid-cols-subgrid text-(--theme-text) no-underline visited:text-(--theme-text)"
       >
         {cover && (
