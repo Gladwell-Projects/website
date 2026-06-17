@@ -62,3 +62,35 @@ website.sql
 websitedata.sql
 .env.development
 webdata.sql
+
+# AI assistants / tooling
+# Claude (Claude Code)
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+# Cursor
+.cursor/
+.cursorrules
+.cursorignore
+# GitHub Copilot
+.github/copilot-instructions.md
+# Aider
+.aider*
+# Continue
+.continue/
+# Windsurf
+.windsurf/
+.windsurfrules
+# Cline / Roo Code
+.clinerules
+.clinerules/
+.roo/
+.roomodes
+# Gemini CLI
+.gemini/
+GEMINI.md
+# OpenAI Codex / generic agents
+.codex/
+AGENTS.md
+# Generic
+.ai/
