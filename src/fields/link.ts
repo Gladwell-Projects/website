@@ -29,6 +29,28 @@ const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = 
   const linkResult: Field = {
     name: 'link',
     type: 'group',
+    hooks: {
+      // Drop sub-values that don't match the selected link type. The
+      // admin `condition`s only hide the other fields; their stored values
+      // otherwise persist, so switching e.g. reference -> custom would leave
+      // a stale reference in the DB (which then leaks its theme into the
+      // nav). Nulling `reference` here is safe even though field hooks run
+      // before validation: each sub-field's `admin.condition` (e.g.
+      // type === 'reference') gates its own `required` validation
+      // (skipValidationFromHere when the condition is false), so the
+      // now-empty mismatched fields are never validated as required.
+      beforeChange: [
+        ({ value }) => {
+          if (!value || typeof value !== 'object') return value
+          return {
+            ...value,
+            reference: value.type === 'reference' ? value.reference : null,
+            url: value.type === 'custom' ? value.url : null,
+            upload: value.type === 'upload' ? value.upload : null,
+          }
+        },
+      ],
+    },
     admin: {
       hideGutter: true,
       ...(overrides?.admin || {}),
