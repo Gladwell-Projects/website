@@ -56,15 +56,28 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
         {data.map(({ link, label, theme: linkTheme }, i) => {
           const { reference } = link
 
-          let CMSTheme = linkTheme || 'default'
+          // Theme is chosen by the Direct Link `type`, never by a stale stored
+          // value. A reference link inherits the linked document's theme, and
+          // falls back to 'default' when the reference is missing/invalid or
+          // the document has no theme field (e.g. Press/Exhibition/Event/Artist
+          // references — only Pages and Viewing Rooms have themes). Custom URL
+          // and document/upload links use the menu item's own theme. This is
+          // what prevents stale DB data — e.g. a reference left over from a
+          // previous "custom" link — from leaking a wrong theme like "glow".
+          let CMSTheme = 'default'
 
-          // Only derive the theme from a reference for actual reference
-          // links. Switching a link from reference -> custom in Payload can
-          // leave a stale reference in the DB; without this guard its theme
-          // would override the custom link's menu-item theme (e.g. Press
-          // inheriting "glow" from an old "About" reference).
-          if (link.type === 'reference' && reference && 'theme' in reference.value) {
-            CMSTheme = reference.value.theme
+          if (link.type === 'reference') {
+            if (
+              reference &&
+              typeof reference.value === 'object' &&
+              reference.value !== null &&
+              'theme' in reference.value &&
+              reference.value.theme
+            ) {
+              CMSTheme = reference.value.theme
+            }
+          } else if (link.type === 'custom' || link.type === 'upload') {
+            CMSTheme = linkTheme || 'default'
           }
 
           return (
