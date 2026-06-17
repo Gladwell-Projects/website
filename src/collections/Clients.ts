@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { admins, adminsField } from './access/admins'
 import { adminsAndEditors } from './access/adminsAndEditors'
-import { published } from './access/published'
+import { adminsAndSelf } from './access/adminsAndSelf'
 
 export const Clients: CollectionConfig = {
   slug: 'clients',
@@ -12,7 +12,7 @@ export const Clients: CollectionConfig = {
     hidden: true,
   },
   access: {
-    read: published,
+    read: adminsAndSelf,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: admins,
