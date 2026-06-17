@@ -3,6 +3,7 @@ import { hasText } from '@payloadcms/richtext-lexical/shared'
 import Image from 'next/image'
 import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 export const CMSImage = (props: {
   image: string | Media
@@ -16,7 +17,7 @@ export const CMSImage = (props: {
   const { image, showCaption, size, className, captionClasses, children, blockSize } =
     props
 
-  if (typeof image !== 'object') {
+  if (!isRenderableImage(image)) {
     return null
   }
 

@@ -1,6 +1,6 @@
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { Artist, Exhibition, Media } from '@/payload-types'
+import { Artist, Exhibition } from '@/payload-types'
 import { fetchPress, fetchTopLevelTitle } from '../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import { GladwellRichtext as RichText } from '@/components/frontend/lexical'
@@ -13,6 +13,7 @@ import { colors } from '@/fields/theme'
 import { unstable_cache } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { dateToLong } from '@/utilities/convertCMSDate'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const PressPage: React.FC = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -45,7 +46,7 @@ const PressPage: React.FC = async () => {
           const relatedExhibitions = press.relatedExhibitions as Partial<Exhibition>[]
           const relatedArtists = press.relatedArtists as Partial<Artist>[]
           const links = press.links
-          const image = press.featuredImage as Media
+          const image = press.featuredImage
           return (
             <li key={press.id} className="md:col-span-full md:grid md:grid-cols-subgrid">
               <div className="md:col-span-6">
@@ -61,7 +62,7 @@ const PressPage: React.FC = async () => {
                 </time>
               </div>
               <div className="md:col-span-6">
-                {press.featuredImage && (
+                {isRenderableImage(image) && (
                   <Image
                     src={image.url}
                     width={image.width}

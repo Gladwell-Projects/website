@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { fetchMedia } from '../../_data'
 import { dateToLong } from '@/utilities/convertCMSDate'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const PressJoin = (props: { children?: React.ReactNode; data: Partial<Exhibition> }) => {
   const { data, children } = props
@@ -58,7 +59,7 @@ const PressJoin = (props: { children?: React.ReactNode; data: Partial<Exhibition
                 href={`/press/${press.slug}`}
                 className="text-(--theme-text) no-underline"
               >
-                {image && (
+                {isRenderableImage(image) && (
                   <Image
                     alt={image.alt}
                     width={image.width}

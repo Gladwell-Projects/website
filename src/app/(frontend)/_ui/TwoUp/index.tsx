@@ -1,6 +1,7 @@
 import { Media } from '@/payload-types'
 import { Caption } from '../Image'
 import Image from 'next/image'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const TwoUp = (props: {
   leftImage: string | Media
@@ -26,7 +27,7 @@ export default TwoUp
 const TwoUpImage = (props: { image: Media | number; showCaption: boolean }) => {
   const { image, showCaption } = props
 
-  if (typeof image !== 'object') {
+  if (!isRenderableImage(image)) {
     return null
   }
 

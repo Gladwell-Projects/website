@@ -1,7 +1,8 @@
 import { dateToLong } from '@/utilities/convertCMSDate'
-import { Artist, Exhibition, Media } from '@/payload-types'
+import { Artist, Exhibition } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const ExhibitionItem = ({
   exhibition,
@@ -12,7 +13,7 @@ const ExhibitionItem = ({
 }) => {
   const artists = exhibition.featuredArtists as Partial<Artist>[]
 
-  const cover = exhibition.coverImage as Partial<Media>
+  const cover = isRenderableImage(exhibition.coverImage) ? exhibition.coverImage : null
 
   const start = dateToLong(exhibition.startDate, exhibition.startDate_tz)
 

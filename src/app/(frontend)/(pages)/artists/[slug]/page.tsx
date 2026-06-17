@@ -16,6 +16,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Link from 'next/link'
 import Image from 'next/image'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -79,7 +80,7 @@ const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) 
         </div>
       </Headline>
       <Content>
-        {page.profileImage && typeof page.profileImage === 'object' && (
+        {isRenderableImage(page.profileImage) && (
           <div className="col-span-full grid grid-cols-subgrid md:col-span-4 md:col-start-8 md:row-start-1">
             <Image
               src={page.profileImage.url}

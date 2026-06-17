@@ -10,6 +10,7 @@ import Link from 'next/link'
 
 import Image from 'next/image'
 import Headline from '@/app/(frontend)/_ui/Headline'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const ExhibitionContent = (props: {
   page: Partial<Exhibition>
@@ -18,12 +19,11 @@ const ExhibitionContent = (props: {
 }) => {
   const { page, draft, children } = props
 
-  const cover =
-    page.featuredImg && typeof page.featuredImg === 'object'
-      ? page.featuredImg
-      : page.coverImage && typeof page.coverImage === 'object'
-        ? page.coverImage
-        : null
+  const cover = isRenderableImage(page.featuredImg)
+    ? page.featuredImg
+    : isRenderableImage(page.coverImage)
+      ? page.coverImage
+      : null
 
   const start = dateToLong(page.startDate, page.startDate_tz)
   const end = dateToLong(page.endDate, page.startDate_tz)

@@ -1,31 +1,28 @@
 import { ViewingRoom } from '@/payload-types'
 import Link from 'next/link'
 import Image from 'next/image'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const ViewingRoomTile = (props: { room: Partial<ViewingRoom> }) => {
   const { room } = props
 
-  let url, alt, width, height
-
-  if (room.cover && typeof room.cover === 'object') {
-    ;({ url, alt, width, height } = room.cover)
-  }
+  const cover = isRenderableImage(room.cover) ? room.cover : null
 
   return (
     <div
       key={room.id}
       className={`${room.theme ? `theme-${room.theme}` : ''} col-span-full grid grid-cols-subgrid gap-2 bg-(--theme-bg) p-2 text-(--theme-text)`}
     >
-      {room.cover && (
+      {cover && (
         <Link
           href={`/viewing-rooms/${room.slug}`}
           className="col-span-4 text-(--theme-text) no-underline"
         >
           <Image
-            src={url}
-            alt={alt}
-            width={width}
-            height={height}
+            src={cover.url}
+            alt={cover.alt}
+            width={cover.width}
+            height={cover.height}
             className="aspect-4/3 w-full object-cover"
             sizes="(width >=48rem) 50vw, 100vw"
           />
