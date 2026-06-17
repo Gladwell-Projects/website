@@ -58,7 +58,12 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
 
           let CMSTheme = linkTheme || 'default'
 
-          if (reference && 'theme' in reference.value) {
+          // Only derive the theme from a reference for actual reference
+          // links. Switching a link from reference -> custom in Payload can
+          // leave a stale reference in the DB; without this guard its theme
+          // would override the custom link's menu-item theme (e.g. Press
+          // inheriting "glow" from an old "About" reference).
+          if (link.type === 'reference' && reference && 'theme' in reference.value) {
             CMSTheme = reference.value.theme
           }
 
