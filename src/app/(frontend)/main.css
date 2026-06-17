@@ -200,6 +200,20 @@
     1px -1px 0px var(--theme-bg), -1px 1px 0px var(--theme-bg);
 }
 
+/* Honor the device "reduce motion" setting: drop the theme cross-fade,
+   neutralize transitions built from the shared duration, and disable
+   smooth scroll. Unlayered so it overrides the @layer base html rule. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --default-transition-duration: 0.01ms;
+    --theme-transition: none;
+  }
+  html {
+    transition: none;
+    scroll-behavior: auto;
+  }
+}
+
 .baseline {
   background-image: linear-gradient(
     to top,
@@ -283,14 +297,16 @@
   }
 
   /* theme settings */
-  .theme-default {
+  .theme-default,
+  html[data-hover-theme='default'] {
     --theme-text: var(--color-midnight);
     --theme-bg: var(--color-white);
     --theme-highlight: var(--color-glow-300);
     --theme-shadow: var(--color-midnight-400);
     --theme-accent: var(--color-glow);
   }
-  .theme-blue {
+  .theme-blue,
+  html[data-hover-theme='blue'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-blue);
     --theme-link: var(--color-white);
@@ -299,7 +315,8 @@
     --theme-shadow: var(--color-blue-800);
     --theme-accent: var(--color-blue-300);
   }
-  .theme-cli {
+  .theme-cli,
+  html[data-hover-theme='cli'] {
     --theme-text: var(--color-cli);
     --theme-bg: var(--color-black);
     --theme-link: var(--color-cli);
@@ -308,7 +325,8 @@
     --theme-shadow: var(--color-cli-900);
     --theme-accent: var(--color-cli-900);
   }
-  .theme-web3 {
+  .theme-web3,
+  html[data-hover-theme='web3'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-web3);
     --theme-link: var(--color-white);
@@ -317,7 +335,8 @@
     --theme-shadow: var(--color-web3-700);
     --theme-accent: var(--color-web3-600);
   }
-  .theme-glow {
+  .theme-glow,
+  html[data-hover-theme='glow'] {
     --theme-text: var(--color-blue);
     --theme-bg: var(--color-glow);
     --theme-link: var(--color-blue-400);
@@ -327,7 +346,8 @@
     --theme-accent: var(--color-glow-300);
   }
 
-  .theme-midnight {
+  .theme-midnight,
+  html[data-hover-theme='midnight'] {
     --theme-text: var(--color-bone);
     --theme-bg: var(--color-midnight);
     --theme-link: var(--color-bone);
@@ -337,7 +357,8 @@
     --theme-accent: var(--color-midnight-800);
   }
 
-  .theme-bone {
+  .theme-bone,
+  html[data-hover-theme='bone'] {
     --theme-text: var(--color-midnight);
     --theme-bg: var(--color-bone);
     --theme-link: var(--color-midnight);
@@ -346,7 +367,8 @@
     --theme-shadow: var(--color-bone-800);
     --theme-accent: var(--color-bone-400);
   }
-  .theme-hi-vis {
+  .theme-hi-vis,
+  html[data-hover-theme='hi-vis'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-hi-vis);
     --theme-link: var(--color-white);
@@ -355,7 +377,8 @@
     --theme-shadow: var(--color-hi-vis-900);
     --theme-accent: var(--color-hi-vis-700);
   }
-  .theme-taxi {
+  .theme-taxi,
+  html[data-hover-theme='taxi'] {
     --theme-text: var(--color-black);
     --theme-bg: var(--color-taxi);
     --theme-link: var(--color-black);
@@ -364,7 +387,8 @@
     --theme-shadow: var(--color-taxi-900);
     --theme-accent: var(--color-taxi-200);
   }
-  .theme-brick {
+  .theme-brick,
+  html[data-hover-theme='brick'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-brick);
     --theme-link: var(--color-white);
@@ -374,7 +398,8 @@
     --theme-accent: var(--color-brick-400);
   }
 
-  .theme-timber {
+  .theme-timber,
+  html[data-hover-theme='timber'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-timber);
     --theme-link: var(--color-white);
@@ -384,7 +409,8 @@
     --theme-accent: var(--color-timber-300);
   }
 
-  .theme-dark {
+  .theme-dark,
+  html[data-hover-theme='dark'] {
     --theme-text: var(--color-white);
     --theme-bg: var(--color-midnight);
     --theme-link: var(--color-white);
@@ -394,7 +420,8 @@
     --theme-accent: var(--color-midnight-800);
   }
 
-  .theme-contrast {
+  .theme-contrast,
+  html[data-hover-theme='contrast'] {
     --theme-text: var(--color-midnight);
     --theme-link: var(--color-blue);
     --theme-link-visited: var(--color-blue);

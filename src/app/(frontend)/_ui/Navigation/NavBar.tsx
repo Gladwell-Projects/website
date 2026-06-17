@@ -1,7 +1,6 @@
 'use client'
 import { CMSLink } from '../CMSLinks'
-import { useContext } from 'react'
-import ThemeContext from '../../_contexts/ThemeContext'
+import { useEffect } from 'react'
 import {
   Artist,
   Exhibition,
@@ -39,9 +38,14 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
   data,
   className,
 }) => {
-  const [theme, setTheme] = useContext(ThemeContext)
   const pathname = usePathname()
   const isHome = pathname === '/'
+
+  // Clear any lingering hover override if the route changes before
+  // onMouseLeave fires (e.g. keyboard nav or programmatic navigation).
+  useEffect(() => {
+    delete document.documentElement.dataset.hoverTheme
+  }, [pathname])
 
   return (
     <>
@@ -58,14 +62,6 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
             CMSTheme = reference.value.theme
           }
 
-          if (
-            link.url === '/events' ||
-            link.url === '/newsletter' ||
-            link.url === '/contact'
-          ) {
-            CMSTheme = theme
-          }
-
           return (
             <CMSLink
               className={`block min-w-max basis-0 py-2 text-(--theme-text) no-underline md:shrink md:grow md:p-0 md:first:grow-[0.5] md:first:text-left md:last:grow-[0.5] md:last:text-right`}
@@ -73,12 +69,12 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
               {...link}
               onMouseEnter={() => {
                 if (isHome) {
-                  setTheme({ ...theme, current: CMSTheme })
+                  document.documentElement.dataset.hoverTheme = CMSTheme
                 }
               }}
               onMouseLeave={() => {
                 if (isHome) {
-                  setTheme({ ...theme, current: 'default' })
+                  delete document.documentElement.dataset.hoverTheme
                 }
               }}
               customId={CMSTheme}
