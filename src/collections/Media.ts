@@ -3,6 +3,8 @@ import lexicalBasic from './lexical/basicFeatures'
 import { admins } from './access/admins'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { anyone } from './access/anyone'
+import { clearMediaReferences } from './hooks/clearMediaReferences'
+import { findMediaReferences } from './hooks/findMediaReferences'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -19,7 +21,36 @@ export const Media: CollectionConfig = {
     delete: adminsAndEditors,
     unlock: admins,
   },
+  hooks: {
+    // Clear dangling references when an image is deleted (see panel below).
+    beforeDelete: [clearMediaReferences],
+  },
+  endpoints: [
+    {
+      // Powers the "Used in" panel: GET /api/media/:id/usage
+      path: '/:id/usage',
+      method: 'get',
+      handler: async (req) => {
+        if (!req.user) {
+          return Response.json({ errors: [{ message: 'Forbidden' }] }, { status: 403 })
+        }
+        const id = (req.routeParams?.id as string) ?? ''
+        const references = await findMediaReferences(req.payload, id, req)
+        return Response.json({ references })
+      },
+    },
+  ],
   fields: [
+    {
+      name: 'mediaUsage',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/components/payload/fields/MediaUsageField',
+        },
+      },
+    },
     {
       name: 'isArt',
       type: 'checkbox',

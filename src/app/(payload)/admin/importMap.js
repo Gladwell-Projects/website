@@ -1,3 +1,4 @@
+import { default as default_42d985ffa6c4b2ddb38586019c899fae } from '@/components/payload/fields/MediaUsageField'
 import { default as default_287c0c240aa8c814ff94742fbad8385f } from '@/components/payload/ArtworkImageCell'
 import { default as default_9890a8cd13eac09002d7e201a4cb16e0 } from '@/components/payload/fields/ImagePreviewField'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -39,6 +40,7 @@ import { default as default_6fe5e005b409233c7fca06cae1633729 } from '../../../co
 import { default as default_e34c28bdc97e3fecf976b23b26d64cc9 } from '@/components/payload/Logo'
 
 export const importMap = {
+  "@/components/payload/fields/MediaUsageField#default": default_42d985ffa6c4b2ddb38586019c899fae,
   "@/components/payload/ArtworkImageCell#default": default_287c0c240aa8c814ff94742fbad8385f,
   "@/components/payload/fields/ImagePreviewField#default": default_9890a8cd13eac09002d7e201a4cb16e0,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,

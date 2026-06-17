@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, UploadFieldSingleValidation } from 'payload'
 import link from '@/fields/link'
 import { published } from './access/published'
 import { adminsAndEditors } from './access/adminsAndEditors'
@@ -6,6 +6,31 @@ import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { admins } from './access/admins'
 // import { formatSlug } from '@/fields/slug/formatSlug'
+
+// Reject saving a press item whose featured image is missing or has no file/URL.
+// A dangling upload reference (the media was deleted) or a media with a null
+// `url` renders an unusable `<Image>` that throws during static prerender and
+// fails the production build, so we catch it at save time in the admin instead.
+const validateFeaturedImage: UploadFieldSingleValidation = async (value, { req }) => {
+  if (!value || !req?.payload) return true
+
+  const id =
+    typeof value === 'object' && value !== null
+      ? (value as { id?: string | number }).id
+      : (value as string | number)
+  if (!id) return true
+
+  try {
+    const media = await req.payload.findByID({ collection: 'media', id, depth: 0 })
+    if (!media?.url) {
+      return 'The selected featured image has no file/URL — re-upload it or choose another image.'
+    }
+  } catch {
+    return 'The selected featured image no longer exists — choose another image.'
+  }
+
+  return true
+}
 
 export const Press: CollectionConfig = {
   slug: 'press',
@@ -94,6 +119,7 @@ export const Press: CollectionConfig = {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
+      validate: validateFeaturedImage,
       admin: {
         position: 'sidebar',
       },
