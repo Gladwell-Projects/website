@@ -9,7 +9,7 @@ import { CMSLink } from '../../_ui/CMSLinks'
 import Link from 'next/link'
 import Image from 'next/image'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 import { unstable_cache } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { dateToLong } from '@/utilities/convertCMSDate'
@@ -170,7 +170,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 export const generateViewport = async (): Promise<Viewport> => {
   const slug = '/press'
   const pageTheme = await currentThemeFromNav(slug)
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,

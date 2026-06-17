@@ -11,7 +11,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 import { hasText } from '@payloadcms/richtext-lexical/shared'
 import Image from 'next/image'
 import { Caption } from '@/app/(frontend)/_ui/Image'
@@ -177,7 +177,7 @@ export const generateViewport = async (
 
   const pageTheme = 'theme' in page ? page.theme : 'default'
 
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,

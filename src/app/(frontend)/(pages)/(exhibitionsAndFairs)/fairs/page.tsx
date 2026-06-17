@@ -9,7 +9,7 @@ import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import Headline from '../../../_ui/Headline'
 import ThemeSwitch from '../../../_ui/ThemeSwitch'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 
 const Exhibitions = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -66,7 +66,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 export const generateViewport = async (): Promise<Viewport> => {
   const slug = '/fairs'
   const pageTheme = await currentThemeFromNav(slug)
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,
