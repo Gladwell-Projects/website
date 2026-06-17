@@ -2,6 +2,7 @@ import { SerializedUploadNode } from '@payloadcms/richtext-lexical'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 import { hasText } from '@payloadcms/richtext-lexical/shared'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 // Custom upload converter component that uses next/image
 const CustomUploadComponent: React.FC<{
@@ -9,7 +10,7 @@ const CustomUploadComponent: React.FC<{
 }> = ({ node }) => {
   if (node.relationTo === 'media') {
     const uploadDoc = node.value
-    if (typeof uploadDoc !== 'object') {
+    if (!isRenderableImage(uploadDoc)) {
       return null
     }
     const { alt, height, url, width, caption } = uploadDoc
