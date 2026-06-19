@@ -5,16 +5,21 @@ import CustomUploadComponent from './Upload'
 
 import { type JSXConvertersFunction, RichText } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
+import { withNodeFallback } from './withNodeFallback'
 
 type NodeTypes = DefaultNodeTypes
 
-const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
-  ...defaultConverters,
-  // Override the default upload converter
-  upload: ({ node }) => {
-    return <CustomUploadComponent node={node} />
-  },
-})
+// Every converter is wrapped so a single broken node (deleted media, dangling
+// link target, malformed block) degrades to plain text instead of crashing the
+// whole render: the copy always shows, only the broken link/media drops out.
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) =>
+  withNodeFallback({
+    ...defaultConverters,
+    // Override the default upload converter (guards against deleted media)
+    upload: ({ node }) => {
+      return <CustomUploadComponent node={node} />
+    },
+  })
 
 export const GladwellRichtext: React.FC<{
   data: SerializedEditorState
