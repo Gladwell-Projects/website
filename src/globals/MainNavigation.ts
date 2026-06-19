@@ -37,7 +37,12 @@ export const MainMenu: GlobalConfig = {
         themePicker({
           overrides: {
             admin: {
-              condition: (_, siblingData) => siblingData?.link.type === 'custom',
+              // The item's own theme only applies to custom URL / document
+              // links. Reference links derive their theme from the linked
+              // document, so hide it there to avoid setting a value that's
+              // ignored (and would otherwise read as stale data).
+              condition: (_, siblingData) =>
+                siblingData?.link?.type === 'custom' || siblingData?.link?.type === 'upload',
             },
           },
         }),
@@ -73,7 +78,12 @@ export const MainMenu: GlobalConfig = {
         themePicker({
           overrides: {
             admin: {
-              condition: (_, siblingData) => siblingData?.link.type === 'custom',
+              // The item's own theme only applies to custom URL / document
+              // links. Reference links derive their theme from the linked
+              // document, so hide it there to avoid setting a value that's
+              // ignored (and would otherwise read as stale data).
+              condition: (_, siblingData) =>
+                siblingData?.link?.type === 'custom' || siblingData?.link?.type === 'upload',
             },
           },
         }),

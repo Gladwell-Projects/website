@@ -11,10 +11,11 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 import { hasText } from '@payloadcms/richtext-lexical/shared'
 import Image from 'next/image'
 import { Caption } from '@/app/(frontend)/_ui/Image'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 import Link from 'next/link'
 import { Artist, Exhibition } from '@/payload-types'
 import { dateToLong } from '@/utilities/convertCMSDate'
@@ -47,10 +48,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const theme = 'default'
 
-  const cover =
-    page.featuredImage && typeof page.featuredImage === 'object'
-      ? page.featuredImage
-      : null
+  const cover = isRenderableImage(page.featuredImage) ? page.featuredImage : null
 
   const relatedExhibitions =
     typeof page.relatedExhibitions === 'object'
@@ -179,7 +177,7 @@ export const generateViewport = async (
 
   const pageTheme = 'theme' in page ? page.theme : 'default'
 
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,

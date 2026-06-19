@@ -3,6 +3,7 @@
 import { Media } from '@/payload-types'
 import { Caption } from '../Image'
 import Image from 'next/image'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const GallerySlider = (props: {
   items: (string | Media)[]
@@ -39,7 +40,7 @@ const GallerySlider = (props: {
     }
   }
 
-  if (typeof items[currentImg] !== 'object') {
+  if (!isRenderableImage(items[currentImg])) {
     return null
   }
 
@@ -82,7 +83,7 @@ const GallerySlider = (props: {
           id="preloaded-images"
           className="pointer-events-none fixed bottom-0 left-0 -z-99 h-dvh w-dvw overflow-hidden opacity-0 select-none"
         >
-          {typeof nextImage === 'object' && (
+          {isRenderableImage(nextImage) && (
             <Image
               className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
               alt={nextImage.alt}
@@ -92,7 +93,7 @@ const GallerySlider = (props: {
               sizes="(width>=48rem) 70vw, 85vw"
             />
           )}
-          {typeof previousImage === 'object' && (
+          {isRenderableImage(previousImage) && (
             <Image
               className="col-span-full m-auto block h-[115vw] w-full object-contain md:col-span-8 md:h-[65vh]"
               alt={previousImage.alt}

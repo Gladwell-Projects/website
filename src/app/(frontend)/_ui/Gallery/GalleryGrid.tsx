@@ -4,6 +4,7 @@ import { Media } from '@/payload-types'
 import Image from 'next/image'
 import { Caption } from '../Image'
 import { useRouter } from 'next/navigation'
+import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const GalleryGrid = (props: {
   items: (string | Media)[]
@@ -28,7 +29,7 @@ const GalleryGrid = (props: {
   return (
     <div className="col-span-full grid auto-rows-fr grid-cols-subgrid gap-3 gap-y-4">
       {items.map((item, i) => {
-        if (typeof item !== 'object') {
+        if (!isRenderableImage(item)) {
           return null
         }
         const { id, alt, url, width, height, caption } = item

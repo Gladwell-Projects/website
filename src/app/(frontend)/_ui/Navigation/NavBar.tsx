@@ -1,7 +1,6 @@
 'use client'
 import { CMSLink } from '../CMSLinks'
-import { useContext } from 'react'
-import ThemeContext from '../../_contexts/ThemeContext'
+import { useEffect } from 'react'
 import {
   Artist,
   Exhibition,
@@ -39,9 +38,14 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
   data,
   className,
 }) => {
-  const [theme, setTheme] = useContext(ThemeContext)
   const pathname = usePathname()
   const isHome = pathname === '/'
+
+  // Clear any lingering hover override if the route changes before
+  // onMouseLeave fires (e.g. keyboard nav or programmatic navigation).
+  useEffect(() => {
+    delete document.documentElement.dataset.hoverTheme
+  }, [pathname])
 
   return (
     <>
@@ -52,18 +56,28 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
         {data.map(({ link, label, theme: linkTheme }, i) => {
           const { reference } = link
 
-          let CMSTheme = linkTheme || 'default'
+          // Theme is chosen by the Direct Link `type`, never by a stale stored
+          // value. A reference link inherits the linked document's theme, and
+          // falls back to 'default' when the reference is missing/invalid or
+          // the document has no theme field (e.g. Press/Exhibition/Event/Artist
+          // references — only Pages and Viewing Rooms have themes). Custom URL
+          // and document/upload links use the menu item's own theme. This is
+          // what prevents stale DB data — e.g. a reference left over from a
+          // previous "custom" link — from leaking a wrong theme like "glow".
+          let CMSTheme = 'default'
 
-          if (reference && 'theme' in reference.value) {
-            CMSTheme = reference.value.theme
-          }
-
-          if (
-            link.url === '/events' ||
-            link.url === '/newsletter' ||
-            link.url === '/contact'
-          ) {
-            CMSTheme = theme
+          if (link.type === 'reference') {
+            if (
+              reference &&
+              typeof reference.value === 'object' &&
+              reference.value !== null &&
+              'theme' in reference.value &&
+              reference.value.theme
+            ) {
+              CMSTheme = reference.value.theme
+            }
+          } else if (link.type === 'custom' || link.type === 'upload') {
+            CMSTheme = linkTheme || 'default'
           }
 
           return (
@@ -73,12 +87,12 @@ const NavBar: React.FC<{ data: MenuType | null; className: string }> = ({
               {...link}
               onMouseEnter={() => {
                 if (isHome) {
-                  setTheme({ ...theme, current: CMSTheme })
+                  document.documentElement.dataset.hoverTheme = CMSTheme
                 }
               }}
               onMouseLeave={() => {
                 if (isHome) {
-                  setTheme({ ...theme, current: 'default' })
+                  delete document.documentElement.dataset.hoverTheme
                 }
               }}
               customId={CMSTheme}

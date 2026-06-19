@@ -12,7 +12,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 
 export const generateStaticParams = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -102,7 +102,7 @@ export const generateViewport = async (
 
   const pageTheme = page.theme
 
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,

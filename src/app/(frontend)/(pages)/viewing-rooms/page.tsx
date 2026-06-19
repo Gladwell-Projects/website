@@ -9,7 +9,7 @@ import SubGrid from '../../_ui/pageGrid'
 import { draftMode } from 'next/headers'
 import { unstable_cache } from 'next/cache'
 import ViewingRoomTile from './components/Tile'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 
 const ViewingRoomsPage: React.FC = async () => {
   const { isEnabled: draft } = await draftMode()
@@ -66,7 +66,7 @@ export async function generateMetadata({}: Args): Promise<Metadata> {
 export const generateViewport = async (): Promise<Viewport> => {
   const slug = '/viewing-rooms'
   const pageTheme = await currentThemeFromNav(slug)
-  const themeColor = colors.find((a) => a.theme === pageTheme).code
+  const themeColor = themeCode(pageTheme)
 
   return {
     themeColor,

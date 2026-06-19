@@ -8,7 +8,7 @@ import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { colors } from '@/fields/theme'
+import { themeCode } from '@/fields/theme'
 import ExhibitionContent from '../../_components/ExhibitionPage'
 
 export const generateStaticParams = async () => {
@@ -71,7 +71,7 @@ export async function generateMetadata({
 }
 
 export const generateViewport = async (): Promise<Viewport> => {
-  const themeColor = colors.find((a) => a.theme === 'default').code
+  const themeColor = themeCode('default')
 
   return {
     themeColor,

@@ -15,9 +15,19 @@ export const colors = [
 ]
 const themes = colors.map((c) => c.theme)
 
+const defaultColor = colors.find((c) => c.theme === 'default') ?? colors[0]
+
+/**
+ * Resolve a theme name to its background color code. Falls back to the default
+ * theme's code when the name is missing, unknown, or stale — never throws
+ * (unlike `colors.find(...).code`, which blows up when no theme matches and
+ * crashes prerender via generateViewport).
+ */
+export const themeCode = (theme?: string | null): string =>
+  (colors.find((c) => c.theme === theme) ?? defaultColor).code
+
 export const changeBg: FieldHook = ({ siblingData }) => {
-  const theme = siblingData.theme
-  return colors.find((a) => a.theme === theme).code
+  return themeCode(siblingData?.theme)
 }
 
 export const validateThemePicker: TextFieldSingleValidation = (

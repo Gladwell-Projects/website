@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -21,6 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "src/*": ["./src/*"],
       "@payload-config": ["./src/payload.config.ts"]
     },
     "target": "ES2022"
