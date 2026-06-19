@@ -5,41 +5,40 @@
  * `@payloadcms/db-d1-sqlite` adapter has no local Worker — so each Payload query
  * runs against *remote* D1 over the beta remote-bindings HTTP proxy
  * (`getCloudflareContext` / `getPlatformProxy` with `experimental.remoteBindings`).
- * That proxy has no retry, so an occasional dropped keep-alive surfaces as
- * `TypeError: fetch failed` → `UND_ERR_SOCKET: other side closed` and fails the
- * entire export (a different page each run). Neither Payload nor the adapter
- * retries this — it's a transport-layer flake one level below them.
+ * That proxy has no retry, and the remote D1 HTTP path fails transiently in more
+ * than one way under the hundreds of queries a build fires:
+ *   - dropped keep-alive  → `TypeError: fetch failed` / `UND_ERR_SOCKET: other side closed`
+ *   - a 5xx from the edge → `D1_ERROR: Failed to parse body as JSON, got: <!DOCTYPE html> …`
+ *     (Cloudflare "Temporarily unavailable" error page returned instead of JSON)
+ * Any one of these on any page aborts the whole export. Neither Payload nor the
+ * adapter retries them — they're infra flakes one level below.
  *
- * This wraps the binding so transient socket failures on *read* queries are
- * retried with a short backoff. Only read-only statements (SELECT/WITH/PRAGMA/
- * EXPLAIN) are retried, mirroring D1's own server-side read-retry policy, so a
- * write that may have partially applied is never silently re-run.
- *
- * Intended for BUILD-time use only (see `payload.config.ts`): at Worker runtime
- * D1 is a native, in-colo binding with no HTTP hop, so the wrapper is not
- * applied there and writes/`batch` keep their native statement objects.
+ * Rather than enumerate every transient signature (we've already been bitten by
+ * two), this retries *any* failure on a read query. That's safe because reads
+ * are idempotent and this wrapper is BUILD-time only (see `payload.config.ts`):
+ * only read-only statements (SELECT/WITH/PRAGMA/EXPLAIN) are retried, so a write
+ * that may have partially applied is never silently re-run. At Worker runtime D1
+ * is a native, in-colo binding with no HTTP hop, so the wrapper is not applied
+ * there and writes/`batch` keep their native statement objects.
  */
 
-const TRANSIENT = /UND_ERR_SOCKET|other side closed|fetch failed|ECONNRESET|socket hang up|terminated/i
 const READONLY = /^\s*(?:select|with|pragma|explain)\b/i
 const TERMINAL = new Set(['all', 'run', 'raw', 'first'])
 
-const isTransient = (err: unknown): boolean => {
-  for (let cur = err as { code?: unknown; message?: unknown; cause?: unknown } | null | undefined; cur != null; cur = cur.cause as typeof cur) {
-    if (TRANSIENT.test(`${cur.code ?? ''} ${cur.message ?? ''}`)) return true
-  }
-  return false
-}
-
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const retry = async <T>(op: () => Promise<T>, attempts = 3): Promise<T> => {
+// Retry an idempotent read on ANY error — at build time every failure here is a
+// transient remote-D1 hiccup, and retrying a deterministic error just fails
+// again after the cap with the original error surfaced.
+const retryRead = async <T>(op: () => Promise<T>, attempts = 4): Promise<T> => {
   for (let attempt = 1; ; attempt++) {
     try {
       return await op()
     } catch (err) {
-      if (attempt >= attempts || !isTransient(err)) throw err
-      await sleep(150 * attempt)
+      if (attempt >= attempts) throw err
+      const message = err instanceof Error ? err.message : String(err)
+      console.warn(`[d1] build read failed (attempt ${attempt}/${attempts}), retrying: ${message.slice(0, 140)}`)
+      await sleep(250 * attempt)
     }
   }
 }
@@ -57,7 +56,7 @@ const wrapStatement = (stmt: any, retryable: boolean): any =>
       }
       if (retryable && typeof prop === 'string' && TERMINAL.has(prop)) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (...args: any[]) => retry(() => value.apply(target, args))
+        return (...args: any[]) => retryRead(() => value.apply(target, args))
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (...args: any[]) => value.apply(target, args)
@@ -83,5 +82,5 @@ const wrapDatabase = (db: any): any =>
     },
   })
 
-/** Wrap a D1 binding so transient socket failures on read queries are retried. */
+/** Wrap a D1 binding so transient failures on read queries are retried (build-time). */
 export const withD1Retry = <T>(binding: T): T => wrapDatabase(binding)

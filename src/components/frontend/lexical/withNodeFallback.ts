@@ -29,7 +29,6 @@ const wrap = (type: string, converter: any): any => {
     try {
       return converter(args)
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(`[richtext] converter "${type}" threw; rendering text only`, err)
       try {
         return args?.node?.children ? args.nodesToJSX({ nodes: args.node.children }) : null
