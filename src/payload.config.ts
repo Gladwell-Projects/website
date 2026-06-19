@@ -6,6 +6,7 @@ import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { withD1Retry } from './utilities/withD1Retry'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -35,6 +36,14 @@ const cloudflare =
   !cloudflareRemoteBindings
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
+
+// During `next build` the static export queries *remote* D1 over the beta
+// remote-bindings HTTP proxy, which intermittently drops sockets and fails the
+// whole export. Wrap the binding to retry transient socket errors on read
+// queries while building; at Worker runtime D1 is a native binding, so leave it
+// untouched (writes/batch keep their native objects).
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build'
+const d1Binding = isBuild ? withD1Retry(cloudflare.env.D1) : cloudflare.env.D1
 
 export default buildConfig({
   admin: {
@@ -112,7 +121,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: sqliteD1Adapter({
-    binding: cloudflare.env.D1,
+    binding: d1Binding,
     idType: 'uuid',
     readReplicas: 'first-primary',
   }),
