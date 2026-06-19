@@ -68,27 +68,39 @@ describe('withD1Retry', () => {
     expect(counter[0].calls).toBe(1) // no retry for writes
   })
 
-  it('does NOT retry a non-transient error on a read (e.g. real SQL error)', async () => {
+  it('retries a transient D1 5xx HTML-error-page response on a read (raw)', async () => {
+    // The actual second-seen failure: the remote D1 HTTP endpoint returns a
+    // Cloudflare "Temporarily unavailable" page, surfaced as a D1_ERROR.
+    const d1HtmlError = () =>
+      new Error(
+        'D1_ERROR: Failed to parse body as JSON, got: <!DOCTYPE html> Temporarily unavailable',
+      )
     const counter: { sql: string; calls: number }[] = []
     const db = withD1Retry(
       makeDb(
-        { 'select 1': [{ kind: 'throw', error: new Error('no such table: pages') }] },
+        {
+          'select * from main_menu': [
+            { kind: 'throw', error: d1HtmlError() },
+            { kind: 'ok', value: 'menu' },
+          ],
+        },
         counter,
       ),
     )
 
-    await expect(db.prepare('select 1').all()).rejects.toThrow('no such table')
-    expect(counter[0].calls).toBe(1)
+    const result = await db.prepare('select * from main_menu').raw()
+    expect(result).toBe('menu')
+    expect(counter[0].calls).toBe(2) // retried the 5xx, then succeeded
   })
 
-  it('gives up after the attempt cap and rethrows the transient error', async () => {
+  it('gives up after the attempt cap and rethrows the last error', async () => {
     const counter: { sql: string; calls: number }[] = []
     const db = withD1Retry(
       makeDb({ 'select 2': [{ kind: 'throw', error: socketError() }] }, counter),
     )
 
     await expect(db.prepare('select 2').all()).rejects.toMatchObject({ message: 'fetch failed' })
-    expect(counter[0].calls).toBe(3) // capped at 3 attempts
+    expect(counter[0].calls).toBe(4) // capped at 4 attempts
   })
 
   it('applies retry through withSession() read paths too', async () => {
