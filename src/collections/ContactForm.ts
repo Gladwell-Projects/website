@@ -20,10 +20,17 @@ export const ContactSubmissions: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [
+      /**
+       * Stamp the submission date and guarantee a non-blank `name` (the
+       * collection's `useAsTitle`). The form is public and these rows are
+       * `update: false`, so an empty/whitespace name would render an
+       * unclickable, unfixable row in the admin — fall back to a placeholder.
+       * @param {{ data?: Record<string, unknown> }} args
+       * @returns {Record<string, unknown>} The data with `date` + safe `name`.
+       */
       async ({ data }) => {
-        const newData = { ...data, date: new Date() }
-
-        return newData
+        const name = typeof data?.name === 'string' ? data.name.trim() : ''
+        return { ...data, date: new Date(), name: name || 'Anonymous' }
       },
     ],
     afterChange: [

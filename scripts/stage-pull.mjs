@@ -221,8 +221,8 @@ function topoSort(tables, fkByTable) {
  * @param {Array<Record<string, unknown>>} rows - The table's prod rows.
  * @param {ForeignKey[]} fks - This table's FK edges (from {@link introspectFks}).
  * @param {Map<string, Set<string>>} idSets - parent table → set of copied ids
- *   (string-normalized). Parents precede children in topo order, so these are
- *   populated by the time this runs.
+ *   (string-normalized). Fully populated for every table before any inserts are
+ *   built, so a child serialized before its parent is still checked correctly.
  * @param {string[]} out - Statement accumulator; mutated in place.
  * @returns {{ rows: number, nulled: number }} Rows emitted and dangling FK
  *   values nulled.
@@ -299,14 +299,23 @@ const ordered = topoSort(content, fkByTable) // referenced tables first
 const out = ['PRAGMA defer_foreign_keys=TRUE;']
 for (const t of [...ordered].reverse()) out.push(`DELETE FROM "${t}";`)
 
-// Parent id sets accumulate as we read (topo order ⇒ parents before children),
-// so buildTableInserts can null FK values that point at rows not present in prod.
+// Read every table once and build ALL id-sets BEFORE the nulling pass. Doing
+// this up front (rather than accumulating as we go) means a child table that
+// happens to be serialized before its parent in topo order can't have valid FK
+// values wrongly nulled — the bug that silently nulled every _artists_v.parent_id
+// and broke the admin draft view (reconstructs doc id from the version parent).
+// Now only genuinely dangling refs (parent value absent from prod entirely) null.
+const rowsByTable = new Map()
 const idSets = new Map()
+for (const t of ordered) {
+  const rows = query(PROD, `SELECT * FROM "${t}";`)
+  rowsByTable.set(t, rows)
+  idSets.set(t, new Set(rows.map((r) => String(r.id))))
+}
 let total = 0
 let nulledTotal = 0
 for (const t of ordered) {
-  const rows = query(PROD, `SELECT * FROM "${t}";`)
-  idSets.set(t, new Set(rows.map((r) => String(r.id))))
+  const rows = rowsByTable.get(t)
   const res = buildTableInserts(t, rows, fkByTable.get(t), idSets, out)
   total += res.rows
   nulledTotal += res.nulled

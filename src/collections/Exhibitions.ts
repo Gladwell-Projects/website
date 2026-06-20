@@ -4,9 +4,11 @@ import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { admins } from './access/admins'
+import { blockDeleteIfReferenced } from './hooks/blockDeleteIfReferenced'
 
 export const Exhibitions: CollectionConfig = {
   slug: 'exhibitions',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
   labels: { plural: 'Exhibitions & Art Fairs', singular: 'Exhibition or Art Fair' },
   enableQueryPresets: true,
   admin: {
@@ -41,6 +43,11 @@ export const Exhibitions: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    // Block permanent deletion while press/events still reference this exhibition;
+    // soft-delete to Trash is always allowed.
+    beforeDelete: [blockDeleteIfReferenced('exhibitions')],
   },
   fields: [
     {
@@ -149,6 +156,14 @@ export const Exhibitions: CollectionConfig = {
               type: 'relationship',
               relationTo: 'artists',
               hasMany: true,
+              admin: {
+                // Trash-aware list UI: resolves trashed artists (which the native
+                // relationship drops from its populate as "untitled") and flags
+                // them inline. Shared across every such relationship.
+                components: {
+                  Field: '@/components/payload/fields/TrashAwareRelationship',
+                },
+              },
             },
             {
               name: 'content',

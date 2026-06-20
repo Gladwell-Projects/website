@@ -1,3 +1,25 @@
+/**
+ * @file payload.config.ts — Payload + Cloudflare D1 configuration.
+ *
+ * ┌─ CHANGING THE SCHEMA (read me when you forget) ──────────────────────────┐
+ * │ Dev schema-PUSH is OFF by default (see the `push` option on the db        │
+ * │ adapter below). On D1, push reconciles by REBUILDING tables, which fires  │
+ * │ FK cascades + the SQLite quoted-identifier footgun and silently           │
+ * │ deletes/mangles local data. So evolve the schema with MIGRATIONS:         │
+ * │                                                                           │
+ * │   1. edit a collection                                                    │
+ * │   2. pnpm migrate:create        # generate a migration from the diff      │
+ * │   3. REVIEW the generated file  # watch for the drizzle 12-step table     │
+ * │                                 # rebuild (PRAGMA foreign_keys=OFF, which  │
+ * │                                 # D1 IGNORES) — make it additive/safe      │
+ * │   4. pnpm migrate:local         # apply it to the local D1 (data survives) │
+ * │   5. commit the migration → deploy:database runs it on prod               │
+ * │                                 # (guarded by scripts/migrate-guard.mjs)   │
+ * │                                                                           │
+ * │ Only for throwaway prototyping: `pnpm dev:push` (PAYLOAD_DB_PUSH=on).      │
+ * │ Push NEVER runs in prod — prod schema changes go solely through migrate.  │
+ * └───────────────────────────────────────────────────────────────────────────┘
+ */
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -124,6 +146,16 @@ export default buildConfig({
     binding: d1Binding,
     idType: 'uuid',
     readReplicas: 'first-primary',
+    // Dev schema-push is OFF by default. On D1 push reconciles the DB by
+    // REBUILDING tables (DROP + recreate), which fires FK cascades (D1 ignores
+    // PRAGMA foreign_keys=OFF) and the SQLite quoted-identifier footgun —
+    // silently deleting/mangling local data on any non-additive change. The
+    // safe, prod-matching workflow is migrations: edit a collection, run
+    // `pnpm payload migrate:create`, review the generated SQL (watch for the
+    // drizzle 12-step rebuild), then `pnpm migrate:local`. Opt into push only
+    // for throwaway prototyping with `PAYLOAD_DB_PUSH=on pnpm dev` (or
+    // `pnpm dev:push`). push never runs in prod regardless (prod uses migrate).
+    ...(process.env.PAYLOAD_DB_PUSH === 'on' ? {} : { push: false }),
   }),
   plugins: [
     r2Storage({
