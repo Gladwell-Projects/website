@@ -17,8 +17,22 @@
  *
  * Nested converter maps (`blocks`, `inlineBlocks`) are wrapped recursively.
  */
+
+// A converter map is a *plain* object whose values are converters or further
+// maps. Some default converters (e.g. `horizontalrule`) are pre-built React
+// elements, and React elements are plain objects too — but recursing into one
+// walks its `_owner` fiber chain into the bundler graph and overflows the
+// stack. So we only descend into plain objects that are NOT React elements;
+// anything else (element, array, function, primitive) is treated as a leaf.
+const isConverterMap = (value: any): value is Record<string, any> => {
+  if (value === null || typeof value !== 'object') return false
+  if ('$$typeof' in value) return false // React element / portal
+  const proto = Object.getPrototypeOf(value)
+  return proto === Object.prototype || proto === null
+}
+
 const wrap = (type: string, converter: any): any => {
-  if (converter && typeof converter === 'object') {
+  if (isConverterMap(converter)) {
     return Object.fromEntries(
       Object.entries(converter).map(([key, value]) => [key, wrap(`${type}.${key}`, value)]),
     )

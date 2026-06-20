@@ -47,6 +47,19 @@ describe('withNodeFallback', () => {
     expect(converters.bad({ node: { children: [{ text: 'x' }] }, nodesToJSX } as any)).toBe('text:x')
   })
 
+  it('passes a React-element converter through without recursing into it', () => {
+    // Some default converters (e.g. `horizontalrule`) are pre-built React
+    // elements, not functions. React elements are plain objects with a
+    // circular `_owner` fiber chain — recursing into one overflows the stack.
+    const element: any = { $$typeof: Symbol.for('react.element'), type: 'hr', props: {} }
+    element._owner = { owner: null }
+    element._owner.owner = element._owner // self-referential, like a real fiber
+
+    const converters = withNodeFallback({ horizontalrule: element } as any)
+    // Returned untouched (same reference), and no stack overflow occurred.
+    expect(converters.horizontalrule).toBe(element)
+  })
+
   it('recurses into nested block converter maps', () => {
     const converters = withNodeFallback({
       blocks: {
