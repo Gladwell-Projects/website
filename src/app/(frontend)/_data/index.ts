@@ -28,6 +28,110 @@ export const GLOBALS_TAG = 'globals'
 // (and re-binding to D1) on each call.
 export const getPayloadClient = cache(async () => getPayload({ config }))
 
+/**
+ * Reference rehydration ("ghosting").
+ *
+ * Payload's relationship population excludes trashed (soft-deleted) docs, so a
+ * reference to a trashed — or hard-deleted — document comes back as a *bare id*
+ * instead of a populated object, which crashes any render expecting an object.
+ * For the tracked relationship fields below we re-resolve those bare ids with
+ * `trash: true`: a recovered (trashed) doc is kept but flagged `outdated` so the
+ * UI can render it as a dead/ghosted reference (title preserved, no link); a
+ * bare id with no record left (hard-deleted pre-trash) is dropped entirely.
+ */
+
+/** A populated relationship doc, tagged `outdated` when its target is trashed. */
+export type GhostedDoc = { outdated?: boolean; [key: string]: unknown }
+
+/** Relationship fields that should be rehydrated, keyed by the owning collection. */
+const RELATION_FIELDS: Partial<
+  Record<CollectionSlug, { field: string; relationTo: CollectionSlug }[]>
+> = {
+  exhibitions: [{ field: 'featuredArtists', relationTo: 'artists' }],
+  press: [
+    { field: 'relatedArtists', relationTo: 'artists' },
+    { field: 'relatedExhibitions', relationTo: 'exhibitions' },
+  ],
+  events: [{ field: 'relatedExhibitions', relationTo: 'exhibitions' }],
+}
+
+const isBareId = (value: unknown): value is string | number =>
+  typeof value === 'string' || typeof value === 'number'
+
+/**
+ * Re-resolve bare-id references (trashed/deleted targets) across a set of docs,
+ * batching a single `trash: true` lookup per related collection. Docs are mutated
+ * in place: a recovered (trashed) target is flagged `outdated`; an unrecoverable
+ * one (hard-deleted) is removed.
+ *
+ * @param collection - The collection the docs belong to (selects which fields to rehydrate).
+ * @param docs - The documents to rehydrate (nullish entries are passed through untouched).
+ * @returns The same array, with the tracked relationship fields rehydrated.
+ */
+const rehydrateRelations = async <T>(
+  collection: CollectionSlug,
+  docs: (T | null | undefined)[]
+): Promise<(T | null | undefined)[]> => {
+  const specs = RELATION_FIELDS[collection]
+  const present = docs.filter((d): d is T => !!d)
+  if (!specs || present.length === 0) return docs
+
+  const payload = await getPayloadClient()
+  const asRecord = (doc: T) => doc as Record<string, unknown>
+
+  for (const { field, relationTo } of specs) {
+    const bareIds = new Set<string | number>()
+    for (const doc of present) {
+      const value = asRecord(doc)[field]
+      const entries = Array.isArray(value) ? value : value != null ? [value] : []
+      for (const entry of entries) if (isBareId(entry)) bareIds.add(entry)
+    }
+
+    const recovered: Record<string, GhostedDoc> = {}
+    if (bareIds.size > 0) {
+      const found = await payload.find({
+        collection: relationTo,
+        depth: 0,
+        pagination: false,
+        limit: bareIds.size,
+        overrideAccess: true,
+        trash: true,
+        where: { id: { in: [...bareIds] } },
+      })
+      for (const rec of found.docs) {
+        const record = rec as unknown as Record<string, unknown>
+        recovered[String(record.id)] = { ...record, outdated: true }
+      }
+    }
+
+    const resolve = (entry: unknown): unknown =>
+      isBareId(entry) ? (recovered[String(entry)] ?? null) : entry
+
+    for (const doc of present) {
+      const value = asRecord(doc)[field]
+      if (Array.isArray(value)) {
+        asRecord(doc)[field] = value.map(resolve).filter((e) => e != null)
+      } else if (isBareId(value)) {
+        asRecord(doc)[field] = resolve(value)
+      }
+    }
+  }
+
+  return docs
+}
+
+/**
+ * Convenience wrapper around {@link rehydrateRelations} for single-document fetchers.
+ *
+ * @param collection - The collection the doc belongs to.
+ * @param doc - The document to rehydrate (nullish is returned untouched).
+ * @returns The same document with its tracked relationship fields rehydrated.
+ */
+const rehydrateDoc = async <T>(
+  collection: CollectionSlug,
+  doc: T | null | undefined
+): Promise<T | null | undefined> => (await rehydrateRelations(collection, [doc]))[0]
+
 // ---------------------------------------------------------------------------
 // Globals — fetched once per render (`cache`) and once per build (`unstable_cache`).
 // Previously each of Header, Footer, generateMeta, fetchTopLevelTitle and
@@ -142,7 +246,7 @@ export const fetchPress = async () => {
         ],
       },
     })
-    return data.docs
+    return rehydrateRelations('press', data.docs)
   }
 
   return draft ? run(true) : unstable_cache(() => run(false), ['press', 'list'])()
@@ -186,7 +290,7 @@ export const fetchPressItem = async (slug: string) => {
       return true
     })
 
-    return page ?? null
+    return rehydrateDoc('press', page ?? null)
   }
 
   return draft ? run(slug, true) : unstable_cache((s: string) => run(s, false), ['press', 'doc'])(slug)
@@ -390,7 +494,7 @@ export const fetchEvent = async (slug: string) => {
       return true
     })
 
-    return page ?? null
+    return rehydrateDoc('events', page ?? null)
   }
 
   return draft ? run(slug, true) : unstable_cache((s: string) => run(s, false), ['events', 'doc'])(slug)
@@ -409,7 +513,7 @@ export const fetchEventsByMonth = async (
       where,
     })
 
-    return data.docs
+    return rehydrateRelations('events', data.docs)
   }
 
   return unstable_cache(run, ['events', 'by-month'])(where)
@@ -441,7 +545,7 @@ export const fetchExhibitions = async (sort: string): Promise<Partial<Exhibition
       },
     })
 
-    return data.docs
+    return rehydrateRelations('exhibitions', data.docs)
   }
 
   return draft
@@ -475,7 +579,7 @@ export const fetchFairs = async (sort: string): Promise<Partial<Exhibition>[]> =
       },
     })
 
-    return data.docs
+    return rehydrateRelations('exhibitions', data.docs)
   }
 
   return draft
@@ -514,7 +618,7 @@ export const fetchExhibition = async (slug: string) => {
       },
     })
 
-    return data.docs[0]
+    return rehydrateDoc('exhibitions', data.docs[0])
   }
 
   return draft

@@ -31,9 +31,13 @@ const ExhibitionContent = (props: {
   const startShort = dateISO(page.startDate)
   const endShort = dateISO(page.endDate)
 
-  const artists = (page.featuredArtists as Artist[]).sort((a, b) =>
-    a.title.localeCompare(b.title)
-  )
+  // Guard against bad CMS data: `featuredArtists` may be missing, or hold a
+  // dangling reference (an artist that was deleted is returned as a bare id
+  // rather than a populated object). Drop anything that isn't a real artist
+  // before sorting, so a single orphaned reference can't crash the prerender.
+  const artists = ((page.featuredArtists ?? []) as Artist[])
+    .filter((a): a is Artist => a != null && typeof a === 'object' && typeof a.title === 'string')
+    .sort((a, b) => a.title.localeCompare(b.title))
 
   const pressRelease =
     page.pressRelease && typeof page.pressRelease === 'object' ? page.pressRelease : false
