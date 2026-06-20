@@ -1,0 +1,4 @@
+# Supply-chain cooldown: never resolve a version published less than 7 days ago,
+# even within ^/~ ranges. Enforced by pnpm at resolution time (pnpm >= 10.16).
+# 10080 minutes = 7 days.
+minimumReleaseAge: 10080
