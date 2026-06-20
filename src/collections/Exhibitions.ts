@@ -157,11 +157,11 @@ export const Exhibitions: CollectionConfig = {
               relationTo: 'artists',
               hasMany: true,
               admin: {
-                // Custom list-style UI that resolves trashed artists (which the
-                // native relationship field drops from its populate, rendering
-                // them as "untitled") and flags them inline. See the component.
+                // Trash-aware list UI: resolves trashed artists (which the native
+                // relationship drops from its populate as "untitled") and flags
+                // them inline. Shared across every such relationship.
                 components: {
-                  Field: '@/components/payload/fields/FeaturedArtistsField',
+                  Field: '@/components/payload/fields/TrashAwareRelationship',
                 },
               },
             },

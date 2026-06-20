@@ -104,6 +104,13 @@ export const Events: CollectionConfig = {
       type: 'relationship',
       relationTo: 'exhibitions',
       hasMany: true,
+      admin: {
+        // Trash-aware list UI (resolves/flags trashed refs the native field
+        // would render as "untitled"). See the shared component.
+        components: {
+          Field: '@/components/payload/fields/TrashAwareRelationship',
+        },
+      },
     },
     {
       type: 'checkbox',

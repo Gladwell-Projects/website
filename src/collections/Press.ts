@@ -135,6 +135,11 @@ export const Press: CollectionConfig = {
       hasMany: true,
       admin: {
         position: 'sidebar',
+        // Trash-aware list UI (resolves/flags trashed refs the native field
+        // would render as "untitled"). See the shared component.
+        components: {
+          Field: '@/components/payload/fields/TrashAwareRelationship',
+        },
       },
     },
     {
@@ -144,6 +149,9 @@ export const Press: CollectionConfig = {
       hasMany: true,
       admin: {
         position: 'sidebar',
+        components: {
+          Field: '@/components/payload/fields/TrashAwareRelationship',
+        },
       },
     },
     {
