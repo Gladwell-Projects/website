@@ -134,7 +134,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     sql`CREATE INDEX \`payload_preferences_rels_users_id_idx\` ON \`payload_preferences_rels\` (\`users_id\`);`
   )
   await db.run(sql`CREATE TABLE \`payload_migrations\` (
-  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`id\` text(36) PRIMARY KEY NOT NULL,
   	\`name\` text,
   	\`batch\` numeric,
   	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
