@@ -5,9 +5,11 @@ import { adminsAndEditors } from './access/adminsAndEditors'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
 import { admins } from './access/admins'
+import { blockDeleteIfReferenced } from './hooks/blockDeleteIfReferenced'
 
 export const Artists: CollectionConfig = {
   slug: 'artists',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
   admin: {
     group: 'Website',
     useAsTitle: 'title',
@@ -37,6 +39,11 @@ export const Artists: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    // Block permanent deletion while exhibitions/press still reference this artist;
+    // soft-delete to Trash is always allowed.
+    beforeDelete: [blockDeleteIfReferenced('artists')],
   },
   fields: [
     {

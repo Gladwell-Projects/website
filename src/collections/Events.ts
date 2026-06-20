@@ -8,6 +8,7 @@ import { admins } from './access/admins'
 
 export const Events: CollectionConfig = {
   slug: 'events',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
   labels: { singular: 'Event', plural: 'Events' },
   admin: {
     group: 'Website',

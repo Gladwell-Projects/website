@@ -8,6 +8,7 @@ import { admins } from './access/admins'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
   admin: {
     group: 'Website',
     useAsTitle: 'title',

@@ -34,6 +34,10 @@ const validateFeaturedImage: UploadFieldSingleValidation = async (value, { req }
 
 export const Press: CollectionConfig = {
   slug: 'press',
+  // Soft-delete: deletes are reversible (sets deletedAt) and permanent delete is
+  // gated by blockDeleteIfReferenced. Trashed refs ghost-render via rehydrateRelations
+  // (see src/app/(frontend)/_data/index.ts).
+  trash: true,
   labels: { singular: 'Press Item', plural: 'Press' },
   admin: {
     group: 'Website',

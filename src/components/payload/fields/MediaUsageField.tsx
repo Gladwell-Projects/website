@@ -13,8 +13,8 @@ type MediaReference = {
 
 /**
  * Sidebar panel on the Media edit view that warns the editor which documents
- * reference this image. Deleting the media auto-clears these references (see
- * `clearMediaReferences`), so this surfaces what will change beforehand.
+ * reference this image. A permanent delete of a referenced image is blocked (see
+ * `blockDeleteIfReferenced`), so this surfaces what must be unlinked first.
  */
 const MediaUsageField = () => {
   const { id } = useDocumentInfo()

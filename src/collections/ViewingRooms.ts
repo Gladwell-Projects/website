@@ -7,6 +7,7 @@ import { admins } from './access/admins'
 
 export const ViewingRooms: CollectionConfig = {
   slug: 'viewingRooms',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
   versions: {
     drafts: true,
   },

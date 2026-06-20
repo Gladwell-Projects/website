@@ -3,11 +3,13 @@ import lexicalBasic from './lexical/basicFeatures'
 import { admins } from './access/admins'
 import { adminsAndEditors } from './access/adminsAndEditors'
 import { anyone } from './access/anyone'
-import { clearMediaReferences } from './hooks/clearMediaReferences'
-import { findMediaReferences } from './hooks/findMediaReferences'
+import { blockDeleteIfReferenced } from './hooks/blockDeleteIfReferenced'
+import { findReferences } from './hooks/findReferences'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  trash: true, // soft-delete; see Press.ts for the reference-integrity rationale
+
   admin: {
     group: 'Media',
     groupBy: true,
@@ -22,8 +24,9 @@ export const Media: CollectionConfig = {
     unlock: admins,
   },
   hooks: {
-    // Clear dangling references when an image is deleted (see panel below).
-    beforeDelete: [clearMediaReferences],
+    // Block permanent deletion of an image that's still referenced (see "Used in"
+    // panel below); soft-delete to Trash is always allowed.
+    beforeDelete: [blockDeleteIfReferenced('media')],
   },
   endpoints: [
     {
@@ -35,7 +38,7 @@ export const Media: CollectionConfig = {
           return Response.json({ errors: [{ message: 'Forbidden' }] }, { status: 403 })
         }
         const id = (req.routeParams?.id as string) ?? ''
-        const references = await findMediaReferences(req.payload, id, req)
+        const references = await findReferences(req.payload, 'media', id, req)
         return Response.json({ references })
       },
     },
