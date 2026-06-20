@@ -57,14 +57,23 @@ export const Artists: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ data }) => {
-            let title
-            if (data) {
-              title = `${data.firstName ? data.firstName : ''}${data.middleName ? ` ${data.middleName} ` : ' '}${data.lastName ? data.lastName : ''}${data.suffix ? ` ${data.suffix}` : ''}`
-            } else {
-              title = 'unknown'
-            }
-            return title
+          /**
+           * Derive the read-only `title` (the collection's `useAsTitle`) from the
+           * artist's name parts. This is a FIELD hook, so it only receives the
+           * incoming `data`; fall back to `originalDoc` for each part so a partial
+           * update that omits firstName/lastName can't recompute title to a blank
+           * — a blank title renders an unclickable row in the admin list.
+           * @param {import('payload').FieldHookArgs} args
+           * @returns {string} A non-empty full name (or a safe placeholder).
+           */
+          ({ data, originalDoc }) => {
+            const pick = (key: string) => data?.[key] ?? originalDoc?.[key]
+            const name = [pick('firstName'), pick('middleName'), pick('lastName'), pick('suffix')]
+              .filter(Boolean)
+              .map((part) => String(part).trim())
+              .filter(Boolean)
+              .join(' ')
+            return name || originalDoc?.title || 'Untitled artist'
           },
         ],
       },
