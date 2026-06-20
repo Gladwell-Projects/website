@@ -12,7 +12,7 @@
     "stage": "pnpm run stage:database && pnpm run stage:app",
     "stage:app": "opennextjs-cloudflare build --env=staging && opennextjs-cloudflare deploy --env=staging",
     "stage:database": "cross-env NODE_ENV=production CLOUDFLARE_ENV=staging PAYLOAD_SECRET=ignore payload migrate",
-    "stage:refresh": "wrangler d1 export website --remote --output /tmp/website-prod.sql && wrangler d1 execute website-staging --remote --file=/tmp/website-prod.sql && pnpm run stage:database",
+    "stage:refresh": "bash scripts/stage-refresh.sh",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && rm -rf .open-next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
