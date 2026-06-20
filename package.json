@@ -11,7 +11,7 @@
     "deploy:app": "opennextjs-cloudflare build --env=$CLOUDFLARE_ENV && opennextjs-cloudflare deploy --env=$CLOUDFLARE_ENV",
     "deploy:database": "node scripts/migrate-guard.mjs --db website --pre && cross-env NODE_ENV=production PAYLOAD_SECRET=ignore payload migrate && wrangler d1 execute D1 --command 'PRAGMA optimize' --env=$CLOUDFLARE_ENV --remote && node scripts/fk-check.mjs --db website && node scripts/migrate-guard.mjs --db website --post",
     "stage": "pnpm run stage:database && pnpm run stage:app",
-    "stage:app": "opennextjs-cloudflare build --env=staging && opennextjs-cloudflare deploy --env=staging",
+    "stage:app": "cross-env NEXT_DEV_WRANGLER_ENV=staging CLOUDFLARE_ENV=staging opennextjs-cloudflare build --env=staging && opennextjs-cloudflare deploy --env=staging",
     "stage:database": "node scripts/migrate-guard.mjs --db website-staging --pre && cross-env NODE_ENV=production CLOUDFLARE_ENV=staging PAYLOAD_SECRET=ignore payload migrate && node scripts/fk-check.mjs --db website-staging && node scripts/migrate-guard.mjs --db website-staging --post",
     "stage:refresh": "bash scripts/stage-refresh.sh",
     "stage:pull": "node scripts/stage-pull.mjs",
