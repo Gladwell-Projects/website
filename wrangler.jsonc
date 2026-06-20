@@ -70,7 +70,7 @@
         "custom_domain": true,
       },
       "vars": {
-        "NEXT_PUBLIC_FATHOM_ID": "PWSDMEQF",
+        "NEXT_PUBLIC_FATHOM_ID": "NANANA",
         "NEXT_PUBLIC_SERVER_URL": "https://preview.gladwellprojects.com",
       },
       "d1_databases": [
@@ -79,7 +79,7 @@
           // Dedicated staging database — isolates staging from prod so schema
           // changes (e.g. trash/deletedAt) and test data never touch live.
           // Replace the id with the one from `wrangler d1 create website-staging`.
-          "database_id": "27b81649-a176-49f1-9e11-64dc5e81c2cf",
+          "database_id": "1a22cca1-fd53-4a1f-8f9c-b76b70dfcf11",
           "database_name": "website-staging",
           "remote": true,
         },
