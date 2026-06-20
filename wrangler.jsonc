@@ -76,8 +76,11 @@
       "d1_databases": [
         {
           "binding": "D1",
-          "database_id": "bdcb1825-c05b-4c6f-8fdd-2ca27f4de0a9",
-          "database_name": "website",
+          // Dedicated staging database — isolates staging from prod so schema
+          // changes (e.g. trash/deletedAt) and test data never touch live.
+          // Replace the id with the one from `wrangler d1 create website-staging`.
+          "database_id": "<STAGING_D1_DATABASE_ID>",
+          "database_name": "website-staging",
           "remote": true,
         },
       ],
@@ -90,6 +93,8 @@
       ],
       "r2_buckets": [
         {
+          // Intentionally SHARED with prod — media blobs are read-mostly and
+          // there's no need to duplicate the files for staging.
           "binding": "R2",
           "bucket_name": "website",
         },
