@@ -1,19 +1,16 @@
 import React from 'react'
-import { fetchExhibition } from '../../../../_data'
+import { fetchExhibition, getPayloadClient } from '../../../../_data'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 import { themeCode } from '@/fields/theme'
 import ExhibitionContent from '../../_components/ExhibitionPage'
 import PressJoin from '@/app/(frontend)/_ui/PressJoin'
 
 export const generateStaticParams = async () => {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
   const pages = await payload.find({
     collection: 'exhibitions',
     draft: false,
@@ -43,9 +40,7 @@ const ExhibitionPage = async ({ params }: { params: Promise<{ slug: string }> })
 
   const { slug } = await params
 
-  const page: Partial<Exhibition> = draft
-    ? await fetchExhibition(slug)
-    : await unstable_cache(fetchExhibition, [`exhibition-${slug}`])(slug)
+  const page: Partial<Exhibition> = await fetchExhibition(slug)
 
   if (!page) {
     notFound()

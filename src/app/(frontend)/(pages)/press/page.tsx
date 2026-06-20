@@ -10,16 +10,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { themeCode } from '@/fields/theme'
-import { unstable_cache } from 'next/cache'
-import { draftMode } from 'next/headers'
 import { dateToLong } from '@/utilities/convertCMSDate'
 import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 const PressPage: React.FC = async () => {
-  const { isEnabled: draft } = await draftMode()
-  const page = draft
-    ? await fetchPress()
-    : await unstable_cache(fetchPress, ['artists'])()
+  const page = await fetchPress()
 
   const slug = '/press'
 

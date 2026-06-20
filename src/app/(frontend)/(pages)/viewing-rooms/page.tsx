@@ -6,16 +6,11 @@ import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import Headline from '../../_ui/Headline'
 import SubGrid from '../../_ui/pageGrid'
-import { draftMode } from 'next/headers'
-import { unstable_cache } from 'next/cache'
 import ViewingRoomTile from './components/Tile'
 import { themeCode } from '@/fields/theme'
 
 const ViewingRoomsPage: React.FC = async () => {
-  const { isEnabled: draft } = await draftMode()
-  const viewingRooms = draft
-    ? await fetchViewingRooms()
-    : await unstable_cache(fetchViewingRooms, ['viewingRooms'])()
+  const viewingRooms = await fetchViewingRooms()
 
   const slug = '/viewing-rooms'
 

@@ -4,17 +4,12 @@ import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import Headline from '../../_ui/Headline'
 import SubGrid from '../../_ui/pageGrid'
-import { draftMode } from 'next/headers'
-import { unstable_cache } from 'next/cache'
 import ArtistList from './components/ArtistList'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 
 const ArtistsPage: React.FC = async () => {
-  const { isEnabled: draft } = await draftMode()
-  const artistList = draft
-    ? await fetchArtists('firstName')
-    : await unstable_cache(fetchArtists, ['artists'])('firstName')
+  const artistList = await fetchArtists('firstName')
 
   const slug = '/artists'
 

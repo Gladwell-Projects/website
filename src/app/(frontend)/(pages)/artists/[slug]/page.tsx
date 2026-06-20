@@ -6,20 +6,17 @@ import { draftMode } from 'next/headers'
 import Headline from '@/app/(frontend)/_ui/Headline'
 import Content from '@/app/(frontend)/_ui/PageContent'
 import SubGrid from '@/app/(frontend)/_ui/pageGrid'
-import { fetchArtist } from '@/app/(frontend)/_data'
-import { unstable_cache } from 'next/cache'
+import { fetchArtist, getPayloadClient } from '@/app/(frontend)/_data'
 import PageBlocks from '@/app/(frontend)/_ui/PageBlocks'
 import Gallery from '@/app/(frontend)/_ui/Gallery'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 import Link from 'next/link'
 import Image from 'next/image'
 import { isRenderableImage } from '@/utilities/isRenderableImage'
 
 export const generateStaticParams = async () => {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
   const pages = await payload.find({
     collection: 'artists',
     draft: false,
@@ -44,14 +41,11 @@ export const generateStaticParams = async () => {
   return pages.docs.map((page) => ({ slug: page.slug }))
 }
 
-const getArtist = async (slug: string, draft?: boolean) =>
-  draft ? fetchArtist(slug) : unstable_cache(fetchArtist, [`artist-${slug}`])(slug)
-
 const ArtistBioPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await params
 
-  const page = await getArtist(slug, draft)
+  const page = await fetchArtist(slug)
 
   if (!page) {
     notFound()

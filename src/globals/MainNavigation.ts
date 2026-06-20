@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 import link from '../fields/link'
 import { adminsAndEditors } from '@/collections/access/adminsAndEditors'
@@ -102,6 +102,14 @@ export const MainMenu: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [() => revalidatePath('/', 'layout')],
+    // 'globals' must match GLOBALS_TAG in src/app/(frontend)/_data/index.ts —
+    // it flushes the cached main-menu/branding/footer getters. (Kept as a
+    // literal to avoid a config <-> _data import cycle.)
+    afterChange: [
+      () => {
+        revalidateTag('globals')
+        revalidatePath('/', 'layout')
+      },
+    ],
   },
 }

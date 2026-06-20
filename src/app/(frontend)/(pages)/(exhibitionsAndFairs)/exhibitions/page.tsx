@@ -1,8 +1,6 @@
 import React from 'react'
 import { fetchExhibitions, fetchTopLevelTitle } from '../../../_data'
 import { currentThemeFromNav } from '@/app/(frontend)/_data/theme'
-import { draftMode } from 'next/headers'
-import { unstable_cache } from 'next/cache'
 import { Exhibition } from '@/payload-types'
 import ExhibitionsList from '../_components/ExhibitionList'
 import { Metadata, Viewport } from 'next'
@@ -12,11 +10,7 @@ import ThemeSwitch from '../../../_ui/ThemeSwitch'
 import { themeCode } from '@/fields/theme'
 
 const Exhibitions = async () => {
-  const { isEnabled: draft } = await draftMode()
-
-  const exhibitions: Partial<Exhibition>[] = draft
-    ? await fetchExhibitions('-startDate')
-    : await unstable_cache(fetchExhibitions)('-startDate')
+  const exhibitions: Partial<Exhibition>[] = await fetchExhibitions('-startDate')
 
   const slug = '/exhibitions'
 

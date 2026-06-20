@@ -1,21 +1,18 @@
 import ThemeSwitch from '../../_ui/ThemeSwitch'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
-import { fetchPage } from '../../_data'
+import { fetchPage, getPayloadClient } from '../../_data'
 import Headline from '../../_ui/Headline'
 import Content from '../../_ui/PageContent'
 import SubGrid from '../../_ui/pageGrid'
 import { LivePreviewListener } from '@/components/frontend/LivePreviewListener'
-import { unstable_cache } from 'next/cache'
 import PageBlocks from '../../_ui/PageBlocks'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 import { Metadata, Viewport } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 import { themeCode } from '@/fields/theme'
 
 export const generateStaticParams = async () => {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
   const pages = await payload.find({
     collection: 'pages',
     draft: false,
@@ -26,14 +23,11 @@ export const generateStaticParams = async () => {
   return pages.docs.map((page) => ({ slug: page.slug }))
 }
 
-const getPage = async (slug: string, draft?: boolean) =>
-  draft ? fetchPage(slug) : unstable_cache(fetchPage, [`page-${slug}`])(slug)
-
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { isEnabled: draft } = await draftMode()
   const { slug } = await params
   // const url = '/' + (Array.isArray(slug) ? slug.join('/') : slug)
-  const page = await getPage(slug, draft)
+  const page = await fetchPage(slug)
 
   if (!page) {
     notFound()
@@ -82,7 +76,7 @@ export const generateViewport = async (
   props: PageProps<'/[slug]'>
 ): Promise<Viewport> => {
   const { slug } = await props.params
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
   const page = (
     await payload.find({
       collection: 'pages',

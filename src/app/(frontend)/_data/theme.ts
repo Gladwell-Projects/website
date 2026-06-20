@@ -1,12 +1,7 @@
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+import { getMainMenu } from './index'
 
 export const currentThemeFromNav = async (fromSlug: string) => {
-  const payload = await getPayload({ config })
-  const nav = await payload.findGlobal({
-    slug: 'main-menu',
-    depth: 2,
-  })
+  const nav = await getMainMenu()
   const menuItems = [...nav['menu-items-top'], ...nav['menu-items-bot']]
 
   const slug = fromSlug.startsWith('/') ? fromSlug : `/${fromSlug}`

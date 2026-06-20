@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import type { Media, Page, Artist, Exhibition, Press, Event } from '@/payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
-import { fetchGlobals } from '@/app/(frontend)/_data'
+import { getBranding } from '@/app/(frontend)/_data'
 import { getServerSideURL } from './getURL'
 
 export const generateMeta = async (args: {
@@ -18,7 +18,7 @@ export const generateMeta = async (args: {
 }): Promise<Metadata> => {
   const { doc, colSlug } = args
 
-  const defaults = (await fetchGlobals()).branding
+  const defaults = await getBranding()
 
   const ogImage = doc?.meta?.image as Media
 
