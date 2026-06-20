@@ -16,12 +16,23 @@ set -euo pipefail
 WRANGLER="pnpm exec wrangler"
 STAGING_DB="website-staging"
 
+# Safety assert: this script DROPS ALL TABLES on $STAGING_DB. It must NEVER run
+# against prod. The name is hardcoded above, but assert it anyway so a future
+# edit (or an env/arg override) can't turn this into a prod wipe — exactly the
+# class of accident that cost us the featured-artist data.
+if [ "$STAGING_DB" != "website-staging" ]; then
+  echo "stage-refresh: refusing to run — target '$STAGING_DB' is not 'website-staging'." >&2
+  exit 1
+fi
+
 reset="$(mktemp -t website-reset-XXXXXX).sql"
 trap 'rm -f "$reset"' EXIT
 
 # Drop existing objects so migrations replay onto a clean DB (re-runnable even
-# after a half-applied migration). Dropping tables drops their indexes; D1 has
-# foreign-key enforcement off by default, so order is moot.
+# after a half-applied migration). NOTE: D1 ENFORCES foreign keys and ignores
+# `PRAGMA foreign_keys=OFF`, so dropping a referenced parent table does an
+# implicit cascading DELETE into its children — fine here since we drop every
+# table, but never assume FKs are "off" on D1.
 echo "→ Resetting staging (dropping existing tables)…"
 $WRANGLER d1 execute "$STAGING_DB" --remote --json --command \
   "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' AND name NOT LIKE 'd1_%';" \
