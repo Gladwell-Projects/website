@@ -94,3 +94,6 @@ GEMINI.md
 AGENTS.md
 # Generic
 .ai/
+
+# Local dev seed snapshot (prod-like data, may contain PII — never commit)
+/seed/
