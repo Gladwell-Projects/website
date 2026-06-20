@@ -35,6 +35,12 @@ table_flags=$($WRANGLER d1 execute "$PROD_DB" --remote --json --command \
   "SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ($not_in) AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' AND name NOT LIKE 'd1_%';" \
   | node -e 'const d=JSON.parse(require("fs").readFileSync(0,"utf8"));const rows=(Array.isArray(d)?d[0]?.results:d.results)||[];process.stdout.write(rows.map((r)=>"--table="+r.name).join(" "))')
 
+# Safety: never fall through to an unfiltered export (which would dump PII).
+if [ -z "$table_flags" ]; then
+  echo "✗ Could not resolve content tables — aborting to avoid exporting PII." >&2
+  exit 1
+fi
+
 echo "→ Cloning prod data into staging (PII excluded)…"
 # shellcheck disable=SC2086 # $table_flags must word-split into many --table args
 $WRANGLER d1 export "$PROD_DB" --remote --no-schema $table_flags --output "$data"

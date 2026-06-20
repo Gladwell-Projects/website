@@ -79,7 +79,7 @@
           // Dedicated staging database — isolates staging from prod so schema
           // changes (e.g. trash/deletedAt) and test data never touch live.
           // Replace the id with the one from `wrangler d1 create website-staging`.
-          "database_id": "<STAGING_D1_DATABASE_ID>",
+          "database_id": "27b81649-a176-49f1-9e11-64dc5e81c2cf",
           "database_name": "website-staging",
           "remote": true,
         },
