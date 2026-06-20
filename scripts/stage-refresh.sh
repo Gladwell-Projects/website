@@ -23,7 +23,19 @@ STAGING_DB="website-staging"
 
 schema="$(mktemp -t website-schema-XXXXXX).sql"
 data="$(mktemp -t website-data-XXXXXX).sql"
-trap 'rm -f "$schema" "$data"' EXIT
+reset="$(mktemp -t website-reset-XXXXXX).sql"
+trap 'rm -f "$schema" "$data" "$reset"' EXIT
+
+# Drop any existing objects so the import is a clean replace and the script is
+# re-runnable (e.g. after a half-applied migration). Dropping tables also drops
+# their indexes; D1 has foreign-key enforcement off by default, so order is moot.
+echo "→ Resetting staging (dropping existing tables)…"
+$WRANGLER d1 execute "$STAGING_DB" --remote --json --command \
+  "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' AND name NOT LIKE 'd1_%';" \
+  | node -e 'const d=JSON.parse(require("fs").readFileSync(0,"utf8"));const rows=(Array.isArray(d)?d[0]?.results:d.results)||[];process.stdout.write(rows.map((r)=>"DROP TABLE IF EXISTS \""+r.name+"\";").join("\n"))' > "$reset"
+if [ -s "$reset" ]; then
+  $WRANGLER d1 execute "$STAGING_DB" --remote --yes --file="$reset"
+fi
 
 echo "→ Cloning prod schema into staging (structure only, no rows)…"
 $WRANGLER d1 export "$PROD_DB" --remote --no-data --output "$schema"
